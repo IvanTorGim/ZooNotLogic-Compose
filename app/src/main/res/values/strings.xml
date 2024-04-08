@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Zoo Not Logic</string>
+    <string name="zoonotlogic">Zoo Not logic</string>
+
+    <!-- LOGIN SCREEN & SIGNUP SCREEN-->
+    <string name="login">Iniciar sesión</string>
+    <string name="login_google">Iniciar sesión con Google</string>
+    <string name="divider_text">O</string>
+    <string name="not_have_account">¿No tienes cuenta?</string>
+    <string name="sing_up">Registrate</string>
+    <string name="email">Correo</string>
+    <string name="password">Contraseña</string>
+    <string name="name">Nombre</string>
+    <string name="last_name">Apellidos</string>
+    <string name="phone">Teléfono</string>
+    <string name="signup">Registrate</string>
+    <string name="cancel">Cancelar</string>
+    <string name="show_password">Mostrar contraseña</string>
+    <string name="hide_password">Ocultar contraseña</string>
+
+    <!-- MAIN SCREEN & HOME SCREEN & CART SCREEN & USER SCREEN & ADMIN SCREEN -->
+    <string name="admin">Admin</string>
+    <string name="home">Inicio</string>
+    <string name="cart">Carro</string>
+    <string name="profile">Perfil</string>
+
+    <string name="emailNotValid">Correo no válido</string>
+    <string name="passwordNotValid">La contraseña debe tener al menos 6 carácteres</string>
+    <string name="userNotValid">Usuario no válido</string>
+
+    <!-- MAIN SCREEN & HOME SCREEN & CART SCREEN & USER SCREEN & ADMIN SCREEN -->
+    <string name="new_collection_products">Nueva colección</string>
+    <string name="all_products">Todos los productos</string>
+    <string name="login_error">Email o contraseña no válidos</string>
+    <string name="create_account">Crear cuenta nueva</string>
+
+</resources>
