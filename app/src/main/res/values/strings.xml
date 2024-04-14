@@ -11,8 +11,8 @@
     <string name="email">Correo</string>
     <string name="password">Contraseña</string>
     <string name="name">Nombre</string>
-    <string name="last_name">Apellidos</string>
-    <string name="phone">Teléfono</string>
+    <string name="last_name">Apellidos (Opcional)</string>
+    <string name="phone">Teléfono (Opcional)</string>
     <string name="signup">Registrate</string>
     <string name="cancel">Cancelar</string>
     <string name="show_password">Mostrar contraseña</string>
@@ -26,7 +26,7 @@
 
     <string name="emailNotValid">Correo no válido</string>
     <string name="passwordNotValid">La contraseña debe tener al menos 6 carácteres</string>
-    <string name="userNotValid">Usuario no válido</string>
+    <string name="userNotValid">El nombre debe tener al menos 4 carácteres</string>
 
     <!-- MAIN SCREEN & HOME SCREEN & CART SCREEN & USER SCREEN & ADMIN SCREEN -->
     <string name="new_collection_products">Nueva colección</string>

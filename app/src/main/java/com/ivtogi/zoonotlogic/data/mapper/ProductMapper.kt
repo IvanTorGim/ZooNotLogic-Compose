@@ -1,9 +1,9 @@
 package com.ivtogi.zoonotlogic.data.mapper
 
-import com.ivtogi.zoonotlogic.data.remote.dto.ProductResponse
+import com.ivtogi.zoonotlogic.data.remote.dto.ProductDto
 import com.ivtogi.zoonotlogic.domain.model.Product
 
-fun ProductResponse.toDomain(): Product {
+fun ProductDto.toDomain(): Product {
     return Product(
         name = this.name,
         description = this.description,
