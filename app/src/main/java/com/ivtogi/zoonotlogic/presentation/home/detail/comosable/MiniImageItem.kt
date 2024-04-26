@@ -19,7 +19,7 @@ fun MiniImageItem(selected: Boolean) {
         contentDescription = stringResource(id = R.string.product_image),
         placeholder = painterResource(id = R.drawable.butterfly),
         modifier = Modifier
-            .size(100.dp)
+            .size(68.dp)
             .border(3.dp, Primary, shape = RoundedCornerShape(10.dp))
     )
 }
