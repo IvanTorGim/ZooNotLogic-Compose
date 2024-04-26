@@ -9,7 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.ivtogi.zoonotlogic.navigation.AuthNavigationGraph
+import com.ivtogi.zoonotlogic.navigation.RootNavigationGraph
 import com.ivtogi.zoonotlogic.ui.theme.ZooNotLogicTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,9 +28,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     navigationController = rememberNavController()
-                    AuthNavigationGraph(
-                        navigationController = navigationController
-                    )
+                    RootNavigationGraph(navigationController)
                 }
             }
         }

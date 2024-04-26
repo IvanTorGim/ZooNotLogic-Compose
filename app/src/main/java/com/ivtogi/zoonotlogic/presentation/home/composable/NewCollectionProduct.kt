@@ -1,5 +1,6 @@
 package com.ivtogi.zoonotlogic.presentation.home.composable
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -14,7 +15,7 @@ import coil.compose.AsyncImage
 import com.ivtogi.zoonotlogic.domain.model.Product
 
 @Composable
-fun NewCollectionProduct(product: Product) {
+fun NewCollectionProduct(product: Product, onClick: () -> Unit) {
     Card(
         elevation = CardDefaults.cardElevation(1.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -22,11 +23,12 @@ fun NewCollectionProduct(product: Product) {
             .fillMaxHeight()
             .width(320.dp)
             .padding(8.dp)
+            .clickable { onClick() }
     ) {
         AsyncImage(
             model = product.images[1],
             contentDescription = product.name,
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Crop
         )
     }
 }
