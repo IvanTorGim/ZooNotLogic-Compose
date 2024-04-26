@@ -31,7 +31,7 @@ import com.ivtogi.zoonotlogic.presentation.common.PhoneField
 @Composable
 fun SignupScreen(
     viewModel: SignupViewModel = hiltViewModel(),
-    navigationToLogin: () -> Unit
+    navigateToLogin: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -87,11 +87,11 @@ fun SignupScreen(
         DefaultButton(
             label = stringResource(id = R.string.signup),
             loading = state.signupLoading,
-            onClick = { viewModel.signup { navigationToLogin() } }
+            onClick = { viewModel.signup { navigateToLogin() } }
         )
         DefaultButton(
             label = stringResource(id = R.string.cancel),
-            onClick = { navigationToLogin() }
+            onClick = { navigateToLogin() }
         )
         if (state.signupError != null) {
             Toast.makeText(LocalContext.current, state.signupError, Toast.LENGTH_LONG).show()

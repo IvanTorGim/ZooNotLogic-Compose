@@ -17,21 +17,27 @@
     <string name="cancel">Cancelar</string>
     <string name="show_password">Mostrar contraseña</string>
     <string name="hide_password">Ocultar contraseña</string>
+    <string name="emailNotValid">Correo no válido</string>
+    <string name="passwordNotValid">La contraseña debe tener al menos 6 carácteres</string>
+    <string name="userNotValid">El nombre debe tener al menos 4 carácteres</string>
 
-    <!-- MAIN SCREEN & HOME SCREEN & CART SCREEN & USER SCREEN & ADMIN SCREEN -->
+
+    <!-- MAIN SCREEN & HOME SCREEN & CART SCREEN & PROFILE SCREEN & ADMIN SCREEN -->
     <string name="admin">Admin</string>
     <string name="home">Inicio</string>
     <string name="cart">Carro</string>
     <string name="profile">Perfil</string>
 
-    <string name="emailNotValid">Correo no válido</string>
-    <string name="passwordNotValid">La contraseña debe tener al menos 6 carácteres</string>
-    <string name="userNotValid">El nombre debe tener al menos 4 carácteres</string>
 
-    <!-- MAIN SCREEN & HOME SCREEN & CART SCREEN & USER SCREEN & ADMIN SCREEN -->
+    <!-- HOME SCREEN -->
     <string name="new_collection_products">Nueva colección</string>
     <string name="all_products">Todos los productos</string>
     <string name="login_error">Email o contraseña no válidos</string>
     <string name="create_account">Crear cuenta nueva</string>
+
+    <!-- DETAIL SCREEN -->
+    <string name="add_cart">Añadir al carrito</string>
+    <string name="arrow_back">Volver atrás</string>
+    <string name="product_image">Imagén del producto</string>
 
 </resources>
