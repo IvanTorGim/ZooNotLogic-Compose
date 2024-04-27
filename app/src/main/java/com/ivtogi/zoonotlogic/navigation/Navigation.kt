@@ -36,7 +36,7 @@ fun RootNavigationGraph(
         composable(Graph.MAIN) {
             MainScreen(rootNavigationController)
         }
-        detailNavigationGraph()
+        detailNavigationGraph(rootNavigationController)
     }
 }
 
@@ -80,12 +80,12 @@ fun MainNavigationGraph(
     }
 }
 
-fun NavGraphBuilder.detailNavigationGraph() {
+fun NavGraphBuilder.detailNavigationGraph(rootNavigationController: NavHostController) {
     navigation(
         route = Graph.DETAIL,
         startDestination = Detail.route
     ) {
-        composable(Detail.route) { DetailScreen() }
+        composable(Detail.route) { DetailScreen(onBackPressed = { rootNavigationController.popBackStack() }) }
     }
 }
 

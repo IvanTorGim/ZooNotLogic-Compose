@@ -47,7 +47,10 @@ fun HomeScreen(
         item(span = { GridItemSpan(maxLineSpan) }) {
             LazyRow(modifier = Modifier.height(200.dp)) {
                 items(state.productList) {
-                    NewCollectionProduct(product = it, navigateToDetail)
+                    NewCollectionProduct(
+                        product = it,
+                        onClick = navigateToDetail
+                    )
                 }
             }
         }
@@ -61,7 +64,7 @@ fun HomeScreen(
             )
         }
         items(state.productList) {
-            ProductCard(product = it)
+            ProductCard(product = it, navigateToDetail = navigateToDetail)
         }
     }
 }

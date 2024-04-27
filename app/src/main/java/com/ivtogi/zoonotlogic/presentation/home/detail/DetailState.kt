@@ -1,4 +1,7 @@
 package com.ivtogi.zoonotlogic.presentation.home.detail
 
-class DetailState {
-}
+data class DetailState(
+    val size: String = "",
+    val imageSelected: Int = 0,
+    val images: List<String> = emptyList()
+)
