@@ -3,6 +3,7 @@ package com.ivtogi.zoonotlogic.data.remote
 import com.google.firebase.firestore.FirebaseFirestore
 import com.ivtogi.zoonotlogic.data.mapper.toDto
 import com.ivtogi.zoonotlogic.data.remote.dto.ProductDto
+import com.ivtogi.zoonotlogic.data.remote.dto.UserDto
 import com.ivtogi.zoonotlogic.domain.model.User
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -23,6 +24,11 @@ class FirestoreRepository @Inject constructor(
 
     fun insertUser(id: String, user: User) {
         firestore.collection(USER_PATH).document(id).set(user.toDto())
+    }
+
+    suspend fun getUser(userId: String): UserDto {
+        return firestore.collection(USER_PATH).document(userId).get().await()
+            .toObject(UserDto::class.java)!!
     }
 
 

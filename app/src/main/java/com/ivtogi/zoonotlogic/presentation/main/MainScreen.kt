@@ -10,19 +10,27 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.ivtogi.zoonotlogic.navigation.MainNavigationGraph
 import com.ivtogi.zoonotlogic.navigation.NavigationBottomBar
+import com.ivtogi.zoonotlogic.navigation.NavigationItems
 
 
 @Composable
 fun MainScreen(
-    rootNavHostController: NavHostController,
-    viewModel: MainViewModel = hiltViewModel()
+    mainNavigationController: NavHostController = rememberNavController(),
+    viewModel: MainViewModel = hiltViewModel(),
 ) {
-    val mainNavigationController: NavHostController = rememberNavController()
+
+    val items = listOf(
+        NavigationItems.Admin,
+        NavigationItems.Home,
+        NavigationItems.Cart,
+        NavigationItems.Profile
+    )
     Scaffold(bottomBar = {
-        NavigationBottomBar(mainNavigationController, viewModel.getNavBarItems())
+        //TODO: no funciona bien la bottom bar, no pinta admin si eres admin
+        NavigationBottomBar(mainNavigationController, items)
     }) { paddingValues ->
         Box(modifier = Modifier.padding(paddingValues)) {
-            MainNavigationGraph(rootNavHostController, mainNavigationController)
+            MainNavigationGraph(mainNavigationController)
         }
     }
 }

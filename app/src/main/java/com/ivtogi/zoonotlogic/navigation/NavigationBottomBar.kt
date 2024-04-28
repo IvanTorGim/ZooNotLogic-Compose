@@ -16,11 +16,11 @@ import com.ivtogi.zoonotlogic.R
 
 @Composable
 fun NavigationBottomBar(
-    navHostController: NavHostController,
-    items: List<NavigationItems>
+    mainNavigationController: NavHostController,
+    items: List<NavigationItems>,
 ) {
     // Para obtener la ruta en la que estamos
-    val navBackStackEntry by navHostController.currentBackStackEntryAsState()
+    val navBackStackEntry by mainNavigationController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
     NavigationBar(
@@ -33,9 +33,9 @@ fun NavigationBottomBar(
                 label = { Text(text = stringResource(id = item.label)) },
                 selected = selected,
                 onClick = {
-                    navHostController.navigate(item.route) {
+                    mainNavigationController.navigate(item.route) {
                         // Siempre que pulsemos el boton atras nos llevara a la home
-                        popUpTo(navHostController.graph.startDestinationId)
+                        popUpTo(mainNavigationController.graph.startDestinationId)
                         // Solo hay una instancia de cada screen en el backstack
                         launchSingleTop = true
                     }

@@ -30,5 +30,6 @@ object FirebaseModule {
 
     @Singleton
     @Provides
-    fun provideFirestoreRepository(firestore: FirebaseFirestore) = FirestoreRepository(firestore)
+    fun provideFirestoreRepository(firestore: FirebaseFirestore): FirestoreRepository =
+        FirestoreRepository(firestore)
 }
