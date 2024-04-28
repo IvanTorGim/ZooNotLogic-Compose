@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -22,49 +23,64 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ivtogi.zoonotlogic.R
 import com.ivtogi.zoonotlogic.presentation.home.composable.NewCollectionProduct
 import com.ivtogi.zoonotlogic.presentation.home.composable.ProductCard
+import com.ivtogi.zoonotlogic.presentation.home.composable.TopHomeBar
 
 @Composable
 fun HomeScreen(
     viewmodel: HomeViewModel = hiltViewModel(),
+    navigateToProfile: () -> Unit,
+    navigateToAdmin: () -> Unit,
     navigateToDetail: () -> Unit
 ) {
     val state by viewmodel.state.collectAsState()
 
-    LazyVerticalGrid(
-        columns = GridCells.Adaptive(180.dp),
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        item(span = { GridItemSpan(maxLineSpan) }) {
-            Text(
-                text = stringResource(id = R.string.new_collection_products),
-                fontSize = 24.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(8.dp)
+    Scaffold(
+        topBar = {
+            TopHomeBar(
+                navigateToProfile = navigateToProfile,
+                navigateToAdmin = navigateToAdmin
             )
-        }
+        },
+        modifier = Modifier.fillMaxSize()
+    ) { paddingValues ->
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive(180.dp),
+            modifier = Modifier
+                .padding(paddingValues)
+        ) {
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                Text(
+                    text = stringResource(id = R.string.new_collection_products),
+                    fontSize = 24.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(8.dp)
+                )
+            }
 
-        item(span = { GridItemSpan(maxLineSpan) }) {
-            LazyRow(modifier = Modifier.height(200.dp)) {
-                items(state.productList) {
-                    NewCollectionProduct(
-                        product = it,
-                        onClick = navigateToDetail
-                    )
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                LazyRow(modifier = Modifier.height(200.dp)) {
+                    items(state.productList) {
+                        NewCollectionProduct(
+                            product = it,
+                            onClick = navigateToDetail
+                        )
+                    }
                 }
             }
-        }
 
-        item(span = { GridItemSpan(maxLineSpan) }) {
-            Text(
-                text = stringResource(id = R.string.all_products),
-                fontSize = 24.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(8.dp)
-            )
-        }
-        items(state.productList) {
-            ProductCard(product = it, navigateToDetail = navigateToDetail)
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                Text(
+                    text = stringResource(id = R.string.all_products),
+                    fontSize = 24.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(8.dp)
+                )
+            }
+            items(state.productList) {
+                ProductCard(product = it, navigateToDetail = navigateToDetail)
+            }
         }
     }
+
+
 }
