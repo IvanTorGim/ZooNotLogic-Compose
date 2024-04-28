@@ -35,7 +35,7 @@ import com.ivtogi.zoonotlogic.presentation.common.PasswordField
 fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
     navigateToSignup: () -> Unit,
-    navigateToMain: () -> Unit
+    navigateToHome: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -65,7 +65,7 @@ fun LoginScreen(
         DefaultButton(
             label = stringResource(id = R.string.login),
             loading = state.loginLoading,
-            onClick = { viewModel.login { navigateToMain() } }
+            onClick = { viewModel.login { navigateToHome(it) } }
         )
         Spacer(modifier = Modifier.height(8.dp))
         Row {

@@ -19,16 +19,16 @@ class FirestoreRepository @Inject constructor(
 
     suspend fun getAllProducts(): List<ProductDto> {
         return firestore.collection(PRODUCTS_PATH).get().await()
-            .map { it.toObject(ProductDto::class.java) }
+            .map { document -> document.toObject(ProductDto::class.java).copy(id = document.id) }
     }
 
     fun insertUser(id: String, user: User) {
         firestore.collection(USER_PATH).document(id).set(user.toDto())
     }
 
-    suspend fun getUser(userId: String): UserDto {
+    suspend fun getUser(userId: String): UserDto? {
         return firestore.collection(USER_PATH).document(userId).get().await()
-            .toObject(UserDto::class.java)!!
+            .toObject(UserDto::class.java)
     }
 
 

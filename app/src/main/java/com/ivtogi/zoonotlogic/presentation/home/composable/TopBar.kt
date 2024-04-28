@@ -16,6 +16,7 @@ import com.ivtogi.zoonotlogic.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopHomeBar(
+    isAdmin: Boolean = false,
     navigateToProfile: () -> Unit,
     navigateToAdmin: () -> Unit
 ) {
@@ -27,13 +28,13 @@ fun TopHomeBar(
             )
         },
         actions = {
-            if (false) {
+            if (isAdmin) {
                 IconButton(
                     onClick = { navigateToAdmin() },
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Build,
-                        contentDescription = stringResource(id = R.string.profile)
+                        contentDescription = stringResource(id = R.string.admin)
                     )
                 }
             }

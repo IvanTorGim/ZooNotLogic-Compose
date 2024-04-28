@@ -10,7 +10,7 @@ fun User.toDto(): UserDto {
         phone = this.phone,
         email = this.email,
         cart = this.cart,
-        isAdmin = this.isAdmin
+        admin = this.isAdmin
     )
 }
 
@@ -21,6 +21,6 @@ fun UserDto.toDomain(): User {
         phone = this.phone,
         cart = this.cart,
         email = this.email,
-        isAdmin = this.isAdmin
+        isAdmin = this.admin
     )
 }

@@ -2,9 +2,11 @@ package com.ivtogi.zoonotlogic.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.ivtogi.zoonotlogic.navigation.Routes.Admin
 import com.ivtogi.zoonotlogic.navigation.Routes.Cart
 import com.ivtogi.zoonotlogic.navigation.Routes.Detail
@@ -31,7 +33,7 @@ fun NavigationGraph(
         composable(Login.route) {
             LoginScreen(
                 navigateToSignup = { navHostController.navigate(Signup.route) },
-                navigateToMain = { navHostController.navigate(Home.route) }
+                navigateToHome = { navHostController.navigate(Home.createRoute(it)) }
             )
         }
         composable(Signup.route) {
@@ -41,7 +43,15 @@ fun NavigationGraph(
         composable(Admin.route) {
             AdminScreen()
         }
-        composable(Home.route) {
+        composable(
+            route = Home.route,
+            arguments = listOf(
+                navArgument("habitId") {
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = null
+                })
+        ) {
             HomeScreen(
                 navigateToDetail = { navHostController.navigate(Detail.route) },
                 navigateToProfile = { navHostController.navigate(Profile.route) },
