@@ -1,4 +1,4 @@
-package com.ivtogi.zoonotlogic.presentation.home.detail.composable
+package com.ivtogi.zoonotlogic.presentation.detail.composable
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height

@@ -1,4 +1,4 @@
-package com.ivtogi.zoonotlogic.presentation.home.detail
+package com.ivtogi.zoonotlogic.presentation.detail
 
 data class DetailState(
     val size: String = "",

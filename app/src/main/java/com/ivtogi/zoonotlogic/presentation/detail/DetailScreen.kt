@@ -1,4 +1,4 @@
-package com.ivtogi.zoonotlogic.presentation.home.detail
+package com.ivtogi.zoonotlogic.presentation.detail
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,9 +26,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.ivtogi.zoonotlogic.R
 import com.ivtogi.zoonotlogic.presentation.common.DefaultButton
-import com.ivtogi.zoonotlogic.presentation.home.detail.composable.ImageSelector
-import com.ivtogi.zoonotlogic.presentation.home.detail.composable.ProductNameAndPrice
-import com.ivtogi.zoonotlogic.presentation.home.detail.composable.SizeSelector
+import com.ivtogi.zoonotlogic.presentation.detail.composable.ImageSelector
+import com.ivtogi.zoonotlogic.presentation.detail.composable.ProductNameAndPrice
+import com.ivtogi.zoonotlogic.presentation.detail.composable.SizeSelector
 
 @Composable
 fun DetailScreen(

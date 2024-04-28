@@ -1,4 +1,4 @@
-package com.ivtogi.zoonotlogic.presentation.home.detail
+package com.ivtogi.zoonotlogic.presentation.detail
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
