@@ -53,9 +53,10 @@ fun NavigationGraph(
                 })
         ) {
             HomeScreen(
-                navigateToDetail = { navHostController.navigate(Detail.route) },
                 navigateToProfile = { navHostController.navigate(Profile.route) },
-                navigateToAdmin = { navHostController.navigate(Admin.route) }
+                navigateToCart = { navHostController.navigate(Cart.route) },
+                navigateToAdmin = { navHostController.navigate(Admin.route) },
+                navigateToDetail = { navHostController.navigate(Detail.route) }
             )
         }
         composable(Cart.route) { CartScreen() }

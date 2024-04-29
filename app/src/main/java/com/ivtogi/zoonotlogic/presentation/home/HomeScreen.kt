@@ -1,6 +1,7 @@
 package com.ivtogi.zoonotlogic.presentation.home
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ivtogi.zoonotlogic.R
+import com.ivtogi.zoonotlogic.presentation.home.composable.CartCard
 import com.ivtogi.zoonotlogic.presentation.home.composable.NewCollectionProduct
 import com.ivtogi.zoonotlogic.presentation.home.composable.ProductCard
 import com.ivtogi.zoonotlogic.presentation.home.composable.TopHomeBar
@@ -32,6 +34,7 @@ import com.ivtogi.zoonotlogic.presentation.home.composable.TopHomeBar
 fun HomeScreen(
     viewmodel: HomeViewModel = hiltViewModel(),
     navigateToProfile: () -> Unit,
+    navigateToCart: () -> Unit,
     navigateToAdmin: () -> Unit,
     navigateToDetail: () -> Unit
 ) {
@@ -55,46 +58,57 @@ fun HomeScreen(
             },
             modifier = Modifier.fillMaxSize()
         ) { paddingValues ->
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive(180.dp),
-                modifier = Modifier
-                    .padding(paddingValues)
-            ) {
-                item(span = { GridItemSpan(maxLineSpan) }) {
-                    Text(
-                        text = stringResource(id = R.string.new_collection_products),
-                        fontSize = 24.sp,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(8.dp)
-                    )
-                }
+            Box {
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(180.dp),
+                    modifier = Modifier
+                        .padding(paddingValues)
+                ) {
+                    item(span = { GridItemSpan(maxLineSpan) }) {
+                        Text(
+                            text = stringResource(id = R.string.new_collection_products),
+                            fontSize = 24.sp,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(8.dp)
+                        )
+                    }
 
-                item(span = { GridItemSpan(maxLineSpan) }) {
-                    LazyRow(modifier = Modifier.height(200.dp)) {
-                        items(state.productList) {
-                            NewCollectionProduct(
-                                product = it,
-                                onClick = navigateToDetail
-                            )
+                    item(span = { GridItemSpan(maxLineSpan) }) {
+                        LazyRow(modifier = Modifier.height(200.dp)) {
+                            items(state.productList) {
+                                NewCollectionProduct(
+                                    product = it,
+                                    onClick = navigateToDetail
+                                )
+                            }
                         }
                     }
-                }
 
-                item(span = { GridItemSpan(maxLineSpan) }) {
-                    Text(
-                        text = stringResource(id = R.string.all_products),
-                        fontSize = 24.sp,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(8.dp)
-                    )
+                    item(span = { GridItemSpan(maxLineSpan) }) {
+                        Text(
+                            text = stringResource(id = R.string.all_products),
+                            fontSize = 24.sp,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(8.dp)
+                        )
+                    }
+                    items(state.productList) {
+                        ProductCard(product = it, navigateToDetail = navigateToDetail)
+                    }
+                    item(span = { GridItemSpan(maxLineSpan) }) {
+                        Spacer(modifier = Modifier.height(80.dp))
+                    }
                 }
-                items(state.productList) {
-                    ProductCard(product = it, navigateToDetail = navigateToDetail)
+                if (true) {
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                    ) {
+                        CartCard(navigateToCart)
+                    }
                 }
             }
         }
-
-
     }
 
 }
