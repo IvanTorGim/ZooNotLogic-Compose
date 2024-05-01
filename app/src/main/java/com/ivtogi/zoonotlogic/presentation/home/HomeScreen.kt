@@ -36,7 +36,7 @@ fun HomeScreen(
     navigateToProfile: () -> Unit,
     navigateToCart: () -> Unit,
     navigateToAdmin: () -> Unit,
-    navigateToDetail: () -> Unit
+    navigateToDetail: (String) -> Unit
 ) {
     val state by viewmodel.state.collectAsState()
 
@@ -51,7 +51,7 @@ fun HomeScreen(
         Scaffold(
             topBar = {
                 TopHomeBar(
-                    isAdmin = state.isAdmin,
+                    isAdmin = state.user.isAdmin,
                     navigateToProfile = navigateToProfile,
                     navigateToAdmin = navigateToAdmin
                 )
@@ -75,10 +75,10 @@ fun HomeScreen(
 
                     item(span = { GridItemSpan(maxLineSpan) }) {
                         LazyRow(modifier = Modifier.height(200.dp)) {
-                            items(state.productList) {
+                            items(state.productList) { product ->
                                 NewCollectionProduct(
-                                    product = it,
-                                    onClick = navigateToDetail
+                                    product = product,
+                                    navigateToDetail = { navigateToDetail(it) }
                                 )
                             }
                         }
@@ -92,19 +92,22 @@ fun HomeScreen(
                             modifier = Modifier.padding(8.dp)
                         )
                     }
-                    items(state.productList) {
-                        ProductCard(product = it, navigateToDetail = navigateToDetail)
+                    items(state.productList) { product ->
+                        ProductCard(product = product, navigateToDetail = { navigateToDetail(it) })
                     }
                     item(span = { GridItemSpan(maxLineSpan) }) {
                         Spacer(modifier = Modifier.height(80.dp))
                     }
                 }
-                if (true) {
+                if (viewmodel.getCartSize() > 0) {
                     Box(
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
                     ) {
-                        CartCard(navigateToCart)
+                        CartCard(
+                            viewModel = viewmodel,
+                            navigateToCart = navigateToCart
+                        )
                     }
                 }
             }

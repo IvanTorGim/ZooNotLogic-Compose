@@ -9,7 +9,7 @@ sealed class Routes(val route: String) {
     }
     data object Cart : Routes("cart")
     data object Profile : Routes("profile")
-    data object Detail : Routes("detail/{productId}") {
-        fun createRoute(productId: String) = "detail/$productId"
+    data object Detail : Routes("detail/?productId={productId}") {
+        fun createRoute(productId: String) = "detail/?productId=$productId"
     }
 }

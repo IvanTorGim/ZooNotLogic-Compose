@@ -19,14 +19,14 @@ import coil.compose.AsyncImage
 import com.ivtogi.zoonotlogic.domain.model.Product
 
 @Composable
-fun ProductCard(product: Product, navigateToDetail: () -> Unit) {
+fun ProductCard(product: Product, navigateToDetail: (String) -> Unit) {
     Card(
         elevation = CardDefaults.cardElevation(1.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         modifier = Modifier
             .fillMaxSize()
             .padding(8.dp)
-            .clickable { navigateToDetail() }
+            .clickable { navigateToDetail(product.id) }
     ) {
         Column(Modifier.fillMaxWidth()) {
             AsyncImage(
@@ -42,7 +42,7 @@ fun ProductCard(product: Product, navigateToDetail: () -> Unit) {
                 modifier = Modifier.padding(start = 8.dp)
             )
             Text(
-                text = "${product.price}€",
+                text = String.format("%.2f€", product.price),
                 modifier = Modifier.padding(start = 8.dp, bottom = 8.dp)
             )
         }

@@ -20,10 +20,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivtogi.zoonotlogic.R
+import com.ivtogi.zoonotlogic.presentation.home.HomeViewModel
 import com.ivtogi.zoonotlogic.ui.theme.Primary
 
 @Composable
 fun CartCard(
+    viewModel: HomeViewModel,
     navigateToCart: () -> Unit
 ) {
     Card(
@@ -39,15 +41,23 @@ fun CartCard(
         ) {
             Icon(
                 imageVector = Icons.Filled.ShoppingCart,
-                contentDescription = stringResource(id = R.string.cart),
+                contentDescription = stringResource(id = R.string.see_cart),
             )
             Spacer(modifier = Modifier.width(24.dp))
             Column {
-                Text(text = "4 Unidades", fontSize = 18.sp)
-                Text(text = "Total 180€", fontSize = 12.sp)
+                Text(
+                    text = stringResource(id = R.string.product_quantity, viewModel.getCartSize()),
+                    fontSize = 18.sp
+                )
+                Text(
+                    text = stringResource(
+                        id = R.string.total_product_price,
+                        viewModel.getCartTotalAmount()
+                    ), fontSize = 12.sp
+                )
             }
             Spacer(modifier = Modifier.weight(1f))
-            Text(text = "Ver carro", fontSize = 18.sp)
+            Text(text = stringResource(id = R.string.see_cart), fontSize = 18.sp)
         }
     }
 }

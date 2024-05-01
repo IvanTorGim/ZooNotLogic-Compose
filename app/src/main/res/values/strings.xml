@@ -21,19 +21,14 @@
     <string name="passwordNotValid">La contraseña debe tener al menos 6 carácteres</string>
     <string name="userNotValid">El nombre debe tener al menos 4 carácteres</string>
 
-
-    <!-- MAIN SCREEN & HOME SCREEN & CART SCREEN & PROFILE SCREEN & ADMIN SCREEN -->
-    <string name="admin">Admin</string>
-    <string name="home">Inicio</string>
-    <string name="cart">Carro</string>
-    <string name="profile">Perfil</string>
-
-
     <!-- HOME SCREEN -->
     <string name="new_collection_products">Nueva colección</string>
     <string name="all_products">Todos los productos</string>
     <string name="login_error">Email o contraseña no válidos</string>
     <string name="create_account">Crear cuenta nueva</string>
+    <string name="product_quantity">%s Unidades</string>
+    <string name="total_product_price">Total %s€</string>
+    <string name="see_cart">Ver carro</string>
 
     <!-- DETAIL SCREEN -->
     <string name="add_cart">Añadir al carrito</string>
@@ -41,5 +36,14 @@
     <string name="product_image">Imagén del producto</string>
     <string name="select_size">Selecciona la talla</string>
     <string name="size_chart">Guía de tallas</string>
+
+    <!-- CART SCREEN -->
+    <string name="cart">Carro</string>
+
+    <!-- PROFILE SCREEN -->
+    <string name="profile">Perfil</string>
+
+    <!-- ADMIN SCREEN -->
+    <string name="admin">Admin</string>
 
 </resources>

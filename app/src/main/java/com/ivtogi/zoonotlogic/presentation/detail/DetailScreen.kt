@@ -11,6 +11,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -41,52 +42,61 @@ fun DetailScreen(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
-        ) {
-            Box(modifier = Modifier.fillMaxWidth()) {
-                AsyncImage(
-                    model = state.images[state.imageSelected],
-                    contentDescription = "",
-                    placeholder = painterResource(id = R.drawable.butterfly),
-                    modifier = Modifier.fillMaxWidth()
-                )
-                IconButton(onClick = { onBackPressed() }) {
-                    Icon(
-                        imageVector = Icons.Outlined.ArrowBack,
-                        contentDescription = stringResource(id = R.string.arrow_back)
+        if (state.isLoading) {
+            Box(modifier = Modifier.align(Alignment.Center)) {
+                CircularProgressIndicator()
+            }
+        } else {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+            ) {
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    AsyncImage(
+                        model = state.product.images[state.imageSelected],
+                        contentDescription = "",
+                        placeholder = painterResource(id = R.drawable.butterfly),
+                        modifier = Modifier.fillMaxWidth()
                     )
+                    IconButton(onClick = { onBackPressed() }) {
+                        Icon(
+                            imageVector = Icons.Outlined.ArrowBack,
+                            contentDescription = stringResource(id = R.string.arrow_back)
+                        )
+                    }
+                }
+                Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    ImageSelector(
+                        images = state.product.images,
+                        imageSelected = state.imageSelected,
+                        onImageClicked = { viewModel.onImageClicked(it) }
+                    )
+                    Spacer(modifier = Modifier.height(24.dp))
+                    ProductNameAndPrice(
+                        name = state.product.name,
+                        price = String.format("%.2f€", state.product.price)
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Divider(modifier = Modifier.fillMaxWidth())
+                    Spacer(modifier = Modifier.height(16.dp))
+                    SizeSelector { /*TODO: hacer que cambie el color al seleccionar*/ }
+
                 }
             }
-            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                Spacer(modifier = Modifier.height(8.dp))
-                ImageSelector(
-                    images = state.images,
-                    imageSelected = state.imageSelected,
-                    onImageClicked = { viewModel.onImageClicked(it) }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+                    .align(Alignment.BottomCenter)
+            ) {
+                DefaultButton(
+                    label = stringResource(id = R.string.add_cart),
+                    loading = false,
+                    onClick = {/*TODO: Añadir al carro*/ }
                 )
-                Spacer(modifier = Modifier.height(24.dp))
-                ProductNameAndPrice(name = "Nombre del producto", price = "30.00€")
-                Spacer(modifier = Modifier.height(16.dp))
-                Divider(modifier = Modifier.fillMaxWidth())
-                Spacer(modifier = Modifier.height(16.dp))
-                SizeSelector { /*TODO: hacer que cambie el color al seleccionar*/ }
-
             }
-        }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-                .align(Alignment.BottomCenter)
-        ) {
-            DefaultButton(
-                label = stringResource(id = R.string.add_cart),
-                loading = false,
-                onClick = {/*TODO: Añadir al carro*/ }
-            )
         }
     }
 }

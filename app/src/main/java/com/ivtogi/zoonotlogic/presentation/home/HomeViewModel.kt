@@ -1,6 +1,5 @@
 package com.ivtogi.zoonotlogic.presentation.home
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -25,7 +24,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         val userId = savedStateHandle.get<String>("userId")
-        if (userId != null) {
+        if (!userId.isNullOrBlank()) {
             viewModelScope.launch {
                 _state.update { it.copy(isLoading = true) }
                 getUser(userId)
@@ -42,13 +41,21 @@ class HomeViewModel @Inject constructor(
                     .map { product -> product.toDomain() }
             )
         }
-        Log.i("ivan", _state.value.productList.toString())
     }
 
     private suspend fun getUser(userId: String) {
         val user = firestoreRepository.getUser(userId)?.toDomain()
         if (user != null) {
-            _state.update { it.copy(isAdmin = user.isAdmin) }
+            _state.update { it.copy(user = user) }
         }
+    }
+
+    fun getCartSize(): Int {
+        return _state.value.user.cart.size
+    }
+
+    fun getCartTotalAmount(): String {
+        val totalPrice: Double = _state.value.user.cart.sumOf { product -> product.price }
+        return String.format("%.2f", totalPrice)
     }
 }

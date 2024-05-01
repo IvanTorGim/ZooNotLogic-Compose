@@ -5,6 +5,6 @@ data class ProductDto(
     val name: String = "",
     val description: String = "",
     val category: String = "",
-    val price: String = "",
+    val price: Double = 0.0,
     val images: List<String> = emptyList()
 )

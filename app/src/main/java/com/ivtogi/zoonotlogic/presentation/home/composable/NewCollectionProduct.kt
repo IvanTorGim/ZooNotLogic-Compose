@@ -15,7 +15,7 @@ import coil.compose.AsyncImage
 import com.ivtogi.zoonotlogic.domain.model.Product
 
 @Composable
-fun NewCollectionProduct(product: Product, onClick: () -> Unit) {
+fun NewCollectionProduct(product: Product, navigateToDetail: (String) -> Unit) {
     Card(
         elevation = CardDefaults.cardElevation(1.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -23,7 +23,7 @@ fun NewCollectionProduct(product: Product, onClick: () -> Unit) {
             .fillMaxHeight()
             .width(320.dp)
             .padding(8.dp)
-            .clickable { onClick() }
+            .clickable { navigateToDetail(product.id) }
     ) {
         AsyncImage(
             model = product.images[1],

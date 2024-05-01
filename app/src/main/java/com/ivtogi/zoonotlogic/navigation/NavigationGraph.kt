@@ -46,7 +46,7 @@ fun NavigationGraph(
         composable(
             route = Home.route,
             arguments = listOf(
-                navArgument("habitId") {
+                navArgument("userId") {
                     type = NavType.StringType
                     nullable = true
                     defaultValue = null
@@ -56,12 +56,19 @@ fun NavigationGraph(
                 navigateToProfile = { navHostController.navigate(Profile.route) },
                 navigateToCart = { navHostController.navigate(Cart.route) },
                 navigateToAdmin = { navHostController.navigate(Admin.route) },
-                navigateToDetail = { navHostController.navigate(Detail.route) }
+                navigateToDetail = { navHostController.navigate(Detail.createRoute(it)) }
             )
         }
         composable(Cart.route) { CartScreen() }
         composable(Profile.route) { ProfileScreen() }
-        composable(Detail.route) {
+        composable(
+            route = Detail.route,
+            arguments = listOf(navArgument("productId") {
+                type = NavType.StringType
+                nullable = true
+                defaultValue = null
+            })
+        ) {
             DetailScreen(
                 onBackPressed = { navHostController.popBackStack() }
             )
