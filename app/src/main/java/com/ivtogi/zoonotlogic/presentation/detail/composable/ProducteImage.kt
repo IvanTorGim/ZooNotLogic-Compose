@@ -11,7 +11,6 @@ import com.ivtogi.zoonotlogic.R
 @Composable
 fun ProductImage(
     image: String,
-    onBackPressed: () -> Unit
 ) {
     Box {
         AsyncImage(

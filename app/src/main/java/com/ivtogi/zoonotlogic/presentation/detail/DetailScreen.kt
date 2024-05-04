@@ -1,5 +1,6 @@
 package com.ivtogi.zoonotlogic.presentation.detail
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -31,9 +32,13 @@ import com.ivtogi.zoonotlogic.presentation.detail.composable.SizeSelector
 @Composable
 fun DetailScreen(
     viewModel: DetailViewModel = hiltViewModel(),
-    onBackPressed: () -> Unit
+    navigateToHome: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
+
+    BackHandler {
+        navigateToHome(state.userId)
+    }
 
     if (state.isLoading) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -41,7 +46,12 @@ fun DetailScreen(
         }
     } else {
         Scaffold(
-            topBar = { DetailTopBar(name = state.product.name, onBackPressed = onBackPressed) },
+            topBar = {
+                DetailTopBar(
+                    userId = state.userId,
+                    name = state.product.name,
+                    onBackPressed = { navigateToHome(it) })
+            },
             bottomBar = {
                 DetailBottomBar(
                     enabled = state.sizeSelected != Size.NONE,
@@ -58,7 +68,6 @@ fun DetailScreen(
             ) {
                 ProductImage(
                     image = state.product.images[state.imageSelected],
-                    onBackPressed = onBackPressed
                 )
                 Column(
                     modifier = Modifier.padding(8.dp)

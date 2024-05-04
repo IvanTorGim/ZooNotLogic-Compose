@@ -3,7 +3,6 @@ package com.ivtogi.zoonotlogic.presentation.home
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ivtogi.zoonotlogic.data.mapper.toDomain
 import com.ivtogi.zoonotlogic.data.remote.FirestoreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,13 +37,12 @@ class HomeViewModel @Inject constructor(
         _state.update {
             it.copy(
                 productList = firestoreRepository.getAllProducts()
-                    .map { product -> product.toDomain() }
             )
         }
     }
 
     private suspend fun getUser(userId: String) {
-        val user = firestoreRepository.getUser(userId)?.toDomain()
+        val user = firestoreRepository.getUser(userId)
         if (user != null) {
             _state.update { it.copy(userId = userId, user = user) }
         }

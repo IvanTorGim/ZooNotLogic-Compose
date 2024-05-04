@@ -14,14 +14,15 @@ import com.ivtogi.zoonotlogic.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailTopBar(
+    userId: String,
     name: String,
-    onBackPressed: () -> Unit
+    onBackPressed: (String) -> Unit
 ) {
     TopAppBar(
         title = { Text(text = name) },
         navigationIcon = {
             IconButton(
-                onClick = { onBackPressed() }
+                onClick = { onBackPressed(userId) }
             ) {
                 Icon(
                     imageVector = Icons.Outlined.ArrowBack,

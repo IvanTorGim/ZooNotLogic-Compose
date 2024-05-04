@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivtogi.zoonotlogic.R
 import com.ivtogi.zoonotlogic.domain.model.Size
+import com.ivtogi.zoonotlogic.domain.model.Size.NONE
 import com.ivtogi.zoonotlogic.ui.theme.LightSecondary
 import com.ivtogi.zoonotlogic.ui.theme.Primary
 
@@ -44,13 +45,15 @@ fun SizeSelector(
         modifier = Modifier.fillMaxWidth()
     ) {
         Size.entries.forEach { size ->
-            Button(
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = if (sizeSelected == size) Primary else LightSecondary
-                ),
-                onClick = { onSizeClicked(size) }
-            ) {
-                Text(text = size.name.uppercase())
+            if (size != NONE) {
+                Button(
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if (sizeSelected == size) Primary else LightSecondary
+                    ),
+                    onClick = { onSizeClicked(size) }
+                ) {
+                    Text(text = size.name.uppercase())
+                }
             }
         }
     }

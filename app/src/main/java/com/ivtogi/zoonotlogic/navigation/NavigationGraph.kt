@@ -57,12 +57,7 @@ fun NavigationGraph(
                 navigateToCart = { navHostController.navigate(Cart.route) },
                 navigateToAdmin = { navHostController.navigate(Admin.route) },
                 navigateToDetail = { userId, productId ->
-                    navHostController.navigate(
-                        Detail.createRoute(
-                            userId,
-                            productId
-                        )
-                    )
+                    navHostController.navigate(Detail.createRoute(userId, productId))
                 }
             )
         }
@@ -84,7 +79,11 @@ fun NavigationGraph(
             )
         ) {
             DetailScreen(
-                onBackPressed = { navHostController.popBackStack() }
+                navigateToHome = {
+                    navHostController.navigate(Home.createRoute(it)) {
+                        popUpTo(Login.route)
+                    }
+                }
             )
         }
     }
