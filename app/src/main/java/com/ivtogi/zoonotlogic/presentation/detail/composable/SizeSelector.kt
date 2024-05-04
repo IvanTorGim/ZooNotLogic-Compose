@@ -21,8 +21,8 @@ import com.ivtogi.zoonotlogic.ui.theme.Primary
 
 @Composable
 fun SizeSelector(
-    sizeSelected: String,
-    onSizeClicked: (String) -> Unit
+    sizeSelected: Size,
+    onSizeClicked: (Size) -> Unit
 ) {
     Row {
         Text(
@@ -46,11 +46,11 @@ fun SizeSelector(
         Size.entries.forEach { size ->
             Button(
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (sizeSelected == size.name) Primary else LightSecondary
+                    containerColor = if (sizeSelected == size) Primary else LightSecondary
                 ),
-                onClick = { onSizeClicked(size.name) }
+                onClick = { onSizeClicked(size) }
             ) {
-                Text(text = size.name)
+                Text(text = size.name.uppercase())
             }
         }
     }

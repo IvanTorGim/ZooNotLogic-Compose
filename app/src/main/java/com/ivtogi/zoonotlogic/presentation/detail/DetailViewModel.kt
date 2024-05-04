@@ -5,8 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ivtogi.zoonotlogic.data.mapper.toDomain
 import com.ivtogi.zoonotlogic.data.remote.FirestoreRepository
+import com.ivtogi.zoonotlogic.domain.model.CartProduct
+import com.ivtogi.zoonotlogic.domain.model.Size
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,10 +24,11 @@ class DetailViewModel @Inject constructor(
     val state: StateFlow<DetailState> = _state.asStateFlow()
 
     init {
+        val userId = savedStateHandle.get<String>("userId")
         val productId = savedStateHandle.get<String>("productId")
-        if (!productId.isNullOrBlank()) {
+        if (!userId.isNullOrBlank() && !productId.isNullOrBlank()) {
             viewModelScope.launch {
-                _state.update { it.copy(isLoading = true) }
+                _state.update { it.copy(isLoading = true, userId = userId) }
                 getProduct(productId)
                 _state.update { it.copy(isLoading = false) }
             }
@@ -44,15 +46,34 @@ class DetailViewModel @Inject constructor(
         _state.update { it.copy(imageSelected = position) }
     }
 
-    fun onSizeClicked(size: String) {
+    fun onSizeClicked(size: Size) {
         _state.update { it.copy(sizeSelected = size) }
     }
 
     fun onButtonClicked() {
-        // TODO: AÑADIR PRODUCTO AL CARRO
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
-            delay(3000)
+            val user = firestoreRepository.getUser(_state.value.userId)?.toDomain()
+            if (user != null) {
+                val productInCartList: CartProduct? = user.cart.firstOrNull { p ->
+                    p.id == _state.value.product.id && p.size == _state.value.sizeSelected
+                }
+                val cartProduct = if (productInCartList != null) {
+                    val quantity = productInCartList.quantity
+                    productInCartList.copy(quantity = quantity + 1)
+                } else {
+                    CartProduct(
+                        id = _state.value.product.id,
+                        price = _state.value.product.price,
+                        size = _state.value.sizeSelected,
+                        quantity = 1,
+                        image = _state.value.product.images[0]
+                    )
+                }
+                val cartList = user.cart.toMutableList()
+                cartList.add(cartProduct)
+                firestoreRepository.insertCart(_state.value.userId, cartList)
+            }
             _state.update { it.copy(isLoading = false) }
         }
     }

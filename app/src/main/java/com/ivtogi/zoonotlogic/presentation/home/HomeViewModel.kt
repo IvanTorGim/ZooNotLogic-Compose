@@ -46,7 +46,7 @@ class HomeViewModel @Inject constructor(
     private suspend fun getUser(userId: String) {
         val user = firestoreRepository.getUser(userId)?.toDomain()
         if (user != null) {
-            _state.update { it.copy(user = user) }
+            _state.update { it.copy(userId = userId, user = user) }
         }
     }
 

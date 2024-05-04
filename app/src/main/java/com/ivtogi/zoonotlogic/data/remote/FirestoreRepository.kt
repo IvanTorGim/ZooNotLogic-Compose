@@ -4,10 +4,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.ivtogi.zoonotlogic.data.mapper.toDto
 import com.ivtogi.zoonotlogic.data.remote.dto.ProductDto
 import com.ivtogi.zoonotlogic.data.remote.dto.UserDto
+import com.ivtogi.zoonotlogic.domain.model.CartProduct
 import com.ivtogi.zoonotlogic.domain.model.User
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
-
 
 class FirestoreRepository @Inject constructor(
     private val firestore: FirebaseFirestore
@@ -27,11 +27,11 @@ class FirestoreRepository @Inject constructor(
     suspend fun getProduct(productId: String): ProductDto? {
         return firestore.collection(PRODUCTS_PATH)
             .document(productId).get().await()
-            .toObject(ProductDto::class.java)
+            .toObject(ProductDto::class.java)?.copy(id = productId)
     }
 
-    fun insertUser(id: String, user: User) {
-        firestore.collection(USER_PATH).document(id).set(user.toDto())
+    fun insertUser(userId: String, user: User) {
+        firestore.collection(USER_PATH).document(userId).set(user.toDto())
     }
 
     suspend fun getUser(userId: String): UserDto? {
@@ -40,5 +40,10 @@ class FirestoreRepository @Inject constructor(
             .toObject(UserDto::class.java)
     }
 
-
+    fun insertCart(userId: String, cartList: List<CartProduct>) {
+        val cartListDto = cartList.map { it.toDto() }
+        firestore.collection(USER_PATH).document(userId).update(
+            mapOf("cart" to cartListDto)
+        )
+    }
 }

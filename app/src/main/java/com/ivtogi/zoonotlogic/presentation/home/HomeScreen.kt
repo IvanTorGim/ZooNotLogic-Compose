@@ -1,7 +1,6 @@
 package com.ivtogi.zoonotlogic.presentation.home
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -36,7 +35,7 @@ fun HomeScreen(
     navigateToProfile: () -> Unit,
     navigateToCart: () -> Unit,
     navigateToAdmin: () -> Unit,
-    navigateToDetail: (String) -> Unit
+    navigateToDetail: (String, String) -> Unit
 ) {
     val state by viewmodel.state.collectAsState()
 
@@ -78,8 +77,13 @@ fun HomeScreen(
                             items(state.productList) { product ->
                                 NewCollectionProduct(
                                     product = product,
-                                    navigateToDetail = { navigateToDetail(it) }
-                                )
+                                    userId = state.userId,
+                                    navigateToDetail = { userId, productId ->
+                                        navigateToDetail(
+                                            userId,
+                                            productId
+                                        )
+                                    })
                             }
                         }
                     }
@@ -93,10 +97,15 @@ fun HomeScreen(
                         )
                     }
                     items(state.productList) { product ->
-                        ProductCard(product = product, navigateToDetail = { navigateToDetail(it) })
-                    }
-                    item(span = { GridItemSpan(maxLineSpan) }) {
-                        Spacer(modifier = Modifier.height(80.dp))
+                        ProductCard(
+                            product = product,
+                            userId = state.userId,
+                            navigateToDetail = { userId, productId ->
+                                navigateToDetail(
+                                    userId,
+                                    productId
+                                )
+                            })
                     }
                 }
                 if (viewmodel.getCartSize() > 0) {

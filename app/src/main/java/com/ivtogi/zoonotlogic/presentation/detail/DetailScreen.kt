@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.ivtogi.zoonotlogic.domain.model.Size
 import com.ivtogi.zoonotlogic.presentation.detail.composable.Description
 import com.ivtogi.zoonotlogic.presentation.detail.composable.DetailBottomBar
 import com.ivtogi.zoonotlogic.presentation.detail.composable.DetailTopBar
@@ -43,7 +44,7 @@ fun DetailScreen(
             topBar = { DetailTopBar(name = state.product.name, onBackPressed = onBackPressed) },
             bottomBar = {
                 DetailBottomBar(
-                    enabled = state.sizeSelected.isNotEmpty(),
+                    enabled = state.sizeSelected != Size.NONE,
                     onClick = { viewModel.onButtonClicked() }
                 )
             },
@@ -62,13 +63,13 @@ fun DetailScreen(
                 Column(
                     modifier = Modifier.padding(8.dp)
                 ) {
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(4.dp))
                     ImageSelector(
                         images = state.product.images,
                         imageSelected = state.imageSelected,
                         onImageClicked = { viewModel.onImageClicked(it) }
                     )
-                    Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
                     ProductPrice(price = String.format("%.2f€", state.product.price))
                     Spacer(modifier = Modifier.height(16.dp))
                     Divider(modifier = Modifier.fillMaxWidth())
