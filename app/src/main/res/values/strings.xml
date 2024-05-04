@@ -36,6 +36,7 @@
     <string name="product_image">Imagén del producto</string>
     <string name="select_size">Selecciona la talla</string>
     <string name="size_chart">Guía de tallas</string>
+    <string name="description">Descripción</string>
 
     <!-- CART SCREEN -->
     <string name="cart">Carro</string>

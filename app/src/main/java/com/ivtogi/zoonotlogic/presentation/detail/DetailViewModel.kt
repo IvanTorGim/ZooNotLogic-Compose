@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.ivtogi.zoonotlogic.data.mapper.toDomain
 import com.ivtogi.zoonotlogic.data.remote.FirestoreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -41,5 +42,18 @@ class DetailViewModel @Inject constructor(
 
     fun onImageClicked(position: Int) {
         _state.update { it.copy(imageSelected = position) }
+    }
+
+    fun onSizeClicked(size: String) {
+        _state.update { it.copy(sizeSelected = size) }
+    }
+
+    fun onButtonClicked() {
+        // TODO: AÑADIR PRODUCTO AL CARRO
+        viewModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
+            delay(3000)
+            _state.update { it.copy(isLoading = false) }
+        }
     }
 }

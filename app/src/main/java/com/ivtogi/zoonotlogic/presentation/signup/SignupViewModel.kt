@@ -65,7 +65,7 @@ class SignupViewModel @Inject constructor(
         if (validateEmail() && validatePassword() && validateName()) {
             viewModelScope.launch {
                 try {
-                    _state.update { it.copy(signupLoading = true) }
+                    _state.update { it.copy(isLoading = true) }
                     val result: FirebaseUser? = authService.signup(
                         email = _state.value.email,
                         password = _state.value.password,
@@ -85,7 +85,7 @@ class SignupViewModel @Inject constructor(
                 } catch (e: Exception) {
                     _state.update { it.copy(signupError = e.message) }
                 } finally {
-                    _state.update { it.copy(signupLoading = false) }
+                    _state.update { it.copy(isLoading = false) }
                 }
             }
         }

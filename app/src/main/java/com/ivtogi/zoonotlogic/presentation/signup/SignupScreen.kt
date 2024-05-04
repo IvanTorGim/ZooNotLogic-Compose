@@ -1,6 +1,7 @@
 package com.ivtogi.zoonotlogic.presentation.signup
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -35,67 +37,72 @@ fun SignupScreen(
 ) {
     val state by viewModel.state.collectAsState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(modifier = Modifier.height(64.dp))
-        Text(
-            text = stringResource(id = R.string.create_account),
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
+    if (state.isLoading) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
+    } else {
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.Start)
-        )
-        Spacer(modifier = Modifier.height(32.dp))
-        EmailField(
-            value = state.email,
-            error = state.emailError,
-            changeText = { viewModel.changeEmail(it) }
-        )
-        PasswordField(
-            value = state.password,
-            error = state.passwordError,
-            changeText = { viewModel.changePassword(it) }
-        )
-        DefaultField(
-            label = stringResource(id = R.string.name),
-            value = state.name,
-            error = state.nameError,
-            errorText = stringResource(id = R.string.userNotValid),
-            changeText = { viewModel.changeName(it) }
-        )
-        DefaultField(
-            label = stringResource(id = R.string.last_name),
-            value = state.lastName,
-            error = state.lastNameError,
-            errorText = stringResource(id = R.string.userNotValid),
-            changeText = { viewModel.changeLastName(it) }
-        )
-        PhoneField(
-            label = stringResource(id = R.string.phone),
-            value = state.phone,
-            error = state.phoneError,
-            errorText = "",
-            changeText = { viewModel.changePhone(it) }
-        )
-        Spacer(modifier = Modifier.height(32.dp))
-        DefaultButton(
-            label = stringResource(id = R.string.signup),
-            loading = state.signupLoading,
-            onClick = { viewModel.signup { navigateToLogin() } }
-        )
-        DefaultButton(
-            label = stringResource(id = R.string.cancel),
-            onClick = { navigateToLogin() }
-        )
-        if (state.signupError != null) {
-            Toast.makeText(LocalContext.current, state.signupError, Toast.LENGTH_LONG).show()
-            viewModel.cleanSignupError()
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.height(64.dp))
+            Text(
+                text = stringResource(id = R.string.create_account),
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.Start)
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            EmailField(
+                value = state.email,
+                error = state.emailError,
+                changeText = { viewModel.changeEmail(it) }
+            )
+            PasswordField(
+                value = state.password,
+                error = state.passwordError,
+                changeText = { viewModel.changePassword(it) }
+            )
+            DefaultField(
+                label = stringResource(id = R.string.name),
+                value = state.name,
+                error = state.nameError,
+                errorText = stringResource(id = R.string.userNotValid),
+                changeText = { viewModel.changeName(it) }
+            )
+            DefaultField(
+                label = stringResource(id = R.string.last_name),
+                value = state.lastName,
+                error = state.lastNameError,
+                errorText = stringResource(id = R.string.userNotValid),
+                changeText = { viewModel.changeLastName(it) }
+            )
+            PhoneField(
+                label = stringResource(id = R.string.phone),
+                value = state.phone,
+                error = state.phoneError,
+                errorText = "",
+                changeText = { viewModel.changePhone(it) }
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            DefaultButton(
+                label = stringResource(id = R.string.signup),
+                onClick = { viewModel.signup { navigateToLogin() } }
+            )
+            DefaultButton(
+                label = stringResource(id = R.string.cancel),
+                onClick = { navigateToLogin() }
+            )
+            if (state.signupError != null) {
+                Toast.makeText(LocalContext.current, state.signupError, Toast.LENGTH_LONG).show()
+                viewModel.cleanSignupError()
+            }
         }
     }
 }

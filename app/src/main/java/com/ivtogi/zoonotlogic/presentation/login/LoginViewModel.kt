@@ -25,7 +25,7 @@ class LoginViewModel @Inject constructor(
         if (validateEmail() && validatePassword()) {
             viewModelScope.launch {
                 try {
-                    _state.update { it.copy(loginLoading = true) }
+                    _state.update { it.copy(isLoading = true) }
                     val result = authRepository.login(_state.value.email, _state.value.password)
                     if (result != null) {
                         navigateToHome(result.uid)
@@ -33,7 +33,8 @@ class LoginViewModel @Inject constructor(
                 } catch (e: Exception) {
                     _state.update { it.copy(loginError = e.message) }
                 } finally {
-                    _state.update { it.copy(loginLoading = false) }
+                    delay(2000)
+                    _state.update { it.copy(isLoading = false) }
                 }
             }
         }
@@ -41,9 +42,9 @@ class LoginViewModel @Inject constructor(
 
     fun loginWithGoogle() {
         viewModelScope.launch {
-            _state.update { it.copy(loginWithGoogleLoading = true) }
+            _state.update { it.copy(isLoading = true) }
             delay(3000)
-            _state.update { it.copy(loginWithGoogleLoading = false) }
+            _state.update { it.copy(isLoading = false) }
         }
     }
 

@@ -11,6 +11,6 @@ data class SignupState(
     val lastNameError: Boolean = false,
     val phone: String = "",
     val phoneError: Boolean = false,
-    val signupLoading: Boolean = false,
+    val isLoading: Boolean = false,
     val signupError: String? = null
 )
