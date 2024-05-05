@@ -54,14 +54,31 @@ fun NavigationGraph(
         ) {
             HomeScreen(
                 navigateToProfile = { navHostController.navigate(Profile.route) },
-                navigateToCart = { navHostController.navigate(Cart.route) },
+                navigateToCart = { navHostController.navigate(Cart.createRoute(it)) },
                 navigateToAdmin = { navHostController.navigate(Admin.route) },
                 navigateToDetail = { userId, productId ->
                     navHostController.navigate(Detail.createRoute(userId, productId))
                 }
             )
         }
-        composable(Cart.route) { CartScreen() }
+        composable(
+            route = Cart.route,
+            arguments = listOf(
+                navArgument("userId") {
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = null
+                })
+        ) {
+            CartScreen(
+                userId = "",
+                navigateToHome = {
+                    navHostController.navigate(Home.createRoute(it)) {
+                        popUpTo(Login.route)
+                    }
+                }
+            )
+        }
         composable(Profile.route) { ProfileScreen() }
         composable(
             route = Detail.route,

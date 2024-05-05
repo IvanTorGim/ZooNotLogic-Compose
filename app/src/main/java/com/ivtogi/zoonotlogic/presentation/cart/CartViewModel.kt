@@ -1,4 +1,4 @@
-package com.ivtogi.zoonotlogic.presentation.home
+package com.ivtogi.zoonotlogic.presentation.cart
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -13,31 +13,22 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class CartViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val firestoreRepository: FirestoreRepository
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(HomeState())
-    val state: StateFlow<HomeState> = _state.asStateFlow()
+    private val _state = MutableStateFlow(CartState())
+    val state: StateFlow<CartState> = _state.asStateFlow()
 
     init {
         val userId = savedStateHandle.get<String>("userId")
         if (!userId.isNullOrBlank()) {
             viewModelScope.launch {
-                _state.update { it.copy(isLoading = true) }
+                _state.update { it.copy(isLoading = true, userId = userId) }
                 getUser(userId)
-                getAllProducts()
                 _state.update { it.copy(isLoading = false) }
             }
-        }
-    }
-
-    private suspend fun getAllProducts() {
-        _state.update {
-            it.copy(
-                productList = firestoreRepository.getAllProducts()
-            )
         }
     }
 
@@ -46,15 +37,5 @@ class HomeViewModel @Inject constructor(
         if (user != null) {
             _state.update { it.copy(userId = userId, user = user) }
         }
-    }
-
-    fun getTotalCartProducts(): Int {
-        return _state.value.user.cart.sumOf { cartProduct -> cartProduct.quantity }
-    }
-
-    fun getTotalCartProductsAmount(): String {
-        val totalPrice: Double =
-            _state.value.user.cart.sumOf { cartProduct -> cartProduct.price * cartProduct.quantity }
-        return String.format("%.2f", totalPrice)
     }
 }

@@ -18,12 +18,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.ivtogi.zoonotlogic.R
 import com.ivtogi.zoonotlogic.domain.model.Size
+import com.ivtogi.zoonotlogic.presentation.common.DefaultBottomBar
+import com.ivtogi.zoonotlogic.presentation.common.DefaultTopBar
 import com.ivtogi.zoonotlogic.presentation.detail.composable.Description
-import com.ivtogi.zoonotlogic.presentation.detail.composable.DetailBottomBar
-import com.ivtogi.zoonotlogic.presentation.detail.composable.DetailTopBar
 import com.ivtogi.zoonotlogic.presentation.detail.composable.ImageSelector
 import com.ivtogi.zoonotlogic.presentation.detail.composable.ProductImage
 import com.ivtogi.zoonotlogic.presentation.detail.composable.ProductPrice
@@ -47,13 +49,14 @@ fun DetailScreen(
     } else {
         Scaffold(
             topBar = {
-                DetailTopBar(
+                DefaultTopBar(
                     userId = state.userId,
                     name = state.product.name,
                     onBackPressed = { navigateToHome(it) })
             },
             bottomBar = {
-                DetailBottomBar(
+                DefaultBottomBar(
+                    label = stringResource(id = R.string.add_cart),
                     enabled = state.sizeSelected != Size.NONE,
                     onClick = { viewModel.onButtonClicked() }
                 )

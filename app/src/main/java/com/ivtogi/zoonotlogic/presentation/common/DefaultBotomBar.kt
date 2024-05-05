@@ -1,23 +1,21 @@
-package com.ivtogi.zoonotlogic.presentation.detail.composable
+package com.ivtogi.zoonotlogic.presentation.common
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import com.ivtogi.zoonotlogic.R
-import com.ivtogi.zoonotlogic.presentation.common.DefaultButton
 
 @Composable
-fun DetailBottomBar(
-    enabled: Boolean,
+fun DefaultBottomBar(
+    label: String,
+    enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
     BottomAppBar(containerColor = Color.Transparent) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             DefaultButton(
-                label = stringResource(id = R.string.add_cart),
+                label = label,
                 enabled = enabled,
                 onClick = { onClick() },
             )

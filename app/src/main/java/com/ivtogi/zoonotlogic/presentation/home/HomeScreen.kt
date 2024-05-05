@@ -33,7 +33,7 @@ import com.ivtogi.zoonotlogic.presentation.home.composable.TopHomeBar
 fun HomeScreen(
     viewmodel: HomeViewModel = hiltViewModel(),
     navigateToProfile: () -> Unit,
-    navigateToCart: () -> Unit,
+    navigateToCart: (String) -> Unit,
     navigateToAdmin: () -> Unit,
     navigateToDetail: (String, String) -> Unit
 ) {
@@ -108,14 +108,15 @@ fun HomeScreen(
                             })
                     }
                 }
-                if (viewmodel.getCartSize() > 0) {
+                if (viewmodel.getTotalCartProducts() > 0) {
                     Box(
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
                     ) {
                         CartCard(
+                            userId = state.userId,
                             viewModel = viewmodel,
-                            navigateToCart = navigateToCart
+                            navigateToCart = { navigateToCart(it) }
                         )
                     }
                 }

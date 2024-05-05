@@ -25,15 +25,16 @@ import com.ivtogi.zoonotlogic.ui.theme.Primary
 
 @Composable
 fun CartCard(
+    userId: String,
     viewModel: HomeViewModel,
-    navigateToCart: () -> Unit
+    navigateToCart: (String) -> Unit
 ) {
     Card(
         colors = CardDefaults.cardColors(containerColor = Primary),
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()
-            .clickable { navigateToCart() }
+            .clickable { navigateToCart(userId) }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -46,13 +47,16 @@ fun CartCard(
             Spacer(modifier = Modifier.width(24.dp))
             Column {
                 Text(
-                    text = stringResource(id = R.string.product_quantity, viewModel.getCartSize()),
+                    text = stringResource(
+                        id = R.string.product_quantity,
+                        viewModel.getTotalCartProducts()
+                    ),
                     fontSize = 18.sp
                 )
                 Text(
                     text = stringResource(
                         id = R.string.total_product_price,
-                        viewModel.getCartTotalAmount()
+                        viewModel.getTotalCartProductsAmount()
                     ), fontSize = 12.sp
                 )
             }
