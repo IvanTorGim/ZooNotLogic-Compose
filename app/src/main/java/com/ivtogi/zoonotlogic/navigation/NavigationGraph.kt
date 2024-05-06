@@ -71,7 +71,6 @@ fun NavigationGraph(
                 })
         ) {
             CartScreen(
-                userId = "",
                 navigateToHome = {
                     navHostController.navigate(Home.createRoute(it)) {
                         popUpTo(Login.route)
