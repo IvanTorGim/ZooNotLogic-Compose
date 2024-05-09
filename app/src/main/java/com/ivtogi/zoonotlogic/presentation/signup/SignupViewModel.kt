@@ -10,6 +10,7 @@ import com.ivtogi.zoonotlogic.domain.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,7 +21,7 @@ class SignupViewModel @Inject constructor(
     private val firestoreService: FirestoreRepository
 ) : ViewModel() {
     private val _state = MutableStateFlow(SignupState())
-    val state: StateFlow<SignupState> = _state
+    val state: StateFlow<SignupState> = _state.asStateFlow()
 
     fun changeEmail(email: String) {
         _state.update { it.copy(email = email) }
@@ -83,7 +84,7 @@ class SignupViewModel @Inject constructor(
                         navigateToLogin()
                     }
                 } catch (e: Exception) {
-                    _state.update { it.copy(signupError = e.message) }
+                    _state.update { it.copy(signupError = e.localizedMessage) }
                 } finally {
                     _state.update { it.copy(isLoading = false) }
                 }

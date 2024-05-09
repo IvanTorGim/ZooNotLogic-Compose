@@ -22,11 +22,10 @@ class HomeViewModel @Inject constructor(
     val state: StateFlow<HomeState> = _state.asStateFlow()
 
     init {
-        val userId = savedStateHandle.get<String>("userId")
-        if (!userId.isNullOrBlank()) {
+        savedStateHandle.get<String>("userId")?.let { id ->
             viewModelScope.launch {
                 _state.update { it.copy(isLoading = true) }
-                getUser(userId)
+                getUser(id)
                 getAllProducts()
                 _state.update { it.copy(isLoading = false) }
             }
@@ -42,15 +41,15 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun getUser(userId: String) {
-        val user = firestoreRepository.getUser(userId)
-        if (user != null) {
+        firestoreRepository.getUser(userId)?.let { user ->
             _state.update { it.copy(userId = userId, user = user) }
+
         }
     }
 
-    fun getTotalCartProducts(): Int {
-        return _state.value.user.cart.sumOf { cartProduct -> cartProduct.quantity }
-    }
+    fun getTotalCartProducts(): Int =
+        _state.value.user.cart.sumOf { cartProduct -> cartProduct.quantity }
+
 
     fun getTotalCartProductsAmount(): String {
         val totalPrice: Double =

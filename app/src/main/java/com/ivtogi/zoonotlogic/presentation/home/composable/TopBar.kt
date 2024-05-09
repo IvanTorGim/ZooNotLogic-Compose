@@ -17,8 +17,9 @@ import com.ivtogi.zoonotlogic.R
 @Composable
 fun TopHomeBar(
     isAdmin: Boolean = false,
+    userId: String,
     navigateToProfile: () -> Unit,
-    navigateToAdmin: () -> Unit
+    navigateToAdmin: (String) -> Unit
 ) {
     CenterAlignedTopAppBar(
         title = {
@@ -30,7 +31,7 @@ fun TopHomeBar(
         actions = {
             if (isAdmin) {
                 IconButton(
-                    onClick = { navigateToAdmin() },
+                    onClick = { navigateToAdmin(userId) },
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Build,

@@ -26,7 +26,7 @@ fun CartScreen(
     navigateToHome: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
-    // TODO: Añadir snackbar para avisar que el maximo de productos que se pueden agregar son 3
+    // TODO: Añadir snackbar para avisar que el máximo de productos que se pueden agregar son 3
     BackHandler {
         navigateToHome(state.userId)
     }

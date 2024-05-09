@@ -34,7 +34,7 @@ fun HomeScreen(
     viewmodel: HomeViewModel = hiltViewModel(),
     navigateToProfile: () -> Unit,
     navigateToCart: (String) -> Unit,
-    navigateToAdmin: () -> Unit,
+    navigateToAdmin: (String) -> Unit,
     navigateToDetail: (String, String) -> Unit
 ) {
     val state by viewmodel.state.collectAsState()
@@ -51,8 +51,9 @@ fun HomeScreen(
             topBar = {
                 TopHomeBar(
                     isAdmin = state.user.isAdmin,
+                    userId = state.userId,
                     navigateToProfile = navigateToProfile,
-                    navigateToAdmin = navigateToAdmin
+                    navigateToAdmin = { navigateToAdmin(it) }
                 )
             },
             modifier = Modifier.fillMaxSize()
