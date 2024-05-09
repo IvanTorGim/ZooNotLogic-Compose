@@ -6,5 +6,6 @@ data class ProductDto(
     val description: String = "",
     val category: String = "",
     val price: Double = 0.0,
+    val stock: Map<String, Int> = emptyMap(),
     val images: List<String> = emptyList()
 )

@@ -40,12 +40,15 @@
 
     <!-- CART SCREEN -->
     <string name="cart">Carro</string>
+    <string name="pay">Precio total: %s</string>
 
     <!-- PROFILE SCREEN -->
     <string name="profile">Perfil</string>
 
     <!-- ADMIN SCREEN -->
     <string name="admin">Admin</string>
-    <string name="pay">Precio total: %s</string>
+    <string name="category">Categoría: %s</string>
+    <string name="price">Precio: %s</string>
+    <string name="add_product">Añadir producto</string>
 
 </resources>

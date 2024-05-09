@@ -10,6 +10,7 @@ fun ProductDto.toDomain(): Product {
         description = this.description,
         category = this.category,
         price = this.price,
+        stock = this.stock,
         images = this.images
     )
 }
