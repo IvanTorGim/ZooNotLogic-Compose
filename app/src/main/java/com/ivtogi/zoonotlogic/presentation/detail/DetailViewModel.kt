@@ -23,9 +23,9 @@ class DetailViewModel @Inject constructor(
     val state: StateFlow<DetailState> = _state.asStateFlow()
 
     init {
-        val userId = savedStateHandle.get<String>("userId")
-        val productId = savedStateHandle.get<String>("productId")
-        if (!userId.isNullOrBlank() && !productId.isNullOrBlank()) {
+        val userId = savedStateHandle.get<String>("userId").orEmpty()
+        val productId = savedStateHandle.get<String>("productId").orEmpty()
+        if (userId.isNotEmpty() && productId.isNotEmpty()) {
             viewModelScope.launch {
                 _state.update { it.copy(isLoading = true, userId = userId) }
                 getProduct(productId)
@@ -35,8 +35,7 @@ class DetailViewModel @Inject constructor(
     }
 
     private suspend fun getProduct(productId: String) {
-        val product = firestoreRepository.getProduct(productId)
-        if (product != null) {
+        firestoreRepository.getProduct(productId)?.let { product ->
             _state.update { it.copy(product = product) }
         }
     }
@@ -51,18 +50,20 @@ class DetailViewModel @Inject constructor(
 
     fun onButtonClicked() {
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
-            val user = firestoreRepository.getUser(_state.value.userId)
-            if (user != null) {
+            firestoreRepository.getUser(_state.value.userId)?.let { user ->
+
                 val cartList = user.cart.toMutableList()
-                val productInCartList: CartProduct? = cartList.firstOrNull { p ->
-                    p.id == _state.value.product.id && p.size == _state.value.sizeSelected
+                val productInCartList = cartList.find { cartProduct ->
+                    cartProduct.id == state.value.product.id && cartProduct.size == _state.value.sizeSelected
                 }
-                if (productInCartList != null) {
-                    val index = cartList.indexOf(productInCartList)
-                    cartList[index] =
-                        productInCartList.copy(quantity = productInCartList.quantity + 1)
-                } else {
+
+                productInCartList?.let { cartProduct ->
+                    if (cartProduct.quantity < 3) {
+                        val index = cartList.indexOf(cartProduct)
+                        cartList[index] =
+                            cartProduct.copy(quantity = cartProduct.quantity + 1)
+                    }
+                } ?: run {
                     val cartProduct = CartProduct(
                         id = _state.value.product.id,
                         name = _state.value.product.name,
@@ -73,9 +74,9 @@ class DetailViewModel @Inject constructor(
                     )
                     cartList.add(cartProduct)
                 }
-                firestoreRepository.insertCart(_state.value.userId, cartList)
+
+                firestoreRepository.updateCart(_state.value.userId, cartList)
             }
-            _state.update { it.copy(isLoading = false) }
         }
     }
 }

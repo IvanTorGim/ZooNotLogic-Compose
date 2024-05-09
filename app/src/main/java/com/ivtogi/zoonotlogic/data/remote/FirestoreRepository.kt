@@ -41,7 +41,7 @@ class FirestoreRepository @Inject constructor(
             .document(userId).get().await().toObject(UserDto::class.java)?.toDomain()
     }
 
-    fun insertCart(userId: String, cartList: List<CartProduct>) {
+    fun updateCart(userId: String, cartList: List<CartProduct>) {
         val cartListDto = cartList.map { it.toDto() }
         firestore.collection(USER_PATH).document(userId).update(
             mapOf("cart" to cartListDto)

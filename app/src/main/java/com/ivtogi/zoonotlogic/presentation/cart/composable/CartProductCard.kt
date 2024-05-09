@@ -14,7 +14,6 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -27,14 +26,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.ivtogi.zoonotlogic.domain.model.CartProduct
+import com.ivtogi.zoonotlogic.presentation.cart.CartViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CartProductCard(
-    cartProduct: CartProduct
+    cartProduct: CartProduct,
+    viewModel: CartViewModel
 ) {
     Card(
-        onClick = { /*TODO*/ },
         elevation = CardDefaults.elevatedCardElevation(),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         modifier = Modifier
@@ -66,14 +65,21 @@ fun CartProductCard(
                     )
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(
+                        onClick = { viewModel.removeCartProduct(cartProduct) }
+                    ) {
                         Icon(
                             imageVector = if (cartProduct.quantity == 1) Icons.Filled.Delete else Icons.Filled.Remove,
                             contentDescription = "Remove"
                         )
                     }
+                    Spacer(modifier = Modifier.padding(2.dp))
                     Text(text = cartProduct.quantity.toString())
-                    IconButton(onClick = { /*TODO*/ }) {
+                    Spacer(modifier = Modifier.padding(2.dp))
+                    IconButton(
+                        onClick = { viewModel.addCartProduct(cartProduct) },
+                        enabled = cartProduct.quantity < 3
+                    ) {
                         Icon(imageVector = Icons.Filled.Add, contentDescription = "Add")
                     }
                 }

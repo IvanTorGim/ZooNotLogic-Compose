@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ivtogi.zoonotlogic.data.remote.FirestoreRepository
+import com.ivtogi.zoonotlogic.domain.model.CartProduct
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,19 +24,63 @@ class CartViewModel @Inject constructor(
 
     init {
         val userId = savedStateHandle.get<String>("userId")
-        if (!userId.isNullOrBlank()) {
+        userId?.let { user ->
             viewModelScope.launch {
-                _state.update { it.copy(isLoading = true, userId = userId) }
-                getUser(userId)
+                _state.update { it.copy(isLoading = true, userId = user) }
+                getUser(user)
                 _state.update { it.copy(isLoading = false) }
             }
         }
     }
 
     private suspend fun getUser(userId: String) {
-        val user = firestoreRepository.getUser(userId)
-        if (user != null) {
+        firestoreRepository.getUser(userId)?.let { user ->
             _state.update { it.copy(userId = userId, user = user) }
+        }
+    }
+
+    fun removeCartProduct(cartProduct: CartProduct) {
+        viewModelScope.launch {
+            firestoreRepository.getUser(_state.value.userId)?.let { user ->
+
+                val cartList = user.cart.toMutableList()
+                val productInCartList = cartList.find { p ->
+                    p.id == cartProduct.id && p.size == cartProduct.size
+                }
+
+                productInCartList?.let { cartProduct ->
+                    val index = cartList.indexOf(cartProduct)
+                    if (cartProduct.quantity > 1) {
+                        cartList[index] =
+                            cartProduct.copy(quantity = cartProduct.quantity - 1)
+                    } else {
+                        cartList.removeAt(index)
+                    }
+                }
+
+                firestoreRepository.updateCart(_state.value.userId, cartList)
+                _state.update { it.copy(user = user.copy(cart = cartList)) }
+            }
+        }
+    }
+
+    fun addCartProduct(cartProduct: CartProduct) {
+        viewModelScope.launch {
+            firestoreRepository.getUser(_state.value.userId)?.let { user ->
+                val cartList = user.cart.toMutableList()
+                val productInCartList = cartList.find { product ->
+                    product.id == cartProduct.id && product.size == cartProduct.size
+                }
+
+                productInCartList?.let { product ->
+                    val index = cartList.indexOf(product)
+                    cartList[index] =
+                        product.copy(quantity = product.quantity + 1)
+                }
+
+                firestoreRepository.updateCart(_state.value.userId, cartList)
+                _state.update { it.copy(user = user.copy(cart = cartList)) }
+            }
         }
     }
 }

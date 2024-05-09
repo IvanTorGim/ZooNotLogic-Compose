@@ -30,7 +30,7 @@ fun CartScreen(
     BackHandler {
         navigateToHome(state.userId)
     }
-    // TODO: CREATE PRODUCT CARD FOR LAZY COLUMN
+
     if (state.isLoading) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
@@ -46,7 +46,7 @@ fun CartScreen(
             bottomBar = {
                 DefaultBottomBar(
                     label = "Realizar pago",
-                    onClick = { }
+                    onClick = { /* TODO: pago */ }
                 )
             },
             modifier = Modifier
@@ -54,7 +54,7 @@ fun CartScreen(
         ) { paddingValues ->
             LazyColumn(modifier = Modifier.padding(paddingValues)) {
                 items(state.user.cart) {
-                    CartProductCard(cartProduct = it)
+                    CartProductCard(cartProduct = it, viewModel = viewModel)
                 }
             }
         }
