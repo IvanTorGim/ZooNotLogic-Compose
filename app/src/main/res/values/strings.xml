@@ -46,5 +46,6 @@
 
     <!-- ADMIN SCREEN -->
     <string name="admin">Admin</string>
+    <string name="pay">Precio total: %s</string>
 
 </resources>

@@ -26,7 +26,7 @@ fun CartScreen(
     navigateToHome: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
-
+    // TODO: Añadir snackbar para avisar que el maximo de productos que se pueden agregar son 3
     BackHandler {
         navigateToHome(state.userId)
     }
@@ -44,8 +44,9 @@ fun CartScreen(
                     onBackPressed = { navigateToHome(it) })
             },
             bottomBar = {
+                val totalPrice = state.user.cart.sumOf { it.quantity * it.price }
                 DefaultBottomBar(
-                    label = "Realizar pago",
+                    label = stringResource(R.string.pay, String.format("%.2f€", totalPrice)),
                     onClick = { /* TODO: pago */ }
                 )
             },
