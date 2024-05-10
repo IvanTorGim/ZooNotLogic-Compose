@@ -1,4 +1,4 @@
-package com.ivtogi.zoonotlogic.presentation.detail.composable
+package com.ivtogi.zoonotlogic.presentation.home.detail.composable
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

@@ -7,6 +7,11 @@ sealed class Routes(val route: String) {
         fun createRoute(userId: String) = "admin/?userId=$userId"
     }
 
+    data object Product : Routes("product/?userId={userId}&productId={productId}") {
+        fun createRoute(userId: String, productId: String) =
+            "product/?userId=$userId&productId=$productId"
+    }
+
     data object Home : Routes("home/?userId={userId}") {
         fun createRoute(userId: String) = "home/?userId=$userId"
     }

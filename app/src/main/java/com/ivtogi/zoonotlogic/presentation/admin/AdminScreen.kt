@@ -28,7 +28,8 @@ import com.ivtogi.zoonotlogic.ui.theme.Primary
 @Composable
 fun AdminScreen(
     viewModel: AdminViewModel = hiltViewModel(),
-    navigateToHome: (String) -> Unit
+    navigateToHome: (String) -> Unit,
+    navigateToProduct: (String, String) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -53,8 +54,18 @@ fun AdminScreen(
         ) { paddingValues ->
             Box(modifier = Modifier.padding(paddingValues)) {
                 LazyColumn(Modifier.fillMaxSize()) {
-                    items(state.productList) {
-                        AdminProductCard(product = it)
+                    val productsSorted =
+                        state.productList.sortedBy { product -> product.stock.minOf { stock -> stock.value } }
+                    items(productsSorted) { product ->
+                        AdminProductCard(
+                            userId = state.userId,
+                            product = product,
+                            navigateToProduct = { userId, productId ->
+                                navigateToProduct(
+                                    userId,
+                                    productId
+                                )
+                            })
                     }
                 }
                 FloatingActionButton(

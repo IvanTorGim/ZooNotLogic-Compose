@@ -1,4 +1,4 @@
-package com.ivtogi.zoonotlogic.presentation.detail
+package com.ivtogi.zoonotlogic.presentation.home.detail
 
 import com.ivtogi.zoonotlogic.domain.model.Product
 import com.ivtogi.zoonotlogic.domain.model.Size

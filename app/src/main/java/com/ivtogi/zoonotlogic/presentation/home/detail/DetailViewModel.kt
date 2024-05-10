@@ -1,4 +1,4 @@
-package com.ivtogi.zoonotlogic.presentation.detail
+package com.ivtogi.zoonotlogic.presentation.home.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
