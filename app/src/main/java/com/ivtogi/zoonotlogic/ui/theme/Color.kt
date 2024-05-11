@@ -12,4 +12,4 @@ val StockFull = Color(0xFF8CB369)
 val StockWarning = Color(0xFFf4A259)
 val StockEmpty = Color(0xFFBC4B51)
 
-val formStroke = Color(0xFF336699)
+val FormStroke = Color(0xFF03A9F4)

@@ -40,8 +40,18 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun onImageClicked(position: Int) {
-        _state.update { it.copy(imageSelected = position) }
+    fun nextImage() {
+        val imagesSize = _state.value.product.images.size
+        val imageSelected = if (_state.value.imageSelected >= imagesSize - 1) 0
+        else _state.value.imageSelected + 1
+        _state.update { it.copy(imageSelected = imageSelected) }
+    }
+
+    fun previousImage() {
+        val imagesSize = _state.value.product.images.size
+        val imageSelected = if (_state.value.imageSelected <= 0) imagesSize - 1
+        else _state.value.imageSelected - 1
+        _state.update { it.copy(imageSelected = imageSelected) }
     }
 
     fun onSizeClicked(size: Size) {

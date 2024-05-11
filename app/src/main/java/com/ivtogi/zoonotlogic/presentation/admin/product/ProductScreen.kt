@@ -16,7 +16,7 @@ fun ProductScreen(
     navigateToAdmin: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
-
+    //TODO: finish screen
     Scaffold(
         topBar = {
             ProductTopBar(

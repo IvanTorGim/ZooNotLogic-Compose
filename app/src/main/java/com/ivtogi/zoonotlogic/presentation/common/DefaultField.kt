@@ -7,10 +7,9 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.unit.dp
-import com.ivtogi.zoonotlogic.R
+import com.ivtogi.zoonotlogic.ui.theme.FormStroke
 
 @Composable
 fun DefaultField(
@@ -30,13 +29,12 @@ fun DefaultField(
         maxLines = 1,
         singleLine = true,
         colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = colorResource(id = R.color.accent),
-            focusedLabelColor = colorResource(id = R.color.accent),
-            focusedLeadingIconColor = colorResource(id = R.color.accent),
-            focusedPlaceholderColor = colorResource(id = R.color.accent),
-            focusedTrailingIconColor = colorResource(id = R.color.accent),
-            focusedTextColor = Color.Black,
-            cursorColor = Color.Black
+            focusedBorderColor = FormStroke,
+            focusedLabelColor = FormStroke,
+            focusedLeadingIconColor = FormStroke,
+            focusedPlaceholderColor = FormStroke,
+            focusedTextColor = Black,
+            cursorColor = Black
         ),
         supportingText = { Text(text = if (error) errorText else "") },
         isError = error

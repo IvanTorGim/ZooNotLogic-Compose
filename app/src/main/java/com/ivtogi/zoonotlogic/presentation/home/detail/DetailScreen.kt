@@ -26,7 +26,6 @@ import com.ivtogi.zoonotlogic.domain.model.Size
 import com.ivtogi.zoonotlogic.presentation.common.DefaultBottomBar
 import com.ivtogi.zoonotlogic.presentation.common.DefaultTopBar
 import com.ivtogi.zoonotlogic.presentation.home.detail.composable.Description
-import com.ivtogi.zoonotlogic.presentation.home.detail.composable.ImageSelector
 import com.ivtogi.zoonotlogic.presentation.home.detail.composable.ProductImage
 import com.ivtogi.zoonotlogic.presentation.home.detail.composable.ProductPrice
 import com.ivtogi.zoonotlogic.presentation.home.detail.composable.SizeSelector
@@ -71,16 +70,11 @@ fun DetailScreen(
             ) {
                 ProductImage(
                     image = state.product.images[state.imageSelected],
+                    viewModel = viewModel
                 )
                 Column(
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier.padding(horizontal = 8.dp)
                 ) {
-                    Spacer(modifier = Modifier.height(4.dp))
-                    ImageSelector(
-                        images = state.product.images,
-                        imageSelected = state.imageSelected,
-                        onImageClicked = { viewModel.onImageClicked(it) }
-                    )
                     Spacer(modifier = Modifier.height(16.dp))
                     ProductPrice(price = String.format("%.2f€", state.product.price))
                     Spacer(modifier = Modifier.height(16.dp))

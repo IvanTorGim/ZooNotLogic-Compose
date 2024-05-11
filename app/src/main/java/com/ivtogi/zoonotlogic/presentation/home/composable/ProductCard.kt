@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -22,7 +23,10 @@ import com.ivtogi.zoonotlogic.domain.model.Product
 fun ProductCard(product: Product, userId: String, navigateToDetail: (String, String) -> Unit) {
     Card(
         elevation = CardDefaults.cardElevation(1.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White,
+            contentColor = Black
+        ),
         modifier = Modifier
             .fillMaxSize()
             .padding(8.dp)
