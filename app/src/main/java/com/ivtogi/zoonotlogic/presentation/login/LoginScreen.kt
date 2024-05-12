@@ -30,10 +30,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ivtogi.zoonotlogic.R
-import com.ivtogi.zoonotlogic.presentation.common.ButtonWithIcon
-import com.ivtogi.zoonotlogic.presentation.common.DefaultButton
-import com.ivtogi.zoonotlogic.presentation.common.EmailField
-import com.ivtogi.zoonotlogic.presentation.common.PasswordField
+import com.ivtogi.zoonotlogic.presentation.composable.ButtonWithIcon
+import com.ivtogi.zoonotlogic.presentation.composable.DefaultButton
+import com.ivtogi.zoonotlogic.presentation.composable.EmailField
+import com.ivtogi.zoonotlogic.presentation.composable.PasswordField
 
 @Composable
 fun LoginScreen(

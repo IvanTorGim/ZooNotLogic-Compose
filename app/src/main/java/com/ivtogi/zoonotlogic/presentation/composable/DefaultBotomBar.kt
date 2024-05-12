@@ -1,4 +1,4 @@
-package com.ivtogi.zoonotlogic.presentation.common
+package com.ivtogi.zoonotlogic.presentation.composable
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.BottomAppBar

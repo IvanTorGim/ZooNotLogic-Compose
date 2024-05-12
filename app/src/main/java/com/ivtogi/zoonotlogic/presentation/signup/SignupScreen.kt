@@ -24,11 +24,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ivtogi.zoonotlogic.R
-import com.ivtogi.zoonotlogic.presentation.common.DefaultButton
-import com.ivtogi.zoonotlogic.presentation.common.DefaultField
-import com.ivtogi.zoonotlogic.presentation.common.EmailField
-import com.ivtogi.zoonotlogic.presentation.common.PasswordField
-import com.ivtogi.zoonotlogic.presentation.common.PhoneField
+import com.ivtogi.zoonotlogic.presentation.composable.DefaultButton
+import com.ivtogi.zoonotlogic.presentation.composable.DefaultField
+import com.ivtogi.zoonotlogic.presentation.composable.EmailField
+import com.ivtogi.zoonotlogic.presentation.composable.PasswordField
+import com.ivtogi.zoonotlogic.presentation.composable.PhoneField
 
 @Composable
 fun SignupScreen(

@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ivtogi.zoonotlogic.R
 import com.ivtogi.zoonotlogic.presentation.admin.composable.AdminProductCard
-import com.ivtogi.zoonotlogic.presentation.common.DefaultTopBar
+import com.ivtogi.zoonotlogic.presentation.composable.DefaultTopBar
 import com.ivtogi.zoonotlogic.ui.theme.Primary
 
 @Composable

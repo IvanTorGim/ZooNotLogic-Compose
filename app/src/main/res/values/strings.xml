@@ -51,4 +51,13 @@
     <string name="price">Precio: %s</string>
     <string name="add_product">Añadir producto</string>
 
+    <!-- PRODUCT SCREEN -->
+    <string name="description_label">Descripción</string>
+    <string name="price_label">Precio</string>
+    <string name="category_label">Categoría</string>
+    <string name="stock_label">Stock</string>
+    <string name="info_label">Información</string>
+    <string name="images_label">Imágenes</string>"
+
+
 </resources>

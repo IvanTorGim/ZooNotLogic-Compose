@@ -17,8 +17,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ivtogi.zoonotlogic.R
 import com.ivtogi.zoonotlogic.presentation.cart.composable.CartProductCard
-import com.ivtogi.zoonotlogic.presentation.common.DefaultBottomBar
-import com.ivtogi.zoonotlogic.presentation.common.DefaultTopBar
+import com.ivtogi.zoonotlogic.presentation.composable.DefaultBottomBar
+import com.ivtogi.zoonotlogic.presentation.composable.DefaultTopBar
 
 @Composable
 fun CartScreen(

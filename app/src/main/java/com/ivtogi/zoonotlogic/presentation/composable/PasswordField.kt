@@ -1,4 +1,4 @@
-package com.ivtogi.zoonotlogic.presentation.common
+package com.ivtogi.zoonotlogic.presentation.composable
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

@@ -39,4 +39,30 @@ class ProductViewModel @Inject constructor(
         }
     }
 
+    fun changeDescription(description: String) {
+        _state.update { it.copy(product = _state.value.product.copy(description = description)) }
+    }
+
+    fun changeCategory(category: String) {
+        _state.update { it.copy(product = _state.value.product.copy(category = category)) }
+    }
+
+    fun changePrice(price: String) {
+        _state.update { it.copy(product = _state.value.product.copy(price = price.toDouble())) }
+    }
+
+    fun changeStock(size: String, quantity: String) {
+        val number = if (quantity.isBlank()) 0 else quantity.toInt()
+        val stock = _state.value.product.stock.toMutableMap()
+        if (number < 0) {
+            stock[size] = 0
+            _state.update { it.copy(product = _state.value.product.copy(stock = stock)) }
+        } else if (number > 100) {
+            stock[size] = 100
+            _state.update { it.copy(product = _state.value.product.copy(stock = stock)) }
+        } else {
+            stock[size] = number
+            _state.update { it.copy(product = _state.value.product.copy(stock = stock)) }
+        }
+    }
 }

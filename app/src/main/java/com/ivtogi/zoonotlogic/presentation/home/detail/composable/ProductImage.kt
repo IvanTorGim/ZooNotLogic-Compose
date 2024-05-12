@@ -24,7 +24,7 @@ fun ProductImage(
         AsyncImage(
             model = image,
             contentDescription = "",
-            placeholder = painterResource(id = R.drawable.butterfly),
+            placeholder = painterResource(id = R.drawable.product_white_background),
             modifier = Modifier.fillMaxWidth()
         )
         IconButton(

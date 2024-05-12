@@ -62,6 +62,7 @@ fun HomeScreen(
                 LazyVerticalGrid(
                     columns = GridCells.Adaptive(180.dp),
                     modifier = Modifier
+                        .fillMaxSize()
                         .padding(paddingValues)
                 ) {
                     item(span = { GridItemSpan(maxLineSpan) }) {

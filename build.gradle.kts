@@ -8,5 +8,4 @@ plugins {
     alias(libs.plugins.kotlinKapt) apply false
     //Google services
     alias(libs.plugins.googleServices) apply false
-
 }
