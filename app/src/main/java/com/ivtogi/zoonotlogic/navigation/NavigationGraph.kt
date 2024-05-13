@@ -82,7 +82,7 @@ fun NavigationGraph(
         ) {
             ProductScreen(
                 navigateToAdmin = {
-                    navHostController.navigate(Home.createRoute(it)) {
+                    navHostController.navigate(Admin.createRoute(it)) {
                         popUpTo(Home.route)
                     }
                 }

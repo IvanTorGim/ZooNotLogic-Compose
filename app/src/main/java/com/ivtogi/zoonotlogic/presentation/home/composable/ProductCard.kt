@@ -22,7 +22,7 @@ import com.ivtogi.zoonotlogic.domain.model.Product
 @Composable
 fun ProductCard(product: Product, userId: String, navigateToDetail: (String, String) -> Unit) {
     Card(
-        elevation = CardDefaults.cardElevation(1.dp),
+        elevation = CardDefaults.elevatedCardElevation(2.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color.White,
             contentColor = Black

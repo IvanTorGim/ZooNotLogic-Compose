@@ -20,8 +20,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,9 +35,9 @@ fun CartProductCard(
     viewModel: CartViewModel
 ) {
     Card(
-        elevation = CardDefaults.elevatedCardElevation(),
+        elevation = CardDefaults.elevatedCardElevation(2.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White,
+            containerColor = White,
             contentColor = Black
         ),
         modifier = Modifier
@@ -63,7 +63,7 @@ fun CartProductCard(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold
                     )
-                    Text(text = cartProduct.size.name)
+                    Text(text = cartProduct.size)
                     Text(
                         text = String.format("%.2f€", cartProduct.price * cartProduct.quantity)
                     )

@@ -5,6 +5,5 @@ enum class Size {
     S,
     M,
     L,
-    XL,
-    NONE
+    XL
 }

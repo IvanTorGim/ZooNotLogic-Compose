@@ -29,7 +29,7 @@ import com.ivtogi.zoonotlogic.ui.theme.Primary
 fun AdminScreen(
     viewModel: AdminViewModel = hiltViewModel(),
     navigateToHome: (String) -> Unit,
-    navigateToProduct: (String, String) -> Unit
+    navigateToProduct: (String, String?) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -69,7 +69,7 @@ fun AdminScreen(
                     }
                 }
                 FloatingActionButton(
-                    onClick = { /*TODO*/ },
+                    onClick = { navigateToProduct(state.userId, null) },
                     containerColor = Primary,
                     modifier = Modifier
                         .align(Alignment.BottomEnd)

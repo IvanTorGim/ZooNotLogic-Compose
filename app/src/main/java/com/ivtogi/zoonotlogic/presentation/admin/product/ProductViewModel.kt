@@ -1,9 +1,11 @@
 package com.ivtogi.zoonotlogic.presentation.admin.product
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ivtogi.zoonotlogic.data.remote.FirestoreRepository
+import com.ivtogi.zoonotlogic.domain.model.Product
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,13 +32,30 @@ class ProductViewModel @Inject constructor(
                 getProduct(productId)
                 _state.update { it.copy(isLoading = false) }
             }
+        } ?: run {
+            _state.update {
+                it.copy(
+                    product = Product(
+                        name = "",
+                        description = "",
+                        category = "",
+                        price = 0.0,
+                        stock = mapOf("XS" to 0, "S" to 0, "M" to 0, "L" to 0, "XL" to 0)
+                    )
+                )
+            }
         }
     }
 
     private suspend fun getProduct(productId: String) {
         firestoreRepository.getProduct(productId)?.let { product ->
+            Log.i("ivan", product.toString())
             _state.update { it.copy(product = product) }
         }
+    }
+
+    fun changeName(name: String) {
+        _state.update { it.copy(product = _state.value.product.copy(name = name)) }
     }
 
     fun changeDescription(description: String) {

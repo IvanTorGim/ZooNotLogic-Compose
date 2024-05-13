@@ -21,7 +21,7 @@ fun NewCollectionProduct(
     navigateToDetail: (String, String) -> Unit
 ) {
     Card(
-        elevation = CardDefaults.cardElevation(1.dp),
+        elevation = CardDefaults.elevatedCardElevation(2.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         modifier = Modifier
             .fillMaxHeight()

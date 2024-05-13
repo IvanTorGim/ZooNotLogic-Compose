@@ -22,7 +22,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ivtogi.zoonotlogic.R
-import com.ivtogi.zoonotlogic.domain.model.Size
 import com.ivtogi.zoonotlogic.presentation.composable.DefaultBottomBar
 import com.ivtogi.zoonotlogic.presentation.composable.DefaultTopBar
 import com.ivtogi.zoonotlogic.presentation.home.detail.composable.Description
@@ -56,7 +55,7 @@ fun DetailScreen(
             bottomBar = {
                 DefaultBottomBar(
                     label = stringResource(id = R.string.add_cart),
-                    enabled = state.sizeSelected != Size.NONE,
+                    enabled = state.sizeSelected.isNotBlank(),
                     onClick = { viewModel.onButtonClicked() }
                 )
             },

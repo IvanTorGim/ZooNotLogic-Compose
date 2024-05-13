@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ivtogi.zoonotlogic.data.remote.FirestoreRepository
 import com.ivtogi.zoonotlogic.domain.model.CartProduct
-import com.ivtogi.zoonotlogic.domain.model.Size
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -54,7 +53,7 @@ class DetailViewModel @Inject constructor(
         _state.update { it.copy(imageSelected = imageSelected) }
     }
 
-    fun onSizeClicked(size: Size) {
+    fun onSizeClicked(size: String) {
         _state.update { it.copy(sizeSelected = size) }
     }
 

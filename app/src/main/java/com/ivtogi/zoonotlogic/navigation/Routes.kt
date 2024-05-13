@@ -8,7 +8,7 @@ sealed class Routes(val route: String) {
     }
 
     data object Product : Routes("product/?userId={userId}&productId={productId}") {
-        fun createRoute(userId: String, productId: String) =
+        fun createRoute(userId: String, productId: String?) =
             "product/?userId=$userId&productId=$productId"
     }
 

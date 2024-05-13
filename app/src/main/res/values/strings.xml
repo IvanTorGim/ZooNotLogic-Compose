@@ -57,7 +57,13 @@
     <string name="category_label">Categoría</string>
     <string name="stock_label">Stock</string>
     <string name="info_label">Información</string>
-    <string name="images_label">Imágenes</string>"
+    <string name="images_label">Imágenes</string>
+    <string name="delete">Eliminar</string>
+    <string name="save">Guardar</string>
+    <string name="add_image">Añadir imágen</string>
+    <string name="new_product">Nuevo producto</string>
+    <string name="product_label">Producto</string>
+    <string name="name_label">Nombre</string>"
 
 
 </resources>

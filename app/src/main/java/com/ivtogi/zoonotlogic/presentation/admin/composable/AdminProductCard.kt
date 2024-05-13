@@ -37,7 +37,7 @@ fun AdminProductCard(
             .fillMaxWidth()
             .height(140.dp)
             .padding(horizontal = 8.dp, vertical = 4.dp),
-        elevation = CardDefaults.elevatedCardElevation(),
+        elevation = CardDefaults.elevatedCardElevation(2.dp),
     ) {
         Box(
             modifier = Modifier
