@@ -5,7 +5,17 @@ import com.ivtogi.zoonotlogic.domain.model.Product
 
 fun ProductDto.toDomain(): Product {
     return Product(
-        id = this.id,
+        name = this.name,
+        description = this.description,
+        category = this.category,
+        price = this.price,
+        stock = this.stock,
+        images = this.images
+    )
+}
+
+fun Product.toDto(): ProductDto {
+    return ProductDto(
         name = this.name,
         description = this.description,
         category = this.category,

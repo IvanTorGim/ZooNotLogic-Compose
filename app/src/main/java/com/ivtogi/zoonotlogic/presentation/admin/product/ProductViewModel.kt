@@ -1,6 +1,5 @@
 package com.ivtogi.zoonotlogic.presentation.admin.product
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -49,9 +48,12 @@ class ProductViewModel @Inject constructor(
 
     private suspend fun getProduct(productId: String) {
         firestoreRepository.getProduct(productId)?.let { product ->
-            Log.i("ivan", product.toString())
             _state.update { it.copy(product = product) }
         }
+    }
+
+    fun updateProduct(product: Product) {
+        firestoreRepository.insertProduct(_state.value.product)
     }
 
     fun changeName(name: String) {

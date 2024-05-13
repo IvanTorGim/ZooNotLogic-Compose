@@ -51,8 +51,10 @@ fun ProductScreen(
         topBar = {
             ProductTopBar(
                 userId = state.userId,
+                product = state.product,
                 label = stringResource(id = R.string.product_label),
-                onBackPressed = navigateToAdmin
+                onBackPressed = navigateToAdmin,
+                onSavePressed = viewModel::updateProduct
             )
         }
     ) { paddingValues ->

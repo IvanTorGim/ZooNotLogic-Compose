@@ -22,14 +22,18 @@ class FirestoreRepository @Inject constructor(
     suspend fun getAllProducts(): List<Product> {
         return firestore.collection(PRODUCTS_PATH).get().await()
             .mapNotNull { document ->
-                document.toObject(ProductDto::class.java).copy(id = document.id).toDomain()
+                document.toObject(ProductDto::class.java).toDomain().copy(id = document.id)
             }
     }
 
     suspend fun getProduct(productId: String): Product? {
         return firestore.collection(PRODUCTS_PATH)
             .document(productId).get().await()
-            .toObject(ProductDto::class.java)?.copy(id = productId)?.toDomain()
+            .toObject(ProductDto::class.java)?.toDomain()?.copy(id = productId)
+    }
+
+    fun insertProduct(product: Product) {
+        firestore.collection(PRODUCTS_PATH).document(product.id).set(product.toDto())
     }
 
     fun insertUser(userId: String, user: User) {
