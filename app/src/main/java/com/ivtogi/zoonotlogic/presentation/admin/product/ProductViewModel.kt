@@ -81,8 +81,11 @@ class ProductViewModel @Inject constructor(
         _state.update { it.copy(product = _state.value.product.copy(category = category)) }
     }
 
+    //TODO: fix decimals
     fun changePrice(price: String) {
-        _state.update { it.copy(product = _state.value.product.copy(price = price.toDouble())) }
+        if (price.matches(Regex("^\\d{0,7}(\\.\\d{0,2})?$"))) {
+            _state.update { it.copy(product = _state.value.product.copy(price = price.toDouble())) }
+        }
     }
 
     fun changeStock(size: String, quantity: String) {

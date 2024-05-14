@@ -65,6 +65,8 @@
     <string name="new_product">Nuevo producto</string>
     <string name="product_label">Producto</string>
     <string name="name_label">Nombre</string>
+    <string name="delete_product">Eliminar el producto</string>
+    <string name="delete_product_message">¿Desea eliminar el producto?</string>
 
 
 </resources>

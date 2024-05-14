@@ -19,29 +19,23 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddAPhoto
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.Center
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.ivtogi.zoonotlogic.R
 import com.ivtogi.zoonotlogic.domain.model.Size
+import com.ivtogi.zoonotlogic.presentation.admin.product.composable.DeleteDialog
 import com.ivtogi.zoonotlogic.presentation.admin.product.composable.Label
 import com.ivtogi.zoonotlogic.presentation.admin.product.composable.NumberField
 import com.ivtogi.zoonotlogic.presentation.admin.product.composable.ProductTopBar
@@ -60,15 +54,14 @@ fun ProductScreen(
         navigateToAdmin(state.userId)
     }
 
-    //TODO: finish screen
     Scaffold(
         topBar = {
             ProductTopBar(
                 userId = state.userId,
                 label = stringResource(id = R.string.product_label),
-                onBackPressed = navigateToAdmin,
-                onSavePressed = viewModel::updateProduct,
-                onDeletePressed = viewModel::showDialog
+                onBackPressed = { navigateToAdmin(it) },
+                onSavePressed = { viewModel.updateProduct() },
+                onDeletePressed = { viewModel.showDialog() }
             )
         }
     ) { paddingValues ->
@@ -88,25 +81,25 @@ fun ProductScreen(
                 Spacer(modifier = Modifier.height(8.dp))
                 TextField(
                     value = state.product.name,
-                    onValueChange = viewModel::changeName,
+                    onValueChange = { viewModel.changeName(it) },
                     label = stringResource(id = R.string.name_label)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 TextAreaField(
                     value = state.product.description,
-                    onValueChange = viewModel::changeDescription,
+                    onValueChange = { viewModel.changeDescription(it) },
                     label = stringResource(id = R.string.description_label)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 TextField(
                     value = state.product.category,
-                    onValueChange = viewModel::changeCategory,
+                    onValueChange = { viewModel.changeCategory(it) },
                     label = stringResource(id = R.string.category_label)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 NumberField(
-                    value = String.format("%.2f", state.product.price),
-                    onValueChange = viewModel::changePrice,
+                    value = state.product.price.toString(),
+                    onValueChange = { viewModel.changePrice(it) },
                     label = stringResource(id = R.string.price_label)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -122,10 +115,7 @@ fun ProductScreen(
                             size = it.name,
                             value = state.product.stock[it.name].toString(),
                             onValueChange = { size, quantity ->
-                                viewModel.changeStock(
-                                    size,
-                                    quantity
-                                )
+                                viewModel.changeStock(size, quantity)
                             },
                             label = it.name
                         )
@@ -170,40 +160,12 @@ fun ProductScreen(
                     }
                 }
                 if (state.showDeleteDialog) {
-                    Dialog(onDismissRequest = { viewModel.hideDialog() }) {
-                        Card(
-                            colors = CardDefaults.cardColors(containerColor = Color.White),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(120.dp)
-                        ) {
-                            Column(
-                                horizontalAlignment = CenterHorizontally,
-                                modifier = Modifier.fillMaxSize()
-                            ) {
-                                Spacer(modifier = Modifier.weight(1f))
-                                Text(text = "Eliminar el producto")
-                                Spacer(modifier = Modifier.weight(1f))
-                                Row {
-                                    Spacer(modifier = Modifier.weight(1f))
-                                    Text(
-                                        text = "Cancelar",
-                                        modifier = Modifier.clickable { viewModel.hideDialog() })
-                                    Spacer(modifier = Modifier.weight(1f))
-                                    Text(
-                                        text = "Eliminar",
-                                        color = Red,
-                                        modifier = Modifier.clickable {
-                                            viewModel.deleteProduct()
-                                            navigateToAdmin(state.userId)
-                                        })
-                                    Spacer(modifier = Modifier.weight(1f))
-                                }
-                                Spacer(modifier = Modifier.weight(1f))
-                            }
-
-                        }
-                    }
+                    DeleteDialog(
+                        userId = state.userId,
+                        onDismiss = { viewModel.hideDialog() },
+                        onDelete = { viewModel.deleteProduct() },
+                        navigateToAdmin = { navigateToAdmin(it) }
+                    )
                 }
             }
         }
