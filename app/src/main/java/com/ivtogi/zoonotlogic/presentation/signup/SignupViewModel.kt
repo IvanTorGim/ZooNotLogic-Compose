@@ -3,6 +3,8 @@ package com.ivtogi.zoonotlogic.presentation.signup
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.ivtogi.zoonotlogic.data.remote.AuthRepository
 import com.ivtogi.zoonotlogic.data.remote.FirestoreRepository
@@ -83,8 +85,10 @@ class SignupViewModel @Inject constructor(
                         )
                         navigateToLogin()
                     }
-                } catch (e: Exception) {
-                    _state.update { it.copy(signupError = e.localizedMessage) }
+                } catch (e: FirebaseAuthUserCollisionException) {
+                    _state.update { it.copy(signupError = "El email introducido ya existe") }
+                } catch (e: FirebaseNetworkException) {
+                    _state.update { it.copy(signupError = "No hay conexión a internet") }
                 } finally {
                     _state.update { it.copy(isLoading = false) }
                 }
@@ -95,6 +99,4 @@ class SignupViewModel @Inject constructor(
     fun cleanSignupError() {
         _state.update { it.copy(signupError = null) }
     }
-
-
 }

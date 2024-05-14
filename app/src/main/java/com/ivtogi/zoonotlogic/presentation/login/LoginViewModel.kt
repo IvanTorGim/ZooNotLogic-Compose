@@ -3,9 +3,10 @@ package com.ivtogi.zoonotlogic.presentation.login
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.ivtogi.zoonotlogic.data.remote.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,27 +26,21 @@ class LoginViewModel @Inject constructor(
         if (validateEmail() && validatePassword()) {
             viewModelScope.launch {
                 try {
-                    _state.update { it.copy(isLoading = true) }
                     val result = authRepository.login(_state.value.email, _state.value.password)
                     if (result != null) {
                         navigateToHome(result.uid)
                     }
-                } catch (e: Exception) {
-                    _state.update { it.copy(loginError = e.message) }
-                } finally {
-                    delay(2000)
-                    _state.update { it.copy(isLoading = false) }
+                } catch (e: FirebaseAuthInvalidCredentialsException) {
+                    _state.update { it.copy(loginError = "Email o contraseña incorrectos") }
+                } catch (e: FirebaseNetworkException) {
+                    _state.update { it.copy(loginError = "No hay conexión a internet") }
                 }
             }
         }
     }
 
     fun loginWithGoogle() {
-        viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
-            delay(3000)
-            _state.update { it.copy(isLoading = false) }
-        }
+        // TODO
     }
 
     fun changeEmail(email: String) {
