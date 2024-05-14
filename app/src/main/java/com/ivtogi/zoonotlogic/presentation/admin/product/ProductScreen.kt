@@ -1,7 +1,9 @@
 package com.ivtogi.zoonotlogic.presentation.admin.product
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -46,15 +48,20 @@ fun ProductScreen(
     navigateToAdmin: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
+
+    BackHandler {
+        navigateToAdmin(state.userId)
+    }
+
     //TODO: finish screen
     Scaffold(
         topBar = {
             ProductTopBar(
                 userId = state.userId,
-                product = state.product,
                 label = stringResource(id = R.string.product_label),
                 onBackPressed = navigateToAdmin,
-                onSavePressed = viewModel::updateProduct
+                onSavePressed = viewModel::updateProduct,
+                onDeletePressed = viewModel::deleteProduct
             )
         }
     ) { paddingValues ->
@@ -91,7 +98,7 @@ fun ProductScreen(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 NumberField(
-                    value = state.product.price.toString(),
+                    value = String.format("%.2f", state.product.price),
                     onValueChange = viewModel::changePrice,
                     label = stringResource(id = R.string.price_label)
                 )
@@ -141,7 +148,8 @@ fun ProductScreen(
                             modifier = Modifier
                                 .size(120.dp)
                                 .clip(RoundedCornerShape(10.dp))
-                                .border(1.dp, Color.Black, RoundedCornerShape(10.dp)),
+                                .border(1.dp, Color.Black, RoundedCornerShape(10.dp))
+                                .clickable { },
                             contentAlignment = Alignment.Center
                         ) {
                             Image(

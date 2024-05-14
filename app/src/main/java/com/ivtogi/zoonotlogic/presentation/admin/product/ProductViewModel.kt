@@ -39,7 +39,8 @@ class ProductViewModel @Inject constructor(
                         description = "",
                         category = "",
                         price = 0.0,
-                        stock = mapOf("XS" to 0, "S" to 0, "M" to 0, "L" to 0, "XL" to 0)
+                        stock = mapOf("XS" to 0, "S" to 0, "M" to 0, "L" to 0, "XL" to 0),
+                        images = listOf("https://firebasestorage.googleapis.com/v0/b/zoo-not-logic.appspot.com/o/products%2Fbutterfly.png?alt=media&token=a1c4fd6b-e794-44b2-b7c6-e7ee72b12034")
                     )
                 )
             }
@@ -52,8 +53,12 @@ class ProductViewModel @Inject constructor(
         }
     }
 
-    fun updateProduct(product: Product) {
+    fun updateProduct() {
         firestoreRepository.insertProduct(_state.value.product)
+    }
+
+    fun deleteProduct() {
+        firestoreRepository.deleteProduct(_state.value.product.id)
     }
 
     fun changeName(name: String) {

@@ -33,7 +33,15 @@ class FirestoreRepository @Inject constructor(
     }
 
     fun insertProduct(product: Product) {
-        firestore.collection(PRODUCTS_PATH).document(product.id).set(product.toDto())
+        if (product.id.isNotEmpty()) {
+            firestore.collection(PRODUCTS_PATH).document(product.id).set(product.toDto())
+        } else {
+            firestore.collection(PRODUCTS_PATH).add(product.toDto())
+        }
+    }
+
+    fun deleteProduct(productId: String) {
+        firestore.collection(PRODUCTS_PATH).document(productId).delete()
     }
 
     fun insertUser(userId: String, user: User) {

@@ -12,16 +12,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.ivtogi.zoonotlogic.R
-import com.ivtogi.zoonotlogic.domain.model.Product
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductTopBar(
     userId: String,
-    product: Product,
     label: String,
     onBackPressed: (String) -> Unit,
-    onSavePressed: (Product) -> Unit
+    onSavePressed: () -> Unit,
+    onDeletePressed: () -> Unit
 ) {
     CenterAlignedTopAppBar(
         title = { Text(text = label) },
@@ -37,7 +36,10 @@ fun ProductTopBar(
         },
         actions = {
             IconButton(
-                onClick = { onSavePressed(product) }
+                onClick = {
+                    onSavePressed()
+                    onBackPressed(userId)
+                }
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Save,
@@ -45,7 +47,10 @@ fun ProductTopBar(
                 )
             }
             IconButton(
-                onClick = { /*TODO*/ }
+                onClick = {
+                    onDeletePressed()
+                    onBackPressed(userId)
+                }
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Delete,
