@@ -49,7 +49,6 @@ fun ProductTopBar(
             IconButton(
                 onClick = {
                     onDeletePressed()
-                    onBackPressed(userId)
                 }
             ) {
                 Icon(

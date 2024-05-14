@@ -47,6 +47,14 @@ class ProductViewModel @Inject constructor(
         }
     }
 
+    fun showDialog() {
+        _state.update { it.copy(showDeleteDialog = true) }
+    }
+
+    fun hideDialog() {
+        _state.update { it.copy(showDeleteDialog = false) }
+    }
+
     private suspend fun getProduct(productId: String) {
         firestoreRepository.getProduct(productId)?.let { product ->
             _state.update { it.copy(product = product) }

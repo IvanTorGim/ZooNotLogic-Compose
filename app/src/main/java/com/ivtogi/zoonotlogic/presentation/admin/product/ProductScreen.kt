@@ -19,18 +19,25 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddAPhoto
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.ivtogi.zoonotlogic.R
@@ -61,7 +68,7 @@ fun ProductScreen(
                 label = stringResource(id = R.string.product_label),
                 onBackPressed = navigateToAdmin,
                 onSavePressed = viewModel::updateProduct,
-                onDeletePressed = viewModel::deleteProduct
+                onDeletePressed = viewModel::showDialog
             )
         }
     ) { paddingValues ->
@@ -140,7 +147,7 @@ fun ProductScreen(
                             modifier = Modifier
                                 .size(120.dp)
                                 .clip(RoundedCornerShape(10.dp))
-                                .border(1.dp, Color.Black, RoundedCornerShape(10.dp))
+                                .border(1.dp, Black, RoundedCornerShape(10.dp))
                         )
                     }
                     if (state.product.images.size < 2) {
@@ -148,9 +155,9 @@ fun ProductScreen(
                             modifier = Modifier
                                 .size(120.dp)
                                 .clip(RoundedCornerShape(10.dp))
-                                .border(1.dp, Color.Black, RoundedCornerShape(10.dp))
+                                .border(1.dp, Black, RoundedCornerShape(10.dp))
                                 .clickable { },
-                            contentAlignment = Alignment.Center
+                            contentAlignment = Center
                         ) {
                             Image(
                                 imageVector = Icons.Outlined.AddAPhoto,
@@ -159,6 +166,42 @@ fun ProductScreen(
                                     .size(60.dp)
 
                             )
+                        }
+                    }
+                }
+                if (state.showDeleteDialog) {
+                    Dialog(onDismissRequest = { viewModel.hideDialog() }) {
+                        Card(
+                            colors = CardDefaults.cardColors(containerColor = Color.White),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(120.dp)
+                        ) {
+                            Column(
+                                horizontalAlignment = CenterHorizontally,
+                                modifier = Modifier.fillMaxSize()
+                            ) {
+                                Spacer(modifier = Modifier.weight(1f))
+                                Text(text = "Eliminar el producto")
+                                Spacer(modifier = Modifier.weight(1f))
+                                Row {
+                                    Spacer(modifier = Modifier.weight(1f))
+                                    Text(
+                                        text = "Cancelar",
+                                        modifier = Modifier.clickable { viewModel.hideDialog() })
+                                    Spacer(modifier = Modifier.weight(1f))
+                                    Text(
+                                        text = "Eliminar",
+                                        color = Red,
+                                        modifier = Modifier.clickable {
+                                            viewModel.deleteProduct()
+                                            navigateToAdmin(state.userId)
+                                        })
+                                    Spacer(modifier = Modifier.weight(1f))
+                                }
+                                Spacer(modifier = Modifier.weight(1f))
+                            }
+
                         }
                     }
                 }
