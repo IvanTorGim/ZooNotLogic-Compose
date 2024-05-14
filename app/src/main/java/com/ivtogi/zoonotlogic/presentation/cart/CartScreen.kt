@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -44,15 +45,22 @@ fun CartScreen(
                     onBackPressed = { navigateToHome(it) })
             },
             bottomBar = {
-                val totalPrice = state.user.cart.sumOf { it.quantity * it.price }
-                DefaultBottomBar(
-                    label = stringResource(R.string.pay, String.format("%.2f€", totalPrice)),
-                    onClick = { /* TODO: pago */ }
-                )
+                if (state.user.cart.isNotEmpty()) {
+                    val totalPrice = state.user.cart.sumOf { it.quantity * it.price }
+                    DefaultBottomBar(
+                        label = stringResource(R.string.pay, String.format("%.2f€", totalPrice)),
+                        onClick = { /* TODO: pago */ }
+                    )
+                }
             },
             modifier = Modifier
                 .fillMaxSize()
         ) { paddingValues ->
+            if (state.user.cart.isEmpty()) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(text = stringResource(id = R.string.empty_cart))
+                }
+            }
             LazyColumn(modifier = Modifier.padding(paddingValues)) {
                 items(state.user.cart) {
                     CartProductCard(cartProduct = it, viewModel = viewModel)

@@ -1,6 +1,7 @@
 package com.ivtogi.zoonotlogic.presentation.home
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -109,6 +110,11 @@ fun HomeScreen(
                                 )
                             })
                     }
+                    if (viewmodel.getTotalCartProducts() > 0) {
+                        item(span = { GridItemSpan(maxLineSpan) }) {
+                            Spacer(modifier = Modifier.height(80.dp))
+                        }
+                    }
                 }
                 if (viewmodel.getTotalCartProducts() > 0) {
                     Box(
@@ -117,7 +123,8 @@ fun HomeScreen(
                     ) {
                         CartCard(
                             userId = state.userId,
-                            viewModel = viewmodel,
+                            totalProducts = viewmodel.getTotalCartProducts(),
+                            totalProductsAmount = viewmodel.getTotalCartProductsAmount(),
                             navigateToCart = { navigateToCart(it) }
                         )
                     }

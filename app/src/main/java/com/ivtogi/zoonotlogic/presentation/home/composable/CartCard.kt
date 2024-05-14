@@ -20,13 +20,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ivtogi.zoonotlogic.R
-import com.ivtogi.zoonotlogic.presentation.home.HomeViewModel
 import com.ivtogi.zoonotlogic.ui.theme.Primary
 
 @Composable
 fun CartCard(
     userId: String,
-    viewModel: HomeViewModel,
+    totalProducts: Int,
+    totalProductsAmount: String,
     navigateToCart: (String) -> Unit
 ) {
     Card(
@@ -49,14 +49,14 @@ fun CartCard(
                 Text(
                     text = stringResource(
                         id = R.string.product_quantity,
-                        viewModel.getTotalCartProducts()
+                        totalProducts
                     ),
                     fontSize = 18.sp
                 )
                 Text(
                     text = stringResource(
                         id = R.string.total_product_price,
-                        viewModel.getTotalCartProductsAmount()
+                        totalProductsAmount
                     ), fontSize = 12.sp
                 )
             }

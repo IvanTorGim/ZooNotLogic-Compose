@@ -41,6 +41,7 @@
     <!-- CART SCREEN -->
     <string name="cart">Carro</string>
     <string name="pay">Precio total: %s</string>
+    <string name="empty_cart">El carro esta vacío</string>"
 
     <!-- PROFILE SCREEN -->
     <string name="profile">Perfil</string>
@@ -63,7 +64,7 @@
     <string name="add_image">Añadir imágen</string>
     <string name="new_product">Nuevo producto</string>
     <string name="product_label">Producto</string>
-    <string name="name_label">Nombre</string>"
+    <string name="name_label">Nombre</string>
 
 
 </resources>
