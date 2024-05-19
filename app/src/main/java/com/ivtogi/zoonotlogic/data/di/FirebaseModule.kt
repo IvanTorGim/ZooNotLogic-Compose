@@ -5,11 +5,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.ivtogi.zoonotlogic.data.remote.AuthRepository
+import com.ivtogi.zoonotlogic.data.remote.CloudFunctionsService
 import com.ivtogi.zoonotlogic.data.remote.FirestoreRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module
@@ -22,7 +24,8 @@ object FirebaseModule {
 
     @Singleton
     @Provides
-    fun provideAuthRepository(firebaseAuth: FirebaseAuth): AuthRepository = AuthRepository(firebaseAuth)
+    fun provideAuthRepository(firebaseAuth: FirebaseAuth): AuthRepository =
+        AuthRepository(firebaseAuth)
 
     @Singleton
     @Provides
@@ -32,4 +35,9 @@ object FirebaseModule {
     @Provides
     fun provideFirestoreRepository(firestore: FirebaseFirestore): FirestoreRepository =
         FirestoreRepository(firestore)
+
+    @Singleton
+    @Provides
+    fun provideCloudFunctions(retrofit: Retrofit): CloudFunctionsService =
+        retrofit.create(CloudFunctionsService::class.java)
 }

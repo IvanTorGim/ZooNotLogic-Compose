@@ -73,6 +73,13 @@ dependencies {
     implementation(libs.google.firebase.auth)
     implementation(libs.google.firebase.firestore)
 
+    // Stripe
+    implementation(libs.stripe.android)
+
+    // Retrofit
+    implementation(libs.retrofit2.retrofit)
+    implementation(libs.retrofit2.converter.gson)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

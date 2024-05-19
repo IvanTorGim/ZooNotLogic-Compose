@@ -40,7 +40,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun loginWithGoogle() {
-        // TODO
+        // TODO: login with google
     }
 
     fun changeEmail(email: String) {
