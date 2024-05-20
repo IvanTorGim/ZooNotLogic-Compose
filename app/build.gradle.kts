@@ -76,9 +76,9 @@ dependencies {
     // Stripe
     implementation(libs.stripe.android)
 
-    // Retrofit
-    implementation(libs.retrofit2.retrofit)
-    implementation(libs.retrofit2.converter.gson)
+    // Fuel
+    implementation(libs.kittinunf.fuel)
+    implementation(libs.kittinunf.fuel.json)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

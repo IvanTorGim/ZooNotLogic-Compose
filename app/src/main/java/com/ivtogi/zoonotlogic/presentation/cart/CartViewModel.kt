@@ -28,6 +28,7 @@ class CartViewModel @Inject constructor(
             viewModelScope.launch {
                 _state.update { it.copy(isLoading = true, userId = user) }
                 getUser(user)
+                getTotalAmount()
                 _state.update { it.copy(isLoading = false) }
             }
         }
@@ -35,7 +36,13 @@ class CartViewModel @Inject constructor(
 
     private suspend fun getUser(userId: String) {
         firestoreRepository.getUser(userId)?.let { user ->
-            _state.update { it.copy(userId = userId, user = user) }
+            _state.update {
+                it.copy(
+                    userId = userId,
+                    user = user,
+                    totalAmount = getTotalAmount().toInt()
+                )
+            }
         }
     }
 
@@ -59,7 +66,12 @@ class CartViewModel @Inject constructor(
                 }
 
                 firestoreRepository.updateCart(_state.value.userId, cartList)
-                _state.update { it.copy(user = user.copy(cart = cartList)) }
+                _state.update {
+                    it.copy(
+                        user = user.copy(cart = cartList),
+                        totalAmount = getTotalAmount().toInt()
+                    )
+                }
             }
         }
     }
@@ -79,8 +91,17 @@ class CartViewModel @Inject constructor(
                 }
 
                 firestoreRepository.updateCart(_state.value.userId, cartList)
-                _state.update { it.copy(user = user.copy(cart = cartList)) }
+                _state.update {
+                    it.copy(
+                        user = user.copy(cart = cartList),
+                        totalAmount = getTotalAmount().toInt()
+                    )
+                }
             }
         }
+    }
+
+    fun getTotalAmount(): Double {
+        return _state.value.user.cart.sumOf { it.quantity * it.price }
     }
 }

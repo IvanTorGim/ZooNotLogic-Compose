@@ -16,6 +16,7 @@ firebaseBom = "32.8.0"
 coil = "2.6.0"
 stripe = "20.43.0"
 retrofit = "2.11.0"
+fuel = "2.3.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -49,10 +50,9 @@ google-firebase-auth = { group = "com.google.firebase", name = "firebase-auth-kt
 google-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore-ktx" }
 #Stripe Android SDK
 stripe-android = { group = "com.stripe", name = "stripe-android", version.ref = "stripe" }
-#Retrofit
-retrofit2-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
-retrofit2-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
-
+#Fuel
+kittinunf-fuel = { group = "com.github.kittinunf.fuel", name = "fuel", version.ref = "fuel" }
+kittinunf-fuel-json = { group = "com.github.kittinunf.fuel", name = "fuel-json", version.ref = "fuel" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
