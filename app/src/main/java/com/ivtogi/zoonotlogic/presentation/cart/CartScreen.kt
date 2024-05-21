@@ -51,11 +51,10 @@ fun CartScreen(
         navigateToHome(state.userId)
     }
     // TODO: No inicia bien porque tarda mas en cargar el user y el total amount esta a 0
-    LaunchedEffect(key1 = state.totalAmount) {
-        if (state.totalAmount > 0) {
-            val amount = (viewModel.getTotalAmount() * 10).toInt()
-            Log.i("ivan2", amount.toString())
-            "https://us-central1-zoo-not-logic.cloudfunctions.net/paymentSheet?amount=${state.totalAmount}".httpGet()
+    LaunchedEffect(key1 = state.stripeAmount) {
+        Log.i("ivan2", state.stripeAmount.toString())
+        if (state.stripeAmount > 0) {
+            "https://us-central1-zoo-not-logic.cloudfunctions.net/paymentSheet?amount=${state.stripeAmount}".httpGet()
                 .responseJson { _, _, result ->
                     if (result is Result.Success) {
                         val responseJson = result.get().obj()
@@ -86,7 +85,6 @@ fun CartScreen(
             bottomBar = {
                 if (state.user.cart.isNotEmpty()) {
                     val totalPrice = viewModel.getTotalAmount()
-                    Log.i("ivan", totalPrice.toString())
                     DefaultBottomBar(
                         label = stringResource(R.string.pay, String.format("%.2f€", totalPrice)),
                         onClick = {
@@ -150,7 +148,7 @@ private fun onPaymentSheetResult(paymentSheetResult: PaymentSheetResult) {
 
         is PaymentSheetResult.Completed -> {
             // Display for example, an order confirmation screen
-            print("Completed")
+            Log.i("ivan", "Pago correcto")
         }
     }
 }
