@@ -46,7 +46,7 @@ fun ProductCard(product: Product, userId: String, navigateToDetail: (String, Str
                 modifier = Modifier.padding(start = 8.dp)
             )
             Text(
-                text = String.format("%.2f€", product.price),
+                text = "${product.price}€",
                 modifier = Modifier.padding(start = 8.dp, bottom = 8.dp)
             )
         }

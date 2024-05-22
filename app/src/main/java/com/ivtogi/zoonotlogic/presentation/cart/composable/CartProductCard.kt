@@ -65,7 +65,10 @@ fun CartProductCard(
                     )
                     Text(text = cartProduct.size)
                     Text(
-                        text = String.format("%.2f€", cartProduct.price * cartProduct.quantity)
+                        text = String.format(
+                            "%.2f€",
+                            cartProduct.price.toDouble() * cartProduct.quantity
+                        )
                     )
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {

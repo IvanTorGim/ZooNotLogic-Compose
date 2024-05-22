@@ -46,11 +46,10 @@ fun CartScreen(
     var customerConfig by remember { mutableStateOf<PaymentSheet.CustomerConfiguration?>(null) }
     var paymentIntentClientSecret by remember { mutableStateOf<String?>(null) }
 
-    // TODO: Añadir snackbar para avisar que el máximo de productos que se pueden agregar son 3
     BackHandler {
         navigateToHome(state.userId)
     }
-    // TODO: No inicia bien porque tarda mas en cargar el user y el total amount esta a 0
+
     LaunchedEffect(key1 = state.stripeAmount) {
         Log.i("ivan2", state.stripeAmount.toString())
         if (state.stripeAmount > 0) {

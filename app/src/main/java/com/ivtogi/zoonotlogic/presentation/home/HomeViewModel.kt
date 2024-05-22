@@ -53,7 +53,7 @@ class HomeViewModel @Inject constructor(
 
     fun getTotalCartProductsAmount(): String {
         val totalPrice: Double =
-            _state.value.user.cart.sumOf { cartProduct -> cartProduct.price * cartProduct.quantity }
+            _state.value.user.cart.sumOf { cartProduct -> cartProduct.price.toDouble() * cartProduct.quantity }
         return String.format("%.2f", totalPrice)
     }
 }

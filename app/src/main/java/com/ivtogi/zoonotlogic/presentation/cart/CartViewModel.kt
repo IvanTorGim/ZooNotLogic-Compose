@@ -95,9 +95,9 @@ class CartViewModel @Inject constructor(
     }
 
     private fun getStripeAmount(): Int {
-        return _state.value.user.cart.sumOf { (it.quantity * it.price * 100).toInt() }
+        return _state.value.user.cart.sumOf { (it.quantity * it.price.toDouble() * 100).toInt() }
     }
     fun getTotalAmount(): Double {
-        return _state.value.user.cart.sumOf { it.quantity * it.price }
+        return _state.value.user.cart.sumOf { it.quantity * it.price.toDouble() }
     }
 }

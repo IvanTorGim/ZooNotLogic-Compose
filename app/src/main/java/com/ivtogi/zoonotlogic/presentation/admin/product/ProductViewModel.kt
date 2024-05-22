@@ -1,5 +1,6 @@
 package com.ivtogi.zoonotlogic.presentation.admin.product
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -38,7 +39,7 @@ class ProductViewModel @Inject constructor(
                         name = "",
                         description = "",
                         category = "",
-                        price = 0.0,
+                        price = "0.00",
                         stock = mapOf("XS" to 0, "S" to 0, "M" to 0, "L" to 0, "XL" to 0),
                         images = listOf("https://firebasestorage.googleapis.com/v0/b/zoo-not-logic.appspot.com/o/products%2Fbutterfly.png?alt=media&token=a1c4fd6b-e794-44b2-b7c6-e7ee72b12034")
                     )
@@ -84,7 +85,8 @@ class ProductViewModel @Inject constructor(
     //TODO: fix decimals
     fun changePrice(price: String) {
         if (price.matches(Regex("^\\d{0,7}(\\.\\d{0,2})?$"))) {
-            _state.update { it.copy(product = _state.value.product.copy(price = price.toDouble())) }
+            Log.i("ivan", price)
+            _state.update { it.copy(product = _state.value.product.copy(price = price)) }
         }
     }
 
