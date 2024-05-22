@@ -40,8 +40,9 @@ fun CartScreen(
     navigateToHome: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
-
-    val paymentSheet = rememberPaymentSheet(::onPaymentSheetResult)
+    //TODO: FIX WHEN MODIFYING CART FROM CART SCREEN
+    val paymentSheet =
+        rememberPaymentSheet { onPaymentSheetResult(it, viewModel, navigateToHome, state.userId) }
     val context = LocalContext.current
     var customerConfig by remember { mutableStateOf<PaymentSheet.CustomerConfiguration?>(null) }
     var paymentIntentClientSecret by remember { mutableStateOf<String?>(null) }
@@ -50,10 +51,11 @@ fun CartScreen(
         navigateToHome(state.userId)
     }
 
-    LaunchedEffect(key1 = state.stripeAmount) {
-        Log.i("ivan2", state.stripeAmount.toString())
-        if (state.stripeAmount > 0) {
-            "https://us-central1-zoo-not-logic.cloudfunctions.net/paymentSheet?amount=${state.stripeAmount}".httpGet()
+    LaunchedEffect(key1 = state.user) {
+        val amount = viewModel.getStripeAmount()
+        Log.i("ivan2", amount.toString())
+        if (amount > 0) {
+            "https://us-central1-zoo-not-logic.cloudfunctions.net/paymentSheet?amount=$amount".httpGet()
                 .responseJson { _, _, result ->
                     if (result is Result.Success) {
                         val responseJson = result.get().obj()
@@ -135,10 +137,15 @@ private fun presentPaymentSheet(
     )
 }
 
-private fun onPaymentSheetResult(paymentSheetResult: PaymentSheetResult) {
+private fun onPaymentSheetResult(
+    paymentSheetResult: PaymentSheetResult,
+    viewModel: CartViewModel,
+    navigateToHome: (String) -> Unit,
+    userId: String
+) {
     when (paymentSheetResult) {
         is PaymentSheetResult.Canceled -> {
-            print("Canceled")
+            navigateToHome(userId)
         }
 
         is PaymentSheetResult.Failed -> {
@@ -146,8 +153,8 @@ private fun onPaymentSheetResult(paymentSheetResult: PaymentSheetResult) {
         }
 
         is PaymentSheetResult.Completed -> {
-            // Display for example, an order confirmation screen
-            Log.i("ivan", "Pago correcto")
+            viewModel.cleanCart()
+            navigateToHome(userId)
         }
     }
 }
