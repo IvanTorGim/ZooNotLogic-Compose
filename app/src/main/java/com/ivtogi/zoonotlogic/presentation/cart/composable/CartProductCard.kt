@@ -48,7 +48,6 @@ fun CartProductCard(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp)
         ) {
             AsyncImage(model = cartProduct.image, contentDescription = cartProduct.name)
             Spacer(modifier = Modifier.padding(8.dp))
@@ -57,37 +56,44 @@ fun CartProductCard(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxSize()
             ) {
-                Column {
+                Column(modifier = Modifier.fillMaxWidth()) {
                     Text(
                         text = cartProduct.name,
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold,
                     )
-                    Text(text = cartProduct.size)
-                    Text(
-                        text = String.format(
-                            "%.2f€",
-                            cartProduct.price.toDouble() * cartProduct.quantity
-                        )
-                    )
-                }
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(
-                        onClick = { viewModel.removeCartProduct(cartProduct) }
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Icon(
-                            imageVector = if (cartProduct.quantity == 1) Icons.Filled.Delete else Icons.Filled.Remove,
-                            contentDescription = "Remove"
-                        )
-                    }
-                    Spacer(modifier = Modifier.padding(2.dp))
-                    Text(text = cartProduct.quantity.toString())
-                    Spacer(modifier = Modifier.padding(2.dp))
-                    IconButton(
-                        onClick = { viewModel.addCartProduct(cartProduct) },
-                        enabled = cartProduct.quantity < 3
-                    ) {
-                        Icon(imageVector = Icons.Filled.Add, contentDescription = "Add")
+                        Column {
+                            Text(text = cartProduct.size)
+                            Text(
+                                text = String.format(
+                                    "%.2f€",
+                                    cartProduct.price.toDouble() * cartProduct.quantity
+                                )
+                            )
+                        }
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            IconButton(
+                                onClick = { viewModel.removeCartProduct(cartProduct) }
+                            ) {
+                                Icon(
+                                    imageVector = if (cartProduct.quantity == 1) Icons.Filled.Delete else Icons.Filled.Remove,
+                                    contentDescription = "Remove"
+                                )
+                            }
+                            Spacer(modifier = Modifier.padding(2.dp))
+                            Text(text = cartProduct.quantity.toString())
+                            Spacer(modifier = Modifier.padding(2.dp))
+                            IconButton(
+                                onClick = { viewModel.addCartProduct(cartProduct) },
+                                enabled = cartProduct.quantity < 3
+                            ) {
+                                Icon(imageVector = Icons.Filled.Add, contentDescription = "Add")
+                            }
+                        }
                     }
                 }
             }
