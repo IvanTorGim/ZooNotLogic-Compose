@@ -14,12 +14,9 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -32,7 +29,6 @@ import com.ivtogi.zoonotlogic.presentation.home.detail.composable.Description
 import com.ivtogi.zoonotlogic.presentation.home.detail.composable.ProductImage
 import com.ivtogi.zoonotlogic.presentation.home.detail.composable.ProductPrice
 import com.ivtogi.zoonotlogic.presentation.home.detail.composable.SizeSelector
-import kotlinx.coroutines.launch
 
 @Composable
 fun DetailScreen(
@@ -40,10 +36,7 @@ fun DetailScreen(
     navigateToHome: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
-    val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
 
-    // TODO: Añadir snackbar para avisar que el maximo de productos que se pueden agregar son 3
     BackHandler {
         navigateToHome(state.userId)
     }
@@ -54,7 +47,7 @@ fun DetailScreen(
         }
     } else {
         Scaffold(
-            snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+            snackbarHost = { SnackbarHost(hostState = state.snackbarHostState) },
             topBar = {
                 DefaultTopBar(
                     userId = state.userId,
@@ -67,10 +60,6 @@ fun DetailScreen(
                     enabled = state.sizeSelected.isNotBlank(),
                     onClick = {
                         viewModel.onButtonClicked()
-                        scope.launch {
-                            snackbarHostState.showSnackbar("Producto añadido al carrito")
-                        }
-
                     }
                 )
             },

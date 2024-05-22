@@ -1,5 +1,6 @@
 package com.ivtogi.zoonotlogic.presentation.home.detail
 
+import androidx.compose.material3.SnackbarDuration
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,9 +28,16 @@ class DetailViewModel @Inject constructor(
         if (userId.isNotEmpty() && productId.isNotEmpty()) {
             viewModelScope.launch {
                 _state.update { it.copy(isLoading = true, userId = userId) }
+                getUser(userId)
                 getProduct(productId)
                 _state.update { it.copy(isLoading = false) }
             }
+        }
+    }
+
+    private suspend fun getUser(userId: String) {
+        firestoreRepository.getUser(userId)?.let { user ->
+            _state.update { it.copy(user = user) }
         }
     }
 
@@ -60,7 +68,7 @@ class DetailViewModel @Inject constructor(
     fun onButtonClicked() {
         viewModelScope.launch {
             firestoreRepository.getUser(_state.value.userId)?.let { user ->
-
+                var message = "Producto añadido al carrito"
                 val cartList = user.cart.toMutableList()
                 val productInCartList = cartList.find { cartProduct ->
                     cartProduct.id == state.value.product.id && cartProduct.size == _state.value.sizeSelected
@@ -71,6 +79,8 @@ class DetailViewModel @Inject constructor(
                         val index = cartList.indexOf(cartProduct)
                         cartList[index] =
                             cartProduct.copy(quantity = cartProduct.quantity + 1)
+                    } else {
+                        message = "El máximo de productos de la misma talla son 3"
                     }
                 } ?: run {
                     val cartProduct = CartProduct(
@@ -83,8 +93,11 @@ class DetailViewModel @Inject constructor(
                     )
                     cartList.add(cartProduct)
                 }
-
                 firestoreRepository.updateCart(_state.value.userId, cartList)
+                _state.value.snackbarHostState.showSnackbar(
+                    message = message,
+                    duration = SnackbarDuration.Short
+                )
             }
         }
     }
