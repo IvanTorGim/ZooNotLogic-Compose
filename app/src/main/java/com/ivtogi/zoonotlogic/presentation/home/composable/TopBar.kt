@@ -19,7 +19,7 @@ import com.ivtogi.zoonotlogic.R
 fun TopHomeBar(
     isAdmin: Boolean = false,
     userId: String,
-    navigateToProfile: () -> Unit,
+    navigateToProfile: (String) -> Unit,
     navigateToAdmin: (String) -> Unit,
     navigateToOrders: (String) -> Unit
 ) {
@@ -50,7 +50,7 @@ fun TopHomeBar(
                 }
             }
             IconButton(
-                onClick = { navigateToProfile() },
+                onClick = { navigateToProfile(userId) },
             ) {
                 Icon(
                     imageVector = Icons.Filled.AccountCircle,

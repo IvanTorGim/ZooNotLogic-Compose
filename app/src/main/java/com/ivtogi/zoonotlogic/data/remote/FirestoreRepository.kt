@@ -51,9 +51,9 @@ class FirestoreRepository @Inject constructor(
         firestore.collection(USERS_PATH).document(userId).set(user.toDto())
     }
 
-    suspend fun getUser(userId: String): User? {
+    suspend fun getUser(userId: String): User {
         return firestore.collection(USERS_PATH)
-            .document(userId).get().await().toObject(UserDto::class.java)?.toDomain()
+            .document(userId).get().await().toObject(UserDto::class.java)?.toDomain() ?: User()
     }
 
     fun updateCart(userId: String, cartList: List<CartProduct>) {

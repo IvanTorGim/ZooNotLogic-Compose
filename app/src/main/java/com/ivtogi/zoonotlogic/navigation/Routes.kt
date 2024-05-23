@@ -23,7 +23,9 @@ sealed class Routes(val route: String) {
         fun createRoute(userId: String) = "cart/?userId=$userId"
     }
 
-    data object Profile : Routes("profile")
+    data object Profile : Routes("profile/?userId={userId}") {
+        fun createRoute(userId: String) = "profile/?userId=$userId"
+    }
     data object Detail : Routes("detail/?userId={userId}&productId={productId}") {
         fun createRoute(userId: String, productId: String) =
             "detail/?userId=$userId&productId=$productId"

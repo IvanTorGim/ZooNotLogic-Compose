@@ -33,7 +33,7 @@ import com.ivtogi.zoonotlogic.presentation.home.composable.TopHomeBar
 @Composable
 fun HomeScreen(
     viewmodel: HomeViewModel = hiltViewModel(),
-    navigateToProfile: () -> Unit,
+    navigateToProfile: (String) -> Unit,
     navigateToCart: (String) -> Unit,
     navigateToAdmin: (String) -> Unit,
     navigateToDetail: (String, String) -> Unit,
@@ -54,7 +54,7 @@ fun HomeScreen(
                 TopHomeBar(
                     isAdmin = state.user.isAdmin,
                     userId = state.userId,
-                    navigateToProfile = navigateToProfile,
+                    navigateToProfile = { navigateToProfile(it) },
                     navigateToAdmin = { navigateToAdmin(it) },
                     navigateToOrders = { navigateToOrders(it) }
                 )

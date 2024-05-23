@@ -119,7 +119,7 @@ fun NavigationGraph(
                 })
         ) {
             HomeScreen(
-                navigateToProfile = { navHostController.navigate(Profile.route) },
+                navigateToProfile = { navHostController.navigate(Profile.createRoute(it)) },
                 navigateToCart = { navHostController.navigate(Cart.createRoute(it)) },
                 navigateToAdmin = { navHostController.navigate(Admin.createRoute(it)) },
                 navigateToOrders = { navHostController.navigate(Orders.createRoute(it)) },
@@ -147,7 +147,23 @@ fun NavigationGraph(
             )
         }
 
-        composable(Profile.route) { ProfileScreen() }
+        composable(
+            route = Profile.route,
+            arguments = listOf(
+                navArgument("userId") {
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = null
+                })
+        ) {
+            ProfileScreen(
+                navigateToHome = {
+                    navHostController.navigate(Home.createRoute(it)) {
+                        popUpTo(Login.route)
+                    }
+                }
+            )
+        }
 
         composable(
             route = Detail.route,
