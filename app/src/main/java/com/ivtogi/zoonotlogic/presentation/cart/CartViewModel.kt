@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ivtogi.zoonotlogic.data.remote.FirestoreRepository
 import com.ivtogi.zoonotlogic.domain.model.CartProduct
+import com.ivtogi.zoonotlogic.domain.model.Order
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -100,5 +101,15 @@ class CartViewModel @Inject constructor(
 
     fun getTotalAmount(): Double {
         return _state.value.user.cart.sumOf { it.quantity * it.price.toDouble() }
+    }
+
+    fun saveOrder() {
+        firestoreRepository.insertOrder(
+            Order(
+                userId = _state.value.userId,
+                cartProducts = _state.value.user.cart,
+                state = "Pendiente"
+            )
+        )
     }
 }

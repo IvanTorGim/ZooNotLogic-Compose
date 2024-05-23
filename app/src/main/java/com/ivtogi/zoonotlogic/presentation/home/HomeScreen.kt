@@ -36,7 +36,8 @@ fun HomeScreen(
     navigateToProfile: () -> Unit,
     navigateToCart: (String) -> Unit,
     navigateToAdmin: (String) -> Unit,
-    navigateToDetail: (String, String) -> Unit
+    navigateToDetail: (String, String) -> Unit,
+    navigateToOrders: (String) -> Unit
 ) {
     val state by viewmodel.state.collectAsState()
 
@@ -54,7 +55,8 @@ fun HomeScreen(
                     isAdmin = state.user.isAdmin,
                     userId = state.userId,
                     navigateToProfile = navigateToProfile,
-                    navigateToAdmin = { navigateToAdmin(it) }
+                    navigateToAdmin = { navigateToAdmin(it) },
+                    navigateToOrders = { navigateToOrders(it) }
                 )
             },
             modifier = Modifier.fillMaxSize()

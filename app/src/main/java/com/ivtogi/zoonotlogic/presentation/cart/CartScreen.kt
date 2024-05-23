@@ -1,6 +1,5 @@
 package com.ivtogi.zoonotlogic.presentation.cart
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -40,7 +39,7 @@ fun CartScreen(
     navigateToHome: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
-    //TODO: FIX WHEN MODIFYING CART FROM CART SCREEN
+
     val paymentSheet =
         rememberPaymentSheet { onPaymentSheetResult(it, viewModel, navigateToHome, state.userId) }
     val context = LocalContext.current
@@ -53,9 +52,9 @@ fun CartScreen(
 
     LaunchedEffect(key1 = state.user) {
         val amount = viewModel.getStripeAmount()
-        Log.i("ivan2", amount.toString())
         if (amount > 0) {
-            "https://us-central1-zoo-not-logic.cloudfunctions.net/paymentSheet?amount=$amount".httpGet()
+            "https://us-central1-zoo-not-logic.cloudfunctions.net/paymentSheet?amount=$amount&email=${state.user.email}"
+                .httpGet()
                 .responseJson { _, _, result ->
                     if (result is Result.Success) {
                         val responseJson = result.get().obj()
@@ -153,6 +152,7 @@ private fun onPaymentSheetResult(
         }
 
         is PaymentSheetResult.Completed -> {
+            viewModel.saveOrder()
             viewModel.cleanCart()
             navigateToHome(userId)
         }

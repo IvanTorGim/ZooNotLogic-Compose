@@ -39,10 +39,6 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun loginWithGoogle() {
-        // TODO: login with google
-    }
-
     fun changeEmail(email: String) {
         _state.update { it.copy(email = email) }
     }

@@ -18,7 +18,7 @@ class ProductViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val firestoreRepository: FirestoreRepository
 ) : ViewModel() {
-
+    //TODO IMAGE LIST URL OR LOCAL STORAGE
     private val _state = MutableStateFlow(ProductState())
     val state = _state.asStateFlow()
 
@@ -82,7 +82,6 @@ class ProductViewModel @Inject constructor(
         _state.update { it.copy(product = _state.value.product.copy(category = category)) }
     }
 
-    //TODO: fix decimals
     fun changePrice(price: String) {
         if (price.matches(Regex("^\\d{0,7}(\\.\\d{0,2})?$"))) {
             Log.i("ivan", price)

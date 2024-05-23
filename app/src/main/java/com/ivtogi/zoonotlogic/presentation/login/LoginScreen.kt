@@ -29,7 +29,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ivtogi.zoonotlogic.R
-import com.ivtogi.zoonotlogic.presentation.composable.ButtonWithIcon
 import com.ivtogi.zoonotlogic.presentation.composable.DefaultButton
 import com.ivtogi.zoonotlogic.presentation.composable.EmailField
 import com.ivtogi.zoonotlogic.presentation.composable.PasswordField
@@ -73,17 +72,6 @@ fun LoginScreen(
                 onClick = { viewModel.login { navigateToHome(it) } }
             )
             Spacer(modifier = Modifier.height(8.dp))
-            Row {
-                Text(text = stringResource(id = R.string.not_have_account))
-                Text(
-                    text = stringResource(id = R.string.sing_up),
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .padding(start = 4.dp)
-                        .clickable { navigateToSignup() },
-                    color = colorResource(id = R.color.accent)
-                )
-            }
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(vertical = 16.dp)
@@ -95,11 +83,17 @@ fun LoginScreen(
                 )
                 Divider(Modifier.weight(1f))
             }
-            ButtonWithIcon(
-                label = stringResource(id = R.string.login_google),
-                image = R.drawable.ic_google,
-                onClick = { viewModel.loginWithGoogle() }
-            )
+            Row {
+                Text(text = stringResource(id = R.string.not_have_account))
+                Text(
+                    text = stringResource(id = R.string.sing_up),
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .padding(start = 4.dp)
+                        .clickable { navigateToSignup() },
+                    color = colorResource(id = R.color.accent)
+                )
+            }
             Spacer(modifier = Modifier.weight(1f))
             LaunchedEffect(key1 = state.loginError) {
                 if (state.loginError != null) {

@@ -68,6 +68,7 @@
     <string name="delete_product">Eliminar el producto</string>
     <string name="delete_product_message">¿Desea eliminar el producto?</string>
     <string name="add_product_to_cart">Producto añadido al carro</string>
+    <string name="orders">Pedidos</string>
 
 
 </resources>

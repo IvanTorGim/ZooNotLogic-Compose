@@ -12,6 +12,7 @@ import com.ivtogi.zoonotlogic.navigation.Routes.Cart
 import com.ivtogi.zoonotlogic.navigation.Routes.Detail
 import com.ivtogi.zoonotlogic.navigation.Routes.Home
 import com.ivtogi.zoonotlogic.navigation.Routes.Login
+import com.ivtogi.zoonotlogic.navigation.Routes.Orders
 import com.ivtogi.zoonotlogic.navigation.Routes.Product
 import com.ivtogi.zoonotlogic.navigation.Routes.Profile
 import com.ivtogi.zoonotlogic.navigation.Routes.Signup
@@ -21,6 +22,7 @@ import com.ivtogi.zoonotlogic.presentation.cart.CartScreen
 import com.ivtogi.zoonotlogic.presentation.home.HomeScreen
 import com.ivtogi.zoonotlogic.presentation.home.detail.DetailScreen
 import com.ivtogi.zoonotlogic.presentation.login.LoginScreen
+import com.ivtogi.zoonotlogic.presentation.orders.OrdersScreen
 import com.ivtogi.zoonotlogic.presentation.profile.ProfileScreen
 import com.ivtogi.zoonotlogic.presentation.signup.SignupScreen
 
@@ -66,6 +68,24 @@ fun NavigationGraph(
         }
 
         composable(
+            route = Orders.route,
+            arguments = listOf(
+                navArgument("userId") {
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = null
+                })
+        ) {
+            OrdersScreen(
+                navigateToHome = {
+                    navHostController.navigate(Home.createRoute(it)) {
+                        popUpTo(Home.route)
+                    }
+                }
+            )
+        }
+
+        composable(
             route = Product.route,
             arguments = listOf(
                 navArgument("userId") {
@@ -102,6 +122,7 @@ fun NavigationGraph(
                 navigateToProfile = { navHostController.navigate(Profile.route) },
                 navigateToCart = { navHostController.navigate(Cart.createRoute(it)) },
                 navigateToAdmin = { navHostController.navigate(Admin.createRoute(it)) },
+                navigateToOrders = { navHostController.navigate(Orders.createRoute(it)) },
                 navigateToDetail = { userId, productId ->
                     navHostController.navigate(Detail.createRoute(userId, productId))
                 }
