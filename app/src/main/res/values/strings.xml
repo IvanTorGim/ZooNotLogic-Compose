@@ -37,6 +37,8 @@
     <string name="select_size">Selecciona la talla</string>
     <string name="size_chart">Guía de tallas</string>
     <string name="description">Descripción</string>
+    <string name="add_product_to_cart">Producto añadido al carro</string>
+    <string name="size_guide_image">Imagen de la guia de tallas</string>
 
     <!-- CART SCREEN -->
     <string name="cart">Carro</string>
@@ -45,6 +47,9 @@
 
     <!-- PROFILE SCREEN -->
     <string name="profile">Perfil</string>
+    <string name="personal_info">Datos personales</string>
+    <string name="my_orders">Mis pedidos</string>
+    <string name="logout">Cerrar sesión</string>
 
     <!-- ADMIN SCREEN -->
     <string name="admin">Admin</string>
@@ -67,8 +72,7 @@
     <string name="name_label">Nombre</string>
     <string name="delete_product">Eliminar el producto</string>
     <string name="delete_product_message">¿Desea eliminar el producto?</string>
-    <string name="add_product_to_cart">Producto añadido al carro</string>
+
+    <!-- ORDERS SCREEN -->
     <string name="orders">Pedidos</string>
-
-
 </resources>
