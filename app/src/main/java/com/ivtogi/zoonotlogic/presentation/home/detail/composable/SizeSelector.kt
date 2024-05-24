@@ -1,5 +1,6 @@
 package com.ivtogi.zoonotlogic.presentation.home.detail.composable
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,7 +23,8 @@ import com.ivtogi.zoonotlogic.ui.theme.Primary
 @Composable
 fun SizeSelector(
     sizeSelected: String,
-    onSizeClicked: (String) -> Unit
+    onSizeClicked: (String) -> Unit,
+    showSizeDialog: () -> Unit,
 ) {
     Row {
         Text(
@@ -35,7 +37,8 @@ fun SizeSelector(
             text = stringResource(id = R.string.size_chart),
             fontSize = 16.sp,
             fontWeight = FontWeight.SemiBold,
-            color = Primary
+            color = Primary,
+            modifier = Modifier.clickable { showSizeDialog() }
         )
     }
     Spacer(modifier = Modifier.height(8.dp))

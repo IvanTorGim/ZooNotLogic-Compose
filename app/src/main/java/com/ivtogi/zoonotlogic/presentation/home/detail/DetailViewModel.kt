@@ -53,7 +53,15 @@ class DetailViewModel @Inject constructor(
         _state.update { it.copy(sizeSelected = size) }
     }
 
-    fun onButtonClicked() {
+    fun showSizeGuideDialog() {
+        _state.update { it.copy(sizeGuideDialog = true) }
+    }
+
+    fun hideSizeGuideDialog() {
+        _state.update { it.copy(sizeGuideDialog = false) }
+    }
+
+    fun onAddProductClicked() {
         viewModelScope.launch {
             firestoreRepository.getUser(_state.value.userId).let { user ->
                 var message = "Producto añadido al carrito"

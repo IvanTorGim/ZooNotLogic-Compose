@@ -1,6 +1,8 @@
 package com.ivtogi.zoonotlogic.presentation.home.detail
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,8 +21,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ivtogi.zoonotlogic.R
 import com.ivtogi.zoonotlogic.presentation.composable.DefaultBottomBar
@@ -59,7 +65,7 @@ fun DetailScreen(
                     label = stringResource(id = R.string.add_cart),
                     enabled = state.sizeSelected.isNotBlank(),
                     onClick = {
-                        viewModel.onButtonClicked()
+                        viewModel.onAddProductClicked()
                     }
                 )
             },
@@ -85,12 +91,31 @@ fun DetailScreen(
                     Spacer(modifier = Modifier.height(16.dp))
                     SizeSelector(
                         sizeSelected = state.sizeSelected,
-                        onSizeClicked = { viewModel.onSizeClicked(it) }
+                        onSizeClicked = { viewModel.onSizeClicked(it) },
+                        showSizeDialog = { viewModel.showSizeGuideDialog() }
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Divider(modifier = Modifier.fillMaxSize())
                     Spacer(modifier = Modifier.height(16.dp))
                     Description(description = state.product.description)
+                    if (state.sizeGuideDialog) {
+                        Dialog(
+                            onDismissRequest = { viewModel.hideSizeGuideDialog() },
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(White)
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.size_guide),
+                                    contentScale = ContentScale.Crop,
+                                    contentDescription = stringResource(id = R.string.size_guide_image),
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }

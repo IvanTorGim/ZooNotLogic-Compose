@@ -10,6 +10,7 @@ data class DetailState(
     val sizeSelected: String = "",
     val imageSelected: Int = 0,
     val product: Product = Product(),
+    val sizeGuideDialog: Boolean = false,
     val isLoading: Boolean = false,
     val message: String = "",
     val snackbarHostState: SnackbarHostState = SnackbarHostState()
