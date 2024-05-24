@@ -11,6 +11,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,5 +41,10 @@ class OrdersViewModel @Inject constructor(
         orders[index] = order.copy(state = "Enviado")
         _state.update { it.copy(orders = orders) }
         firestoreRepository.changeSendState(order.copy(state = "Enviado"))
+    }
+
+    fun formatDate(date: Long): String {
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return sdf.format(Date(date))
     }
 }

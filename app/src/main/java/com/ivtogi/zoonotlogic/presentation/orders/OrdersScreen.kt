@@ -53,6 +53,7 @@ fun OrdersScreen(
                     items(state.orders) { order ->
                         OrderCard(
                             order = order,
+                            viewModel = viewModel,
                             onSendClick = { viewModel.changeSendState(it) }
                         )
                     }
