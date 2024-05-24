@@ -3,6 +3,7 @@ package com.ivtogi.zoonotlogic.presentation.profile
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ivtogi.zoonotlogic.data.remote.AuthRepository
 import com.ivtogi.zoonotlogic.data.remote.FirestoreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     saveStateHandle: SavedStateHandle,
-    private val firestoreRepository: FirestoreRepository
+    private val firestoreRepository: FirestoreRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ProfileState())
@@ -55,5 +57,9 @@ class ProfileViewModel @Inject constructor(
     fun formatDate(date: Long): String {
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         return sdf.format(Date(date))
+    }
+
+    fun logout() {
+        authRepository.logout()
     }
 }

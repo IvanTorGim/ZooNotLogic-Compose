@@ -12,11 +12,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ButtonWithIcon(label: String, image: Int, onClick: () -> Unit) {
+fun ButtonWithIcon(label: String, image: ImageVector, onClick: () -> Unit) {
     Button(
         onClick = { onClick() },
         modifier = Modifier
@@ -26,8 +26,8 @@ fun ButtonWithIcon(label: String, image: Int, onClick: () -> Unit) {
     ) {
         Box(Modifier.fillMaxSize()) {
             Icon(
-                painter = painterResource(id = image),
-                contentDescription = "",
+                imageVector = image,
+                contentDescription = label,
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .size(28.dp)

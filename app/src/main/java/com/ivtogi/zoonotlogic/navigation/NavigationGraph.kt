@@ -161,6 +161,11 @@ fun NavigationGraph(
                     navHostController.navigate(Home.createRoute(it)) {
                         popUpTo(Login.route)
                     }
+                },
+                navigateToLogin = {
+                    navHostController.navigate(Login.route) {
+                        popUpTo(route = Login.route, popUpToBuilder = { inclusive = true })
+                    }
                 }
             )
         }
