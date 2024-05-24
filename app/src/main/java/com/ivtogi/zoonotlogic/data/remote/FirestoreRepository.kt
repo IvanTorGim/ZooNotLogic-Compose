@@ -1,6 +1,7 @@
 package com.ivtogi.zoonotlogic.data.remote
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.ivtogi.zoonotlogic.data.mapper.toDomain
 import com.ivtogi.zoonotlogic.data.mapper.toDto
 import com.ivtogi.zoonotlogic.data.remote.dto.OrderDto
@@ -64,7 +65,10 @@ class FirestoreRepository @Inject constructor(
     }
 
     suspend fun getAllOrders(): List<Order> {
-        return firestore.collection(ORDERS_PATH).get().await()
+        return firestore
+            .collection(ORDERS_PATH)
+            .orderBy("date", Query.Direction.DESCENDING)
+            .get().await()
             .mapNotNull { document ->
                 document.toObject(OrderDto::class.java).toDomain().copy(orderId = document.id)
             }
@@ -72,7 +76,9 @@ class FirestoreRepository @Inject constructor(
 
     suspend fun getUserOrders(userId: String): List<Order> {
         return firestore.collection(ORDERS_PATH)
-            .whereEqualTo("userId", userId).get().await()
+            .whereEqualTo("userId", userId)
+            .orderBy("date", Query.Direction.DESCENDING)
+            .get().await()
             .mapNotNull { document ->
                 document.toObject(OrderDto::class.java).toDomain().copy(orderId = document.id)
             }
