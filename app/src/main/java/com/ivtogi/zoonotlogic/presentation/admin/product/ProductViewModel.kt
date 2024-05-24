@@ -18,7 +18,7 @@ class ProductViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val firestoreRepository: FirestoreRepository
 ) : ViewModel() {
-    //TODO IMAGE LIST URL OR LOCAL STORAGE
+
     private val _state = MutableStateFlow(ProductState())
     val state = _state.asStateFlow()
 
@@ -29,8 +29,8 @@ class ProductViewModel @Inject constructor(
         savedStateHandle.get<String>("productId")?.let { productId ->
             viewModelScope.launch {
                 _state.update { it.copy(isLoading = true) }
-                getProduct(productId)
-                _state.update { it.copy(isLoading = false) }
+                val product = firestoreRepository.getProduct(productId)
+                _state.update { it.copy(isLoading = false, product = product) }
             }
         } ?: run {
             _state.update {
@@ -41,7 +41,7 @@ class ProductViewModel @Inject constructor(
                         category = "",
                         price = "0.00",
                         stock = mapOf("XS" to 0, "S" to 0, "M" to 0, "L" to 0, "XL" to 0),
-                        images = listOf("https://firebasestorage.googleapis.com/v0/b/zoo-not-logic.appspot.com/o/products%2Fbutterfly.png?alt=media&token=a1c4fd6b-e794-44b2-b7c6-e7ee72b12034")
+                        images = listOf("", "")
                     )
                 )
             }
@@ -54,12 +54,6 @@ class ProductViewModel @Inject constructor(
 
     fun hideDialog() {
         _state.update { it.copy(showDeleteDialog = false) }
-    }
-
-    private suspend fun getProduct(productId: String) {
-        firestoreRepository.getProduct(productId)?.let { product ->
-            _state.update { it.copy(product = product) }
-        }
     }
 
     fun updateProduct() {
@@ -103,4 +97,11 @@ class ProductViewModel @Inject constructor(
             _state.update { it.copy(product = _state.value.product.copy(stock = stock)) }
         }
     }
+
+    fun changeImage(image: String, index: Int) {
+        val images = _state.value.product.images.toMutableList()
+        images[index] = image
+        _state.update { it.copy(product = _state.value.product.copy(images = images)) }
+    }
+
 }

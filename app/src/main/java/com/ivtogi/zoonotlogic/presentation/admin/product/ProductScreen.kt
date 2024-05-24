@@ -1,38 +1,25 @@
 package com.ivtogi.zoonotlogic.presentation.admin.product
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AddAPhoto
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImage
 import com.ivtogi.zoonotlogic.R
 import com.ivtogi.zoonotlogic.domain.model.Size
 import com.ivtogi.zoonotlogic.presentation.admin.product.composable.DeleteDialog
@@ -124,41 +111,18 @@ fun ProductScreen(
                 Spacer(modifier = Modifier.height(16.dp))
                 Label(text = stringResource(id = R.string.images_label))
                 Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    state.product.images.forEach {
-                        AsyncImage(
-                            model = it,
-                            contentDescription = "image",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .size(120.dp)
-                                .clip(RoundedCornerShape(10.dp))
-                                .border(1.dp, Black, RoundedCornerShape(10.dp))
-                        )
-                    }
-                    if (state.product.images.size < 2) {
-                        Box(
-                            modifier = Modifier
-                                .size(120.dp)
-                                .clip(RoundedCornerShape(10.dp))
-                                .border(1.dp, Black, RoundedCornerShape(10.dp))
-                                .clickable { },
-                            contentAlignment = Center
-                        ) {
-                            Image(
-                                imageVector = Icons.Outlined.AddAPhoto,
-                                contentDescription = stringResource(id = R.string.add_image),
-                                modifier = Modifier
-                                    .size(60.dp)
-
-                            )
-                        }
-                    }
-                }
+                TextField(
+                    value = state.product.images[0],
+                    onValueChange = { viewModel.changeImage(it, 0) },
+                    label = "Imagen 1"
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                TextField(
+                    value = state.product.images[1],
+                    onValueChange = { viewModel.changeImage(it, 1) },
+                    label = "Imagen 2"
+                )
+                Spacer(modifier = Modifier.height(8.dp))
                 if (state.showDeleteDialog) {
                     DeleteDialog(
                         userId = state.userId,

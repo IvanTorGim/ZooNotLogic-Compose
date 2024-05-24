@@ -25,13 +25,9 @@ class AdminViewModel @Inject constructor(
         saveStateHandle.get<String>("userId")?.let { userId ->
             viewModelScope.launch {
                 _state.update { it.copy(isLoading = true, userId = userId) }
-                getProducts()
-                _state.update { it.copy(isLoading = false) }
+                val products = firestoreRepository.getAllProducts()
+                _state.update { it.copy(isLoading = false, productList = products) }
             }
         }
-    }
-
-    private suspend fun getProducts() {
-        _state.update { it.copy(productList = firestoreRepository.getAllProducts()) }
     }
 }

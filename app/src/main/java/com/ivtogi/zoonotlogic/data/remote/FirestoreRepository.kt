@@ -29,10 +29,10 @@ class FirestoreRepository @Inject constructor(
             }
     }
 
-    suspend fun getProduct(productId: String): Product? {
+    suspend fun getProduct(productId: String): Product {
         return firestore.collection(PRODUCTS_PATH)
             .document(productId).get().await()
-            .toObject(ProductDto::class.java)?.toDomain()?.copy(id = productId)
+            .toObject(ProductDto::class.java)?.toDomain()?.copy(id = productId)!!
     }
 
     fun insertProduct(product: Product) {
@@ -53,7 +53,7 @@ class FirestoreRepository @Inject constructor(
 
     suspend fun getUser(userId: String): User {
         return firestore.collection(USERS_PATH)
-            .document(userId).get().await().toObject(UserDto::class.java)?.toDomain() ?: User()
+            .document(userId).get().await().toObject(UserDto::class.java)?.toDomain()!!
     }
 
     fun updateCart(userId: String, cartList: List<CartProduct>) {

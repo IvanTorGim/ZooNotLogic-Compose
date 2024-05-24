@@ -24,12 +24,11 @@ class CartViewModel @Inject constructor(
     val state: StateFlow<CartState> = _state.asStateFlow()
 
     init {
-        val userId = savedStateHandle.get<String>("userId")
-        userId?.let { user ->
+        savedStateHandle.get<String>("userId")?.let { userId ->
             viewModelScope.launch {
-                _state.update { it.copy(isLoading = true, userId = user) }
-                getUser(user)
-                _state.update { it.copy(isLoading = false) }
+                _state.update { it.copy(isLoading = true, userId = userId) }
+                val user = firestoreRepository.getUser(userId)
+                _state.update { it.copy(isLoading = false, user = user) }
             }
         }
     }
@@ -37,12 +36,6 @@ class CartViewModel @Inject constructor(
     fun cleanCart() {
         viewModelScope.launch {
             firestoreRepository.updateCart(_state.value.userId, emptyList())
-        }
-    }
-
-    private suspend fun getUser(userId: String) {
-        firestoreRepository.getUser(userId)?.let { user ->
-            _state.update { it.copy(user = user) }
         }
     }
 
