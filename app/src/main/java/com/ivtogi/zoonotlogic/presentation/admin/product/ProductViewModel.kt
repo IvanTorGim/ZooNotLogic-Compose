@@ -1,6 +1,5 @@
 package com.ivtogi.zoonotlogic.presentation.admin.product
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -25,25 +24,26 @@ class ProductViewModel @Inject constructor(
     init {
         savedStateHandle.get<String>("userId")?.let { userId ->
             _state.update { it.copy(userId = userId) }
-        }
-        savedStateHandle.get<String>("productId")?.let { productId ->
-            viewModelScope.launch {
-                _state.update { it.copy(isLoading = true) }
-                val product = firestoreRepository.getProduct(productId)
-                _state.update { it.copy(isLoading = false, product = product) }
-            }
-        } ?: run {
-            _state.update {
-                it.copy(
-                    product = Product(
-                        name = "",
-                        description = "",
-                        category = "",
-                        price = "0.00",
-                        stock = mapOf("XS" to 0, "S" to 0, "M" to 0, "L" to 0, "XL" to 0),
-                        images = listOf("", "")
+
+            savedStateHandle.get<String>("productId")?.let { productId ->
+                viewModelScope.launch {
+                    _state.update { it.copy(isLoading = true) }
+                    val product = firestoreRepository.getProduct(productId)
+                    _state.update { it.copy(isLoading = false, product = product) }
+                }
+            } ?: run {
+                _state.update {
+                    it.copy(
+                        product = Product(
+                            name = "",
+                            description = "",
+                            category = "",
+                            price = "0.00",
+                            stock = mapOf("XS" to 0, "S" to 0, "M" to 0, "L" to 0, "XL" to 0),
+                            images = listOf("", "")
+                        )
                     )
-                )
+                }
             }
         }
     }
@@ -77,25 +77,18 @@ class ProductViewModel @Inject constructor(
     }
 
     fun changePrice(price: String) {
-        if (price.matches(Regex("^\\d{0,7}(\\.\\d{0,2})?$"))) {
-            Log.i("ivan", price)
+        if (price.matches(Regex("^\\d{0,7}(\\.\\d{0,2})?$")))
             _state.update { it.copy(product = _state.value.product.copy(price = price)) }
-        }
     }
 
     fun changeStock(size: String, quantity: String) {
-        val number = if (quantity.isBlank()) 0 else quantity.toInt()
         val stock = _state.value.product.stock.toMutableMap()
-        if (number < 0) {
-            stock[size] = 0
-            _state.update { it.copy(product = _state.value.product.copy(stock = stock)) }
-        } else if (number > 100) {
-            stock[size] = 100
-            _state.update { it.copy(product = _state.value.product.copy(stock = stock)) }
-        } else {
-            stock[size] = number
-            _state.update { it.copy(product = _state.value.product.copy(stock = stock)) }
+        when {
+            quantity.isEmpty() || quantity.toInt() < 0 -> stock[size] = 0
+            quantity.toInt() > 100 -> stock[size] = 100
+            else -> stock[size] = quantity.toInt()
         }
+        _state.update { it.copy(product = _state.value.product.copy(stock = stock)) }
     }
 
     fun changeImage(image: String, index: Int) {
@@ -103,5 +96,4 @@ class ProductViewModel @Inject constructor(
         images[index] = image
         _state.update { it.copy(product = _state.value.product.copy(images = images)) }
     }
-
 }
