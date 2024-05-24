@@ -41,7 +41,7 @@ class CartViewModel @Inject constructor(
 
     fun removeCartProduct(cartProduct: CartProduct) {
         viewModelScope.launch {
-            firestoreRepository.getUser(_state.value.userId)?.let { user ->
+            firestoreRepository.getUser(_state.value.userId).let { user ->
 
                 val cartList = user.cart.toMutableList()
                 val productInCartList = cartList.find { p ->
@@ -68,7 +68,7 @@ class CartViewModel @Inject constructor(
 
     fun addCartProduct(cartProduct: CartProduct) {
         viewModelScope.launch {
-            firestoreRepository.getUser(_state.value.userId)?.let { user ->
+            firestoreRepository.getUser(_state.value.userId).let { user ->
                 val cartList = user.cart.toMutableList()
                 val productInCartList = cartList.find { product ->
                     product.id == cartProduct.id && product.size == cartProduct.size

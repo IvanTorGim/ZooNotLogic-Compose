@@ -23,11 +23,9 @@ class ProductViewModel @Inject constructor(
 
     init {
         savedStateHandle.get<String>("userId")?.let { userId ->
-            _state.update { it.copy(userId = userId) }
-
             savedStateHandle.get<String>("productId")?.let { productId ->
                 viewModelScope.launch {
-                    _state.update { it.copy(isLoading = true) }
+                    _state.update { it.copy(isLoading = true, userId = userId) }
                     val product = firestoreRepository.getProduct(productId)
                     _state.update { it.copy(isLoading = false, product = product) }
                 }

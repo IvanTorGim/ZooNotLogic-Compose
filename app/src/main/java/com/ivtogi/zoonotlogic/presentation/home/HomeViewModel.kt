@@ -22,28 +22,13 @@ class HomeViewModel @Inject constructor(
     val state: StateFlow<HomeState> = _state.asStateFlow()
 
     init {
-        savedStateHandle.get<String>("userId")?.let { id ->
+        savedStateHandle.get<String>("userId")?.let { userId ->
             viewModelScope.launch {
-                _state.update { it.copy(isLoading = true) }
-                getUser(id)
-                getAllProducts()
-                _state.update { it.copy(isLoading = false) }
+                _state.update { it.copy(isLoading = true, userId = userId) }
+                val user = firestoreRepository.getUser(userId)
+                val products = firestoreRepository.getAllProducts()
+                _state.update { it.copy(isLoading = false, user = user, productList = products) }
             }
-        }
-    }
-
-    private suspend fun getAllProducts() {
-        _state.update {
-            it.copy(
-                productList = firestoreRepository.getAllProducts()
-            )
-        }
-    }
-
-    private suspend fun getUser(userId: String) {
-        firestoreRepository.getUser(userId)?.let { user ->
-            _state.update { it.copy(userId = userId, user = user) }
-
         }
     }
 

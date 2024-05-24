@@ -23,27 +23,15 @@ class DetailViewModel @Inject constructor(
     val state: StateFlow<DetailState> = _state.asStateFlow()
 
     init {
-        val userId = savedStateHandle.get<String>("userId").orEmpty()
-        val productId = savedStateHandle.get<String>("productId").orEmpty()
-        if (userId.isNotEmpty() && productId.isNotEmpty()) {
-            viewModelScope.launch {
-                _state.update { it.copy(isLoading = true, userId = userId) }
-                getUser(userId)
-                getProduct(productId)
-                _state.update { it.copy(isLoading = false) }
+        savedStateHandle.get<String>("userId")?.let { userId ->
+            savedStateHandle.get<String>("productId")?.let { productId ->
+                viewModelScope.launch {
+                    _state.update { it.copy(isLoading = true, userId = userId) }
+                    val user = firestoreRepository.getUser(userId)
+                    val product = firestoreRepository.getProduct(productId)
+                    _state.update { it.copy(isLoading = false, user = user, product = product) }
+                }
             }
-        }
-    }
-
-    private suspend fun getUser(userId: String) {
-        firestoreRepository.getUser(userId)?.let { user ->
-            _state.update { it.copy(user = user) }
-        }
-    }
-
-    private suspend fun getProduct(productId: String) {
-        firestoreRepository.getProduct(productId)?.let { product ->
-            _state.update { it.copy(product = product) }
         }
     }
 
@@ -67,7 +55,7 @@ class DetailViewModel @Inject constructor(
 
     fun onButtonClicked() {
         viewModelScope.launch {
-            firestoreRepository.getUser(_state.value.userId)?.let { user ->
+            firestoreRepository.getUser(_state.value.userId).let { user ->
                 var message = "Producto añadido al carrito"
                 val cartList = user.cart.toMutableList()
                 val productInCartList = cartList.find { cartProduct ->

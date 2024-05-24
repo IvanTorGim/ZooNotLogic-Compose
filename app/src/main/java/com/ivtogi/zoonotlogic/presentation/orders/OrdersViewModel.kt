@@ -26,15 +26,9 @@ class OrdersViewModel @Inject constructor(
         saveStateHandle.get<String>("userId")?.let { userId ->
             viewModelScope.launch {
                 _state.update { it.copy(isLoading = true, userId = userId) }
-                getAllOrders()
-                _state.update { it.copy(isLoading = false) }
+                val orders = firestoreRepository.getAllOrders()
+                _state.update { it.copy(isLoading = false, orders = orders) }
             }
-        }
-    }
-
-    private suspend fun getAllOrders() {
-        firestoreRepository.getAllOrders().let { orders ->
-            _state.update { it.copy(orders = orders) }
         }
     }
 
@@ -45,5 +39,4 @@ class OrdersViewModel @Inject constructor(
         _state.update { it.copy(orders = orders) }
         firestoreRepository.changeSendState(order.copy(state = "Enviado"))
     }
-
 }
