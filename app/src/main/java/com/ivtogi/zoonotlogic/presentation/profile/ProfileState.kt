@@ -7,5 +7,6 @@ data class ProfileState(
     val userId: String = "",
     val user: User = User(),
     val isLoading: Boolean = false,
-    val orders: List<Order> = emptyList()
+    val orders: List<Order> = emptyList(),
+    val nameError: Boolean = false,
 )
