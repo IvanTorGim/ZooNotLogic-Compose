@@ -5,5 +5,7 @@ import com.ivtogi.zoonotlogic.domain.model.CartProduct
 data class OrderDto(
     val userId: String = "",
     val cartProducts: List<CartProduct> = emptyList(),
-    val state: String = ""
+    val state: String = "",
+    val totalPrice: String = "",
+    val date: Long = 0
 )

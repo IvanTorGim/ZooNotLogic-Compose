@@ -20,12 +20,17 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ivtogi.zoonotlogic.R
 import com.ivtogi.zoonotlogic.domain.model.Order
+import com.ivtogi.zoonotlogic.presentation.orders.OrdersViewModel
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @Composable
 fun OrderCard(
     order: Order,
+    viewModel: OrdersViewModel,
     onSendClick: (Order) -> Unit
 ) {
+    val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -37,14 +42,15 @@ fun OrderCard(
                 contentDescription = stringResource(id = R.string.product_image),
                 modifier = Modifier.fillMaxHeight()
             )
-            Row(modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(8.dp)
+            ) {
                 Column(
                     verticalArrangement = Arrangement.SpaceEvenly,
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    val totalPrice = order.cartProducts.sumOf { it.price.toDouble() * it.quantity }
                     Text(text = "Pedido: ${order.orderId}")
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -54,8 +60,9 @@ fun OrderCard(
                             modifier = Modifier.fillMaxHeight(),
                             verticalArrangement = Arrangement.SpaceEvenly
                         ) {
+                            Text(text = "Fecha: ${viewModel.formatDate(order.date)}")
                             Text(text = "Estado: ${order.state}")
-                            Text(text = String.format("Total: %.2f€", totalPrice))
+                            Text(text = "Total: ${order.totalPrice}€")
                         }
                         if (order.state == "Pendiente") {
                             Button(

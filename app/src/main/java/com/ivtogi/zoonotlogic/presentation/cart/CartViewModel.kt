@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -97,11 +98,14 @@ class CartViewModel @Inject constructor(
     }
 
     fun saveOrder() {
+        val totalPrice = _state.value.user.cart.sumOf { it.quantity * it.price.toDouble() }
         firestoreRepository.insertOrder(
             Order(
                 userId = _state.value.userId,
                 cartProducts = _state.value.user.cart,
-                state = "Pendiente"
+                totalPrice = String.format(Locale.ROOT, "%.2f", totalPrice),
+                state = "Pendiente",
+                date = System.currentTimeMillis()
             )
         )
     }

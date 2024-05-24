@@ -4,5 +4,7 @@ data class Order(
     val orderId: String = "",
     val userId: String = "",
     val cartProducts: List<CartProduct> = emptyList(),
-    val state: String = ""
+    val state: String = "",
+    val totalPrice: String = "",
+    val date: Long = 0
 )
