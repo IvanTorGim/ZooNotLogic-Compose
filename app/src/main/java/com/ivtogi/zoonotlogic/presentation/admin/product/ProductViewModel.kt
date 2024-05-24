@@ -84,7 +84,7 @@ class ProductViewModel @Inject constructor(
     fun changeStock(size: String, quantity: String) {
         val stock = _state.value.product.stock.toMutableMap()
         when {
-            quantity.isEmpty() || quantity.toInt() < 0 -> stock[size] = 0
+            quantity.isEmpty() -> stock[size] = 0
             quantity.toInt() > 100 -> stock[size] = 100
             else -> stock[size] = quantity.toInt()
         }

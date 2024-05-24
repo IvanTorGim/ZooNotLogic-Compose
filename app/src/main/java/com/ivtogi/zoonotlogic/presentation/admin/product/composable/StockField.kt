@@ -22,7 +22,7 @@ fun StockField(
         singleLine = true,
         maxLines = 1,
         minLines = 1,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         modifier = Modifier
             .fillMaxWidth()
     )
