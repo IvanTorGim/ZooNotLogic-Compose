@@ -23,12 +23,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ivtogi.zoonotlogic.R
 import com.ivtogi.zoonotlogic.domain.model.Size
 import com.ivtogi.zoonotlogic.presentation.admin.product.composable.DeleteDialog
-import com.ivtogi.zoonotlogic.presentation.admin.product.composable.Label
-import com.ivtogi.zoonotlogic.presentation.admin.product.composable.NumberField
 import com.ivtogi.zoonotlogic.presentation.admin.product.composable.ProductTopBar
-import com.ivtogi.zoonotlogic.presentation.admin.product.composable.StockField
-import com.ivtogi.zoonotlogic.presentation.admin.product.composable.TextAreaField
-import com.ivtogi.zoonotlogic.presentation.admin.product.composable.TextField
+import com.ivtogi.zoonotlogic.presentation.composable.Label
+import com.ivtogi.zoonotlogic.presentation.composable.NumberField
+import com.ivtogi.zoonotlogic.presentation.composable.StockField
+import com.ivtogi.zoonotlogic.presentation.composable.TextAreaField
+import com.ivtogi.zoonotlogic.presentation.composable.TextField
 
 @Composable
 fun ProductScreen(
@@ -65,31 +65,26 @@ fun ProductScreen(
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
                 Label(text = stringResource(id = R.string.info_label))
-                Spacer(modifier = Modifier.height(8.dp))
                 TextField(
                     value = state.product.name,
-                    onValueChange = { viewModel.changeName(it) },
+                    changeText = { viewModel.changeName(it) },
                     label = stringResource(id = R.string.name_label)
                 )
-                Spacer(modifier = Modifier.height(8.dp))
                 TextAreaField(
                     value = state.product.description,
                     onValueChange = { viewModel.changeDescription(it) },
                     label = stringResource(id = R.string.description_label)
                 )
-                Spacer(modifier = Modifier.height(8.dp))
                 TextField(
                     value = state.product.category,
-                    onValueChange = { viewModel.changeCategory(it) },
+                    changeText = { viewModel.changeCategory(it) },
                     label = stringResource(id = R.string.category_label)
                 )
-                Spacer(modifier = Modifier.height(8.dp))
                 NumberField(
                     value = state.product.price.toString(),
                     onValueChange = { viewModel.changePrice(it) },
                     label = stringResource(id = R.string.price_label)
                 )
-                Spacer(modifier = Modifier.height(8.dp))
                 Label(text = stringResource(id = R.string.stock_label))
                 Spacer(modifier = Modifier.height(16.dp))
                 Column(
@@ -113,16 +108,15 @@ fun ProductScreen(
                 Spacer(modifier = Modifier.height(16.dp))
                 TextField(
                     value = state.product.images[0],
-                    onValueChange = { viewModel.changeImage(it, 0) },
+                    changeText = { viewModel.changeImage(it, 0) },
                     label = "Imagen 1"
                 )
-                Spacer(modifier = Modifier.height(8.dp))
                 TextField(
                     value = state.product.images[1],
-                    onValueChange = { viewModel.changeImage(it, 1) },
+                    changeText = { viewModel.changeImage(it, 1) },
                     label = "Imagen 2"
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(16.dp))
                 if (state.showDeleteDialog) {
                     DeleteDialog(
                         userId = state.userId,

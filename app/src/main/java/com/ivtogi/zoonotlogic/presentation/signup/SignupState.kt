@@ -8,9 +8,7 @@ data class SignupState(
     val name: String = "",
     val nameError: Boolean = false,
     val lastName: String = "",
-    val lastNameError: Boolean = false,
     val phone: String = "",
-    val phoneError: Boolean = false,
     val isLoading: Boolean = false,
     val signupError: String? = null
 )

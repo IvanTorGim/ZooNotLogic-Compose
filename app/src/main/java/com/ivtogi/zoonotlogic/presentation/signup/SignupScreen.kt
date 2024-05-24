@@ -28,10 +28,11 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ivtogi.zoonotlogic.R
 import com.ivtogi.zoonotlogic.presentation.composable.DefaultButton
-import com.ivtogi.zoonotlogic.presentation.composable.DefaultField
 import com.ivtogi.zoonotlogic.presentation.composable.EmailField
+import com.ivtogi.zoonotlogic.presentation.composable.ErrorTextField
 import com.ivtogi.zoonotlogic.presentation.composable.PasswordField
 import com.ivtogi.zoonotlogic.presentation.composable.PhoneField
+import com.ivtogi.zoonotlogic.presentation.composable.TextField
 
 @Composable
 fun SignupScreen(
@@ -75,25 +76,21 @@ fun SignupScreen(
                     error = state.passwordError,
                     changeText = { viewModel.changePassword(it) }
                 )
-                DefaultField(
+                ErrorTextField(
                     label = stringResource(id = R.string.name),
                     value = state.name,
                     error = state.nameError,
                     errorText = stringResource(id = R.string.userNotValid),
                     changeText = { viewModel.changeName(it) }
                 )
-                DefaultField(
+                TextField(
                     label = stringResource(id = R.string.last_name),
                     value = state.lastName,
-                    error = state.lastNameError,
-                    errorText = stringResource(id = R.string.userNotValid),
                     changeText = { viewModel.changeLastName(it) }
                 )
                 PhoneField(
                     label = stringResource(id = R.string.phone),
                     value = state.phone,
-                    error = state.phoneError,
-                    errorText = "",
                     changeText = { viewModel.changePhone(it) }
                 )
                 Spacer(modifier = Modifier.height(32.dp))

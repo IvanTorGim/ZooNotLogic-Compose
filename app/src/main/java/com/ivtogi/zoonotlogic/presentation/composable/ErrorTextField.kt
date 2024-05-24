@@ -1,15 +1,13 @@
 package com.ivtogi.zoonotlogic.presentation.composable
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 
 @Composable
-fun DefaultField(
+fun ErrorTextField(
     label: String,
     value: String,
     error: Boolean,
@@ -21,8 +19,7 @@ fun DefaultField(
         value = value,
         onValueChange = { changeText(it) },
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
+            .fillMaxWidth(),
         maxLines = 1,
         singleLine = true,
         supportingText = { Text(text = if (error) errorText else "") },

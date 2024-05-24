@@ -1,4 +1,4 @@
-package com.ivtogi.zoonotlogic.presentation.admin.product.composable
+package com.ivtogi.zoonotlogic.presentation.composable
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.OutlinedTextField
@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun TextField(
+fun TextAreaField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String
@@ -16,10 +16,10 @@ fun TextField(
         value = value,
         onValueChange = onValueChange,
         label = { Text(label) },
-        singleLine = true,
-        maxLines = 1,
-        minLines = 1,
+        minLines = 4,
+        maxLines = 4,
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth(),
+        supportingText = { Text("") }
     )
 }

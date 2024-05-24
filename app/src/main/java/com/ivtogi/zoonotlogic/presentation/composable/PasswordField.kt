@@ -1,7 +1,6 @@
 package com.ivtogi.zoonotlogic.presentation.composable
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -20,7 +19,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.dp
 import com.ivtogi.zoonotlogic.R
 
 @Composable
@@ -36,8 +34,7 @@ fun PasswordField(
         value = value,
         onValueChange = { changeText(it) },
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
+            .fillMaxWidth(),
         maxLines = 1,
         singleLine = true,
         visualTransformation = if (passwordHidden) PasswordVisualTransformation() else VisualTransformation.None,
