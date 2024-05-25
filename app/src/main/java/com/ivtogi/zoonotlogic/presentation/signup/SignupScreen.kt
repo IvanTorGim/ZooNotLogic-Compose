@@ -1,5 +1,6 @@
 package com.ivtogi.zoonotlogic.presentation.signup
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -41,6 +42,10 @@ fun SignupScreen(
 ) {
     val state by viewModel.state.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
+
+    BackHandler {
+        navigateToLogin()
+    }
 
     if (state.isLoading) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -98,10 +103,12 @@ fun SignupScreen(
                     label = stringResource(id = R.string.signup),
                     onClick = { viewModel.signup { navigateToLogin() } }
                 )
+                Spacer(modifier = Modifier.height(16.dp))
                 DefaultButton(
                     label = stringResource(id = R.string.cancel),
                     onClick = { navigateToLogin() }
                 )
+                Spacer(modifier = Modifier.height(4.dp))
                 LaunchedEffect(state.signupError) {
                     if (state.signupError != null) {
                         snackbarHostState.showSnackbar(state.signupError!!)

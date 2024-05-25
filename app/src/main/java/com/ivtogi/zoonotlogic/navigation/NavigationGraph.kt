@@ -36,14 +36,27 @@ fun NavigationGraph(
     ) {
         composable(Login.route) {
             LoginScreen(
-                navigateToSignup = { navHostController.navigate(Signup.route) },
-                navigateToHome = { navHostController.navigate(Home.createRoute(it)) }
+                navigateToSignup = {
+                    navHostController.navigate(Signup.route) {
+                        popUpTo(route = Login.route, popUpToBuilder = { inclusive = true })
+                    }
+                },
+                navigateToHome = {
+                    navHostController.navigate(Home.createRoute(it)) {
+                        popUpTo(route = Login.route, popUpToBuilder = { inclusive = true })
+                    }
+                }
             )
         }
 
         composable(Signup.route) {
             SignupScreen(
-                navigateToLogin = { navHostController.navigate(Login.route) })
+                navigateToLogin = {
+                    navHostController.navigate(Login.route) {
+                        popUpTo(route = Signup.route, popUpToBuilder = { inclusive = true })
+                    }
+                }
+            )
         }
 
         composable(
@@ -58,11 +71,13 @@ fun NavigationGraph(
             AdminScreen(
                 navigateToHome = {
                     navHostController.navigate(Home.createRoute(it)) {
-                        popUpTo(Login.route)
+                        popUpTo(route = Admin.route, popUpToBuilder = { inclusive = true })
                     }
                 },
                 navigateToProduct = { userId, productId ->
-                    navHostController.navigate(Product.createRoute(userId, productId))
+                    navHostController.navigate(Product.createRoute(userId, productId)) {
+                        popUpTo(route = Admin.route, popUpToBuilder = { inclusive = true })
+                    }
                 }
             )
         }
@@ -79,7 +94,7 @@ fun NavigationGraph(
             OrdersScreen(
                 navigateToHome = {
                     navHostController.navigate(Home.createRoute(it)) {
-                        popUpTo(Home.route)
+                        popUpTo(route = Orders.route, popUpToBuilder = { inclusive = true })
                     }
                 }
             )
@@ -103,7 +118,7 @@ fun NavigationGraph(
             ProductScreen(
                 navigateToAdmin = {
                     navHostController.navigate(Admin.createRoute(it)) {
-                        popUpTo(Home.route)
+                        popUpTo(route = Product.route, popUpToBuilder = { inclusive = true })
                     }
                 }
             )
@@ -119,12 +134,30 @@ fun NavigationGraph(
                 })
         ) {
             HomeScreen(
-                navigateToProfile = { navHostController.navigate(Profile.createRoute(it)) },
-                navigateToCart = { navHostController.navigate(Cart.createRoute(it)) },
-                navigateToAdmin = { navHostController.navigate(Admin.createRoute(it)) },
-                navigateToOrders = { navHostController.navigate(Orders.createRoute(it)) },
+                navigateToProfile = {
+                    navHostController.navigate(Profile.createRoute(it)) {
+                        popUpTo(route = Home.route, popUpToBuilder = { inclusive = true })
+                    }
+                },
+                navigateToCart = {
+                    navHostController.navigate(Cart.createRoute(it)) {
+                        popUpTo(route = Home.route, popUpToBuilder = { inclusive = true })
+                    }
+                },
+                navigateToAdmin = {
+                    navHostController.navigate(Admin.createRoute(it)) {
+                        popUpTo(route = Home.route, popUpToBuilder = { inclusive = true })
+                    }
+                },
+                navigateToOrders = {
+                    navHostController.navigate(Orders.createRoute(it)) {
+                        popUpTo(route = Home.route, popUpToBuilder = { inclusive = true })
+                    }
+                },
                 navigateToDetail = { userId, productId ->
-                    navHostController.navigate(Detail.createRoute(userId, productId))
+                    navHostController.navigate(Detail.createRoute(userId, productId)) {
+                        popUpTo(route = Home.route, popUpToBuilder = { inclusive = true })
+                    }
                 }
             )
         }
@@ -141,7 +174,7 @@ fun NavigationGraph(
             CartScreen(
                 navigateToHome = {
                     navHostController.navigate(Home.createRoute(it)) {
-                        popUpTo(Login.route)
+                        popUpTo(route = Cart.route, popUpToBuilder = { inclusive = true })
                     }
                 }
             )
@@ -159,12 +192,12 @@ fun NavigationGraph(
             ProfileScreen(
                 navigateToHome = {
                     navHostController.navigate(Home.createRoute(it)) {
-                        popUpTo(Login.route)
+                        popUpTo(route = Profile.route, popUpToBuilder = { inclusive = true })
                     }
                 },
                 navigateToLogin = {
                     navHostController.navigate(Login.route) {
-                        popUpTo(route = Login.route, popUpToBuilder = { inclusive = true })
+                        popUpTo(route = Profile.route, popUpToBuilder = { inclusive = true })
                     }
                 }
             )
@@ -188,7 +221,7 @@ fun NavigationGraph(
             DetailScreen(
                 navigateToHome = {
                     navHostController.navigate(Home.createRoute(it)) {
-                        popUpTo(Login.route)
+                        popUpTo(route = Detail.route, popUpToBuilder = { inclusive = true })
                     }
                 }
             )
