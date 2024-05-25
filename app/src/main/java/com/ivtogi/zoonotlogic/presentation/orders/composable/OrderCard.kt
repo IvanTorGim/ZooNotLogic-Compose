@@ -21,8 +21,6 @@ import coil.compose.AsyncImage
 import com.ivtogi.zoonotlogic.R
 import com.ivtogi.zoonotlogic.domain.model.Order
 import com.ivtogi.zoonotlogic.presentation.orders.OrdersViewModel
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 @Composable
 fun OrderCard(
@@ -30,7 +28,6 @@ fun OrderCard(
     viewModel: OrdersViewModel,
     onSendClick: (Order) -> Unit
 ) {
-    val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     Box(
         modifier = Modifier
             .fillMaxWidth()

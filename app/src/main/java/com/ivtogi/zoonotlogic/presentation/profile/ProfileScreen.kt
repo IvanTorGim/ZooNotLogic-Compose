@@ -39,9 +39,9 @@ fun ProfileScreen(
     navigateToLogin: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
-    //TODO: ADD SAVE BUTTON AND LOGOUT BUTTON
+    //TODO: ADD SAVE BUTTON
     BackHandler {
-        navigateToHome(state.userId)
+        navigateToHome(state.user.id)
     }
 
     if (state.isLoading) {
@@ -52,7 +52,7 @@ fun ProfileScreen(
         Scaffold(
             topBar = {
                 DefaultTopBar(
-                    userId = state.userId,
+                    userId = state.user.id,
                     name = stringResource(id = R.string.profile, state.user.name),
                     onBackPressed = { navigateToHome(it) })
             },

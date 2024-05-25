@@ -55,6 +55,7 @@ class FirestoreRepository @Inject constructor(
     suspend fun getUser(userId: String): User {
         return firestore.collection(USERS_PATH)
             .document(userId).get().await().toObject(UserDto::class.java)?.toDomain()!!
+            .copy(id = userId)
     }
 
     fun updateCart(userId: String, cartList: List<CartProduct>) {

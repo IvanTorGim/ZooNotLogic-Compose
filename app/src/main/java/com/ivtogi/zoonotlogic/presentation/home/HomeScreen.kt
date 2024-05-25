@@ -53,7 +53,7 @@ fun HomeScreen(
             topBar = {
                 TopHomeBar(
                     isAdmin = state.user.isAdmin,
-                    userId = state.userId,
+                    userId = state.user.id,
                     navigateToProfile = { navigateToProfile(it) },
                     navigateToAdmin = { navigateToAdmin(it) },
                     navigateToOrders = { navigateToOrders(it) }
@@ -61,12 +61,15 @@ fun HomeScreen(
             },
             modifier = Modifier.fillMaxSize()
         ) { paddingValues ->
-            Box {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+            ) {
                 LazyVerticalGrid(
                     columns = GridCells.Adaptive(180.dp),
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(paddingValues)
                 ) {
                     item(span = { GridItemSpan(maxLineSpan) }) {
                         Text(
@@ -82,7 +85,7 @@ fun HomeScreen(
                             items(state.productList) { product ->
                                 NewCollectionProduct(
                                     product = product,
-                                    userId = state.userId,
+                                    userId = state.user.id,
                                     navigateToDetail = { userId, productId ->
                                         navigateToDetail(
                                             userId,
@@ -105,7 +108,7 @@ fun HomeScreen(
                     items(state.productList) { product ->
                         ProductCard(
                             product = product,
-                            userId = state.userId,
+                            userId = state.user.id,
                             navigateToDetail = { userId, productId ->
                                 navigateToDetail(
                                     userId,
@@ -122,10 +125,11 @@ fun HomeScreen(
                 if (viewmodel.getTotalCartProducts() > 0) {
                     Box(
                         modifier = Modifier
+                            .padding(4.dp)
                             .align(Alignment.BottomCenter)
                     ) {
                         CartCard(
-                            userId = state.userId,
+                            userId = state.user.id,
                             totalProducts = viewmodel.getTotalCartProducts(),
                             totalProductsAmount = viewmodel.getTotalCartProductsAmount(),
                             navigateToCart = { navigateToCart(it) }

@@ -26,7 +26,7 @@ class DetailViewModel @Inject constructor(
         savedStateHandle.get<String>("userId")?.let { userId ->
             savedStateHandle.get<String>("productId")?.let { productId ->
                 viewModelScope.launch {
-                    _state.update { it.copy(isLoading = true, userId = userId) }
+                    _state.update { it.copy(isLoading = true) }
                     val user = firestoreRepository.getUser(userId)
                     val product = firestoreRepository.getProduct(productId)
                     _state.update { it.copy(isLoading = false, user = user, product = product) }
@@ -63,7 +63,7 @@ class DetailViewModel @Inject constructor(
 
     fun onAddProductClicked() {
         viewModelScope.launch {
-            firestoreRepository.getUser(_state.value.userId).let { user ->
+            firestoreRepository.getUser(_state.value.user.id).let { user ->
                 var message = "Producto añadido al carrito"
                 val cartList = user.cart.toMutableList()
                 val productInCartList = cartList.find { cartProduct ->
@@ -89,7 +89,7 @@ class DetailViewModel @Inject constructor(
                     )
                     cartList.add(cartProduct)
                 }
-                firestoreRepository.updateCart(_state.value.userId, cartList)
+                firestoreRepository.updateCart(_state.value.user.id, cartList)
                 _state.value.snackbarHostState.showSnackbar(
                     message = message,
                     duration = SnackbarDuration.Short

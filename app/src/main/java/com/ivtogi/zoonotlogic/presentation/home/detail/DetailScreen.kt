@@ -44,7 +44,7 @@ fun DetailScreen(
     val state by viewModel.state.collectAsState()
 
     BackHandler {
-        navigateToHome(state.userId)
+        navigateToHome(state.user.id)
     }
 
     if (state.isLoading) {
@@ -56,7 +56,7 @@ fun DetailScreen(
             snackbarHost = { SnackbarHost(hostState = state.snackbarHostState) },
             topBar = {
                 DefaultTopBar(
-                    userId = state.userId,
+                    userId = state.user.id,
                     name = state.product.name,
                     onBackPressed = { navigateToHome(it) })
             },
