@@ -42,63 +42,67 @@ fun LoginScreen(
     val state by viewModel.state.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    Scaffold(snackbarHost = { SnackbarHost(hostState = snackbarHostState) }) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(paddingValues)
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Spacer(modifier = Modifier.weight(1f))
-            Image(
-                painter = painterResource(id = R.drawable.zoonotlogic),
-                contentDescription = stringResource(id = R.string.zoonotlogic),
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            EmailField(
-                value = state.email,
-                error = state.emailError,
-                changeText = { viewModel.changeEmail(it) })
-            PasswordField(
-                value = state.password,
-                error = state.passwordError,
-                changeText = { viewModel.changePassword(it) }
-            )
-            Spacer(modifier = Modifier.height(24.dp))
-            DefaultButton(
-                label = stringResource(id = R.string.login),
-                onClick = { viewModel.login { navigateToHome(it) } }
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(vertical = 16.dp)
+    if (!state.userId.isNullOrBlank()) {
+        navigateToHome(state.userId!!)
+    } else {
+        Scaffold(snackbarHost = { SnackbarHost(hostState = snackbarHostState) }) { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .padding(paddingValues)
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Divider(Modifier.weight(1f))
-                Text(
-                    text = stringResource(id = R.string.divider_text),
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                Spacer(modifier = Modifier.weight(1f))
+                Image(
+                    painter = painterResource(id = R.drawable.zoonotlogic),
+                    contentDescription = stringResource(id = R.string.zoonotlogic),
                 )
-                Divider(Modifier.weight(1f))
-            }
-            Row {
-                Text(text = stringResource(id = R.string.not_have_account))
-                Text(
-                    text = stringResource(id = R.string.sing_up),
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .padding(start = 4.dp)
-                        .clickable { navigateToSignup() },
-                    color = colorResource(id = R.color.accent)
+                Spacer(modifier = Modifier.weight(1f))
+                EmailField(
+                    value = state.email,
+                    error = state.emailError,
+                    changeText = { viewModel.changeEmail(it) })
+                PasswordField(
+                    value = state.password,
+                    error = state.passwordError,
+                    changeText = { viewModel.changePassword(it) }
                 )
-            }
-            Spacer(modifier = Modifier.weight(1f))
-            LaunchedEffect(key1 = state.loginError) {
-                if (state.loginError != null) {
-                    snackbarHostState.showSnackbar(state.loginError!!)
-                    viewModel.cleanLoginError()
+                Spacer(modifier = Modifier.height(24.dp))
+                DefaultButton(
+                    label = stringResource(id = R.string.login),
+                    onClick = { viewModel.login { navigateToHome(it) } }
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(vertical = 16.dp)
+                ) {
+                    Divider(Modifier.weight(1f))
+                    Text(
+                        text = stringResource(id = R.string.divider_text),
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
+                    Divider(Modifier.weight(1f))
+                }
+                Row {
+                    Text(text = stringResource(id = R.string.not_have_account))
+                    Text(
+                        text = stringResource(id = R.string.sing_up),
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .padding(start = 4.dp)
+                            .clickable { navigateToSignup() },
+                        color = colorResource(id = R.color.accent)
+                    )
+                }
+                Spacer(modifier = Modifier.weight(1f))
+                LaunchedEffect(key1 = state.loginError) {
+                    if (state.loginError != null) {
+                        snackbarHostState.showSnackbar(state.loginError!!)
+                        viewModel.cleanLoginError()
+                    }
                 }
             }
         }

@@ -22,6 +22,12 @@ class LoginViewModel @Inject constructor(
     private val _state = MutableStateFlow(LoginState())
     val state: StateFlow<LoginState> = _state.asStateFlow()
 
+    init {
+        authRepository.getSession()?.let { userId ->
+            _state.update { it.copy(userId = userId) }
+        }
+    }
+
     fun login(navigateToHome: (String) -> Unit) {
         if (validateEmail() && validatePassword()) {
             viewModelScope.launch {

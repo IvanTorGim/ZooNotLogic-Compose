@@ -16,6 +16,10 @@ class AuthRepository @Inject constructor(
         return firebaseAuth.createUserWithEmailAndPassword(email, password).await().user
     }
 
+    fun getSession(): String? {
+        return firebaseAuth.currentUser?.uid
+    }
+
     fun logout() {
         return firebaseAuth.signOut()
     }
