@@ -24,74 +24,125 @@ class FirestoreRepository @Inject constructor(
     }
 
     suspend fun getAllProducts(): List<Product> {
-        return firestore.collection(PRODUCTS_PATH).get().await()
+        return firestore
+            .collection(PRODUCTS_PATH)
+            .get()
+            .await()
             .mapNotNull { document ->
-                document.toObject(ProductDto::class.java).toDomain().copy(id = document.id)
+                document
+                    .toObject(ProductDto::class.java)
+                    .toDomain()
+                    .copy(id = document.id)
             }
     }
 
     suspend fun getProduct(productId: String): Product {
-        return firestore.collection(PRODUCTS_PATH)
-            .document(productId).get().await()
-            .toObject(ProductDto::class.java)?.toDomain()?.copy(id = productId)!!
+        return firestore
+            .collection(PRODUCTS_PATH)
+            .document(productId)
+            .get()
+            .await()
+            .toObject(ProductDto::class.java)
+            ?.toDomain()!!
+            .copy(id = productId)
     }
 
     fun insertProduct(product: Product) {
         if (product.id.isNotEmpty()) {
-            firestore.collection(PRODUCTS_PATH).document(product.id).set(product.toDto())
+            firestore
+                .collection(PRODUCTS_PATH)
+                .document(product.id)
+                .set(product.toDto())
         } else {
-            firestore.collection(PRODUCTS_PATH).add(product.toDto())
+            firestore
+                .collection(PRODUCTS_PATH)
+                .add(product.toDto())
         }
     }
 
     fun deleteProduct(productId: String) {
-        firestore.collection(PRODUCTS_PATH).document(productId).delete()
+        firestore
+            .collection(PRODUCTS_PATH)
+            .document(productId)
+            .delete()
     }
 
-    fun insertUser(userId: String, user: User) {
-        firestore.collection(USERS_PATH).document(userId).set(user.toDto())
+    fun insertUser(user: User) {
+        firestore
+            .collection(USERS_PATH)
+            .document(user.id)
+            .set(user.toDto())
     }
 
     suspend fun getUser(userId: String): User {
-        return firestore.collection(USERS_PATH)
-            .document(userId).get().await().toObject(UserDto::class.java)?.toDomain()!!
+        return firestore
+            .collection(USERS_PATH)
+            .document(userId)
+            .get()
+            .await()
+            .toObject(UserDto::class.java)
+            ?.toDomain()!!
             .copy(id = userId)
     }
 
     fun updateCart(userId: String, cartList: List<CartProduct>) {
         val cartListDto = cartList.map { it.toDto() }
-        firestore.collection(USERS_PATH).document(userId).update(
-            mapOf("cart" to cartListDto)
-        )
+        firestore
+            .collection(USERS_PATH)
+            .document(userId)
+            .update(mapOf("cart" to cartListDto))
     }
 
     suspend fun getAllOrders(): List<Order> {
         return firestore
             .collection(ORDERS_PATH)
             .orderBy("date", Query.Direction.DESCENDING)
-            .get().await()
+            .get()
+            .await()
             .mapNotNull { document ->
-                document.toObject(OrderDto::class.java).toDomain().copy(orderId = document.id)
+                document
+                    .toObject(OrderDto::class.java)
+                    .toDomain()
+                    .copy(orderId = document.id)
             }
     }
 
     suspend fun getUserOrders(userId: String): List<Order> {
-        return firestore.collection(ORDERS_PATH)
+        return firestore
+            .collection(ORDERS_PATH)
             .whereEqualTo("userId", userId)
             .orderBy("date", Query.Direction.DESCENDING)
-            .get().await()
+            .get()
+            .await()
             .mapNotNull { document ->
-                document.toObject(OrderDto::class.java).toDomain().copy(orderId = document.id)
+                document
+                    .toObject(OrderDto::class.java)
+                    .toDomain()
+                    .copy(orderId = document.id)
             }
     }
 
     fun insertOrder(order: Order) {
-        firestore.collection(ORDERS_PATH).add(order.toDto())
+        firestore
+            .collection(ORDERS_PATH)
+            .add(order.toDto())
     }
 
     fun changeSendState(order: Order) {
-        firestore.collection(ORDERS_PATH).document(order.orderId).update(
-            mapOf("state" to order.state)
-        )
+        firestore
+            .collection(ORDERS_PATH)
+            .document(order.orderId)
+            .update(mapOf("state" to order.state))
+    }
+
+    suspend fun getOrder(orderId: String): Order {
+        return firestore
+            .collection(ORDERS_PATH)
+            .document(orderId)
+            .get()
+            .await()
+            .toObject(OrderDto::class.java)
+            ?.toDomain()!!
+            .copy(orderId = orderId)
     }
 }
