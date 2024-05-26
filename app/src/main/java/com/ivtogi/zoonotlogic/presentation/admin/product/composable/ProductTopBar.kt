@@ -16,6 +16,7 @@ import com.ivtogi.zoonotlogic.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductTopBar(
+    productId: String,
     userId: String,
     label: String,
     onBackPressed: (String) -> Unit,
@@ -46,15 +47,17 @@ fun ProductTopBar(
                     contentDescription = stringResource(id = R.string.save)
                 )
             }
-            IconButton(
-                onClick = {
-                    onDeletePressed()
+            if (productId.isNotEmpty()) {
+                IconButton(
+                    onClick = {
+                        onDeletePressed()
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Delete,
+                        contentDescription = stringResource(id = R.string.delete)
+                    )
                 }
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.Delete,
-                    contentDescription = stringResource(id = R.string.delete)
-                )
             }
         }
     )

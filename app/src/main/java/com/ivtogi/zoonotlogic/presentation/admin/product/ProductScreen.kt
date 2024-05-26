@@ -44,6 +44,7 @@ fun ProductScreen(
     Scaffold(
         topBar = {
             ProductTopBar(
+                productId = state.product.id,
                 userId = state.userId,
                 label = stringResource(id = R.string.product_label),
                 onBackPressed = { navigateToAdmin(it) },
