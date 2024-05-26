@@ -66,7 +66,7 @@ fun ProfileScreen(
             Column(
                 modifier = Modifier
                     .padding(paddingValues)
-                    .padding(16.dp)
+                    .padding(horizontal = 8.dp)
                     .verticalScroll(rememberScrollState())
             ) {
                 Label(text = stringResource(id = R.string.personal_info))
