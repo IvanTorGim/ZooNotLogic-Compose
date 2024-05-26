@@ -72,8 +72,8 @@
     <string name="delete">Eliminar</string>
     <string name="save">Guardar</string>
     <string name="add_image">Añadir imágen</string>
-    <string name="new_product">Nuevo producto</string>
-    <string name="product_label">Producto</string>
+    <string name="new_product_label">Nuevo producto</string>
+    <string name="edit_product_label">Editar producto</string>
     <string name="name_label">Nombre</string>
     <string name="delete_product">Eliminar el producto</string>
     <string name="delete_product_message">¿Desea eliminar el producto?</string>

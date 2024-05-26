@@ -46,7 +46,8 @@ fun ProductScreen(
             ProductTopBar(
                 productId = state.product.id,
                 userId = state.userId,
-                label = stringResource(id = R.string.product_label),
+                label = if (state.product.id.isEmpty()) stringResource(id = R.string.new_product_label)
+                else stringResource(id = R.string.edit_product_label),
                 onBackPressed = { navigateToAdmin(it) },
                 onSavePressed = { viewModel.updateProduct() },
                 onDeletePressed = { viewModel.showDialog() }
