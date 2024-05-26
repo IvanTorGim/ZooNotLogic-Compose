@@ -44,12 +44,17 @@
     <string name="cart">Carro</string>
     <string name="pay">Precio total: %s</string>
     <string name="empty_cart">El carro esta vacío</string>"
+    <string name="pay_now">Pagar ahora</string>
 
     <!-- PROFILE SCREEN -->
     <string name="profile">Perfil</string>
     <string name="personal_info">Datos personales</string>
     <string name="my_orders">Mis pedidos</string>
     <string name="logout">Cerrar sesión</string>
+    <string name="shipping_address">Direccion de entrega</string>
+    <string name="address">Dirección</string>
+    <string name="city">Ciudad</string>
+    <string name="postal_code">Código Postal</string>
 
     <!-- ADMIN SCREEN -->
     <string name="admin">Admin</string>
