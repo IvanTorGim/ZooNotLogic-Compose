@@ -23,27 +23,28 @@ class ProductViewModel @Inject constructor(
 
     init {
         savedStateHandle.get<String>("userId")?.let { userId ->
-            _state.update { it.copy(isLoading = true, userId = userId) }
-            savedStateHandle.get<String>("productId")?.let { productId ->
-                viewModelScope.launch {
-                    val product = firestoreRepository.getProduct(productId)
-                    _state.update { it.copy(product = product) }
-                }
-            } ?: run {
-                _state.update {
-                    it.copy(
-                        product = Product(
-                            name = "",
-                            description = "",
-                            category = "",
-                            price = "0.00",
-                            stock = mapOf("XS" to 0, "S" to 0, "M" to 0, "L" to 0, "XL" to 0),
-                            images = listOf("", "")
+            viewModelScope.launch {
+                _state.update { it.copy(isLoading = true, userId = userId) }
+                savedStateHandle.get<String>("productId")?.let { productId ->
+                    firestoreRepository.getProduct(productId).let { product ->
+                        _state.update { it.copy(product = product) }
+                    }
+                } ?: run {
+                    _state.update {
+                        it.copy(
+                            product = Product(
+                                name = "",
+                                description = "",
+                                category = "",
+                                price = "0.00",
+                                stock = mapOf("XS" to 0, "S" to 0, "M" to 0, "L" to 0, "XL" to 0),
+                                images = listOf("", "")
+                            )
                         )
-                    )
+                    }
                 }
+                _state.update { it.copy(isLoading = false) }
             }
-            _state.update { it.copy(isLoading = false) }
         }
     }
 

@@ -25,12 +25,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ivtogi.zoonotlogic.R
 import com.ivtogi.zoonotlogic.presentation.composable.ButtonWithIcon
-import com.ivtogi.zoonotlogic.presentation.composable.DefaultTopBar
 import com.ivtogi.zoonotlogic.presentation.composable.ErrorTextField
 import com.ivtogi.zoonotlogic.presentation.composable.Label
+import com.ivtogi.zoonotlogic.presentation.composable.NumberField
 import com.ivtogi.zoonotlogic.presentation.composable.PhoneField
 import com.ivtogi.zoonotlogic.presentation.composable.TextField
 import com.ivtogi.zoonotlogic.presentation.profile.composable.ProfileOrderCard
+import com.ivtogi.zoonotlogic.presentation.profile.composable.ProfileTopBar
 
 @Composable
 fun ProfileScreen(
@@ -51,10 +52,12 @@ fun ProfileScreen(
     } else {
         Scaffold(
             topBar = {
-                DefaultTopBar(
+                ProfileTopBar(
                     userId = state.user.id,
                     name = stringResource(id = R.string.profile, state.user.name),
-                    onBackPressed = { navigateToHome(it) })
+                    onBackPressed = { navigateToHome(it) },
+                    onSavePressed = { viewModel.updateProfile() }
+                )
             },
             modifier = Modifier
                 .fillMaxSize()
@@ -83,6 +86,24 @@ fun ProfileScreen(
                     value = state.user.phone,
                     changeText = { viewModel.changePhone(it) },
                     label = stringResource(id = R.string.phone)
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Label(text = stringResource(id = R.string.shipping_address))
+                Spacer(modifier = Modifier.height(16.dp))
+                TextField(
+                    value = state.user.address,
+                    changeText = { viewModel.changeAddress(it) },
+                    label = stringResource(id = R.string.address)
+                )
+                TextField(
+                    value = state.user.city,
+                    changeText = { viewModel.changeCity(it) },
+                    label = stringResource(id = R.string.city)
+                )
+                NumberField(
+                    value = state.user.postalCode,
+                    onValueChange = { viewModel.changePostalCode(it) },
+                    label = stringResource(id = R.string.postal_code)
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Label(text = stringResource(id = R.string.my_orders))

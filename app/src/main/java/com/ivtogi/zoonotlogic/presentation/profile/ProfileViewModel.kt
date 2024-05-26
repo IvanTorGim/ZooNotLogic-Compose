@@ -37,6 +37,10 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    fun updateProfile() {
+        firestoreRepository.insertUser(_state.value.user)
+    }
+
     fun changeName(name: String) {
         _state.update { it.copy(user = _state.value.user.copy(name = name)) }
     }
@@ -52,6 +56,18 @@ class ProfileViewModel @Inject constructor(
 
     fun changePhone(phone: String) {
         _state.update { it.copy(user = _state.value.user.copy(phone = phone)) }
+    }
+
+    fun changeAddress(address: String) {
+        _state.update { it.copy(user = _state.value.user.copy(address = address)) }
+    }
+
+    fun changeCity(city: String) {
+        _state.update { it.copy(user = _state.value.user.copy(city = city)) }
+    }
+
+    fun changePostalCode(postalCode: String) {
+        _state.update { it.copy(user = _state.value.user.copy(postalCode = postalCode)) }
     }
 
     fun formatDate(date: Long): String {
