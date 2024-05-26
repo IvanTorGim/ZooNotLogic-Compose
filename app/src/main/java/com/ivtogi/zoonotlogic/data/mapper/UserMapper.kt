@@ -10,6 +10,9 @@ fun User.toDto(): UserDto {
         phone = this.phone,
         email = this.email,
         cart = this.cart,
+        address = this.address,
+        city = this.city,
+        postalCode = this.postalCode,
         admin = this.isAdmin
     )
 }
@@ -21,6 +24,9 @@ fun UserDto.toDomain(): User {
         phone = this.phone,
         cart = this.cart,
         email = this.email,
+        address = this.address,
+        city = this.city,
+        postalCode = this.postalCode,
         isAdmin = this.admin
     )
 }

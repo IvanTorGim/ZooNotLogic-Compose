@@ -27,7 +27,7 @@ class CartViewModel @Inject constructor(
     init {
         savedStateHandle.get<String>("userId")?.let { userId ->
             viewModelScope.launch {
-                _state.update { it.copy(isLoading = true, userId = userId) }
+                _state.update { it.copy(isLoading = true) }
                 val user = firestoreRepository.getUser(userId)
                 _state.update { it.copy(isLoading = false, user = user) }
             }
@@ -36,13 +36,13 @@ class CartViewModel @Inject constructor(
 
     fun cleanCart() {
         viewModelScope.launch {
-            firestoreRepository.updateCart(_state.value.userId, emptyList())
+            firestoreRepository.updateCart(_state.value.user.id, emptyList())
         }
     }
 
     fun removeCartProduct(cartProduct: CartProduct) {
         viewModelScope.launch {
-            firestoreRepository.getUser(_state.value.userId).let { user ->
+            firestoreRepository.getUser(_state.value.user.id).let { user ->
 
                 val cartList = user.cart.toMutableList()
                 val productInCartList = cartList.find { p ->
@@ -59,7 +59,7 @@ class CartViewModel @Inject constructor(
                     }
                 }
 
-                firestoreRepository.updateCart(_state.value.userId, cartList)
+                firestoreRepository.updateCart(_state.value.user.id, cartList)
                 _state.update {
                     it.copy(user = user.copy(cart = cartList))
                 }
@@ -69,7 +69,7 @@ class CartViewModel @Inject constructor(
 
     fun addCartProduct(cartProduct: CartProduct) {
         viewModelScope.launch {
-            firestoreRepository.getUser(_state.value.userId).let { user ->
+            firestoreRepository.getUser(_state.value.user.id).let { user ->
                 val cartList = user.cart.toMutableList()
                 val productInCartList = cartList.find { product ->
                     product.id == cartProduct.id && product.size == cartProduct.size
@@ -81,7 +81,7 @@ class CartViewModel @Inject constructor(
                         product.copy(quantity = product.quantity + 1)
                 }
 
-                firestoreRepository.updateCart(_state.value.userId, cartList)
+                firestoreRepository.updateCart(_state.value.user.id, cartList)
                 _state.update {
                     it.copy(user = user.copy(cart = cartList))
                 }
@@ -98,15 +98,37 @@ class CartViewModel @Inject constructor(
     }
 
     fun saveOrder() {
-        val totalPrice = _state.value.user.cart.sumOf { it.quantity * it.price.toDouble() }
         firestoreRepository.insertOrder(
             Order(
-                userId = _state.value.userId,
+                userId = _state.value.user.id,
                 cartProducts = _state.value.user.cart,
-                totalPrice = String.format(Locale.ROOT, "%.2f", totalPrice),
+                totalPrice = String.format(Locale.ROOT, "%.2f", getTotalAmount()),
+                address = _state.value.user.address,
+                city = _state.value.user.city,
+                postalCode = _state.value.user.postalCode,
                 state = "Pendiente",
                 date = System.currentTimeMillis()
             )
         )
+    }
+
+    fun showBottomSheet() {
+        _state.update { it.copy(showBottomSheet = true) }
+    }
+
+    fun hideBottomSheet() {
+        _state.update { it.copy(showBottomSheet = false) }
+    }
+
+    fun changeAddress(address: String) {
+        _state.update { it.copy(user = _state.value.user.copy(address = address)) }
+    }
+
+    fun changeCity(city: String) {
+        _state.update { it.copy(user = _state.value.user.copy(city = city)) }
+    }
+
+    fun changePostalCode(postalCode: String) {
+        _state.update { it.copy(user = _state.value.user.copy(postalCode = postalCode)) }
     }
 }

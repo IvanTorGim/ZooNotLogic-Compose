@@ -8,5 +8,8 @@ data class User(
     val cart: List<CartProduct> = emptyList(),
     val email: String = "",
     val isAdmin: Boolean = false,
+    val address: String = "",
+    val city: String = "",
+    val postalCode: String = "",
     val password: String = ""
 )

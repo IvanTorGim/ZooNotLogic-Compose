@@ -75,8 +75,8 @@ class SignupViewModel @Inject constructor(
                     )
                     if (result != null) {
                         firestoreService.insertUser(
-                            userId = result.uid,
                             user = User(
+                                id = result.uid,
                                 name = _state.value.name,
                                 lastName = _state.value.lastName,
                                 phone = _state.value.phone,

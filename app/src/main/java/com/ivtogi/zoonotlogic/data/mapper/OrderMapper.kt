@@ -9,6 +9,9 @@ fun Order.toDto(): OrderDto {
         cartProducts = this.cartProducts,
         state = this.state,
         totalPrice = this.totalPrice,
+        address = this.address,
+        city = this.city,
+        postalCode = this.postalCode,
         date = this.date
     )
 }
@@ -19,6 +22,9 @@ fun OrderDto.toDomain(): Order {
         cartProducts = this.cartProducts,
         state = this.state,
         totalPrice = this.totalPrice,
+        address = this.address,
+        city = this.city,
+        postalCode = this.postalCode,
         date = this.date
     )
 }

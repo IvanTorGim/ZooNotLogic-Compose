@@ -8,5 +8,8 @@ data class UserDto(
     val email: String = "",
     val phone: String = "",
     val cart: List<CartProduct> = emptyList(),
-    val admin: Boolean = false
+    val admin: Boolean = false,
+    val address: String = "",
+    val city: String = "",
+    val postalCode: String = ""
 )
