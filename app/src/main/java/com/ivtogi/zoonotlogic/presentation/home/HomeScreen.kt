@@ -125,7 +125,6 @@ fun HomeScreen(
                 if (viewmodel.getTotalCartProducts() > 0) {
                     Box(
                         modifier = Modifier
-                            .padding(4.dp)
                             .align(Alignment.BottomCenter)
                     ) {
                         CartCard(

@@ -30,6 +30,7 @@ class CartViewModel @Inject constructor(
                 _state.update { it.copy(isLoading = true) }
                 val user = firestoreRepository.getUser(userId)
                 _state.update { it.copy(isLoading = false, user = user) }
+                _state.update { it.copy(validAddress = isValidAddress()) }
             }
         }
     }
@@ -101,6 +102,8 @@ class CartViewModel @Inject constructor(
         firestoreRepository.insertOrder(
             Order(
                 userId = _state.value.user.id,
+                userName = "${_state.value.user.name} ${_state.value.user.lastName}",
+                userPhone = _state.value.user.phone,
                 cartProducts = _state.value.user.cart,
                 totalPrice = String.format(Locale.ROOT, "%.2f", getTotalAmount()),
                 address = _state.value.user.address,
@@ -122,13 +125,20 @@ class CartViewModel @Inject constructor(
 
     fun changeAddress(address: String) {
         _state.update { it.copy(user = _state.value.user.copy(address = address)) }
+        _state.update { it.copy(validAddress = isValidAddress()) }
     }
 
     fun changeCity(city: String) {
         _state.update { it.copy(user = _state.value.user.copy(city = city)) }
+        _state.update { it.copy(validAddress = isValidAddress()) }
     }
 
     fun changePostalCode(postalCode: String) {
         _state.update { it.copy(user = _state.value.user.copy(postalCode = postalCode)) }
+        _state.update { it.copy(validAddress = isValidAddress()) }
+    }
+
+    private fun isValidAddress(): Boolean {
+        return _state.value.user.address.isNotBlank() && _state.value.user.city.isNotBlank() && _state.value.user.postalCode.isNotBlank()
     }
 }

@@ -12,6 +12,7 @@ import com.ivtogi.zoonotlogic.navigation.Routes.Cart
 import com.ivtogi.zoonotlogic.navigation.Routes.Detail
 import com.ivtogi.zoonotlogic.navigation.Routes.Home
 import com.ivtogi.zoonotlogic.navigation.Routes.Login
+import com.ivtogi.zoonotlogic.navigation.Routes.OrderDetail
 import com.ivtogi.zoonotlogic.navigation.Routes.Orders
 import com.ivtogi.zoonotlogic.navigation.Routes.Product
 import com.ivtogi.zoonotlogic.navigation.Routes.Profile
@@ -23,6 +24,7 @@ import com.ivtogi.zoonotlogic.presentation.home.HomeScreen
 import com.ivtogi.zoonotlogic.presentation.home.detail.DetailScreen
 import com.ivtogi.zoonotlogic.presentation.login.LoginScreen
 import com.ivtogi.zoonotlogic.presentation.orders.OrdersScreen
+import com.ivtogi.zoonotlogic.presentation.orders.orderDetail.OrderDetailScreen
 import com.ivtogi.zoonotlogic.presentation.profile.ProfileScreen
 import com.ivtogi.zoonotlogic.presentation.signup.SignupScreen
 
@@ -94,6 +96,17 @@ fun NavigationGraph(
             OrdersScreen(
                 navigateToHome = {
                     navHostController.navigate(Home.createRoute(it)) {
+                        popUpTo(route = Orders.route, popUpToBuilder = { inclusive = true })
+                    }
+                },
+                navigateToOrderDetail = { userId, productId, goOrders ->
+                    navHostController.navigate(
+                        OrderDetail.createRoute(
+                            userId,
+                            productId,
+                            goOrders
+                        )
+                    ) {
                         popUpTo(route = Orders.route, popUpToBuilder = { inclusive = true })
                     }
                 }
@@ -199,6 +212,17 @@ fun NavigationGraph(
                     navHostController.navigate(Login.route) {
                         popUpTo(route = Profile.route, popUpToBuilder = { inclusive = true })
                     }
+                },
+                navigateToOrderDetail = { userId, productId, goOrders ->
+                    navHostController.navigate(
+                        OrderDetail.createRoute(
+                            userId,
+                            productId,
+                            goOrders
+                        )
+                    ) {
+                        popUpTo(route = Profile.route, popUpToBuilder = { inclusive = true })
+                    }
                 }
             )
         }
@@ -222,6 +246,39 @@ fun NavigationGraph(
                 navigateToHome = {
                     navHostController.navigate(Home.createRoute(it)) {
                         popUpTo(route = Detail.route, popUpToBuilder = { inclusive = true })
+                    }
+                }
+            )
+        }
+
+        composable(
+            route = OrderDetail.route,
+            arguments = listOf(
+                navArgument("userId") {
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = null
+                },
+                navArgument("orderId") {
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = null
+                },
+                navArgument("goOrders") {
+                    type = NavType.BoolType
+                    defaultValue = false
+                }
+            )
+        ) {
+            OrderDetailScreen(
+                navigateToProfile = {
+                    navHostController.navigate(Profile.createRoute(it)) {
+                        popUpTo(route = OrderDetail.route, popUpToBuilder = { inclusive = true })
+                    }
+                },
+                navigateToOrders = {
+                    navHostController.navigate(Orders.createRoute(it)) {
+                        popUpTo(route = OrderDetail.route, popUpToBuilder = { inclusive = true })
                     }
                 }
             )

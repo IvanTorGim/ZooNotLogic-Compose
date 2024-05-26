@@ -8,5 +8,6 @@ data class CartState(
     val city: String = "",
     val state: String = "",
     val isLoading: Boolean = false,
+    val validAddress: Boolean = false,
     val showBottomSheet: Boolean = false
 )

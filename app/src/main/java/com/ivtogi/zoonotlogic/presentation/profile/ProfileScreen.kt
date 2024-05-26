@@ -37,10 +37,11 @@ import com.ivtogi.zoonotlogic.presentation.profile.composable.ProfileTopBar
 fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel(),
     navigateToHome: (String) -> Unit,
-    navigateToLogin: () -> Unit
+    navigateToLogin: () -> Unit,
+    navigateToOrderDetail: (String, String, Boolean) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
-    //TODO: ADD SAVE BUTTON
+
     BackHandler {
         navigateToHome(state.user.id)
     }
@@ -110,7 +111,14 @@ fun ProfileScreen(
                 Spacer(modifier = Modifier.height(16.dp))
                 LazyRow {
                     items(state.orders) { order ->
-                        ProfileOrderCard(order = order, viewModel = viewModel)
+                        ProfileOrderCard(
+                            order = order,
+                            user = state.user,
+                            viewModel = viewModel,
+                            navigateToOrderDetail = { userId, orderId, goOrders ->
+                                navigateToOrderDetail(userId, orderId, goOrders)
+                            }
+                        )
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))

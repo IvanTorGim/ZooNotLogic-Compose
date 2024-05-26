@@ -24,7 +24,8 @@ import com.ivtogi.zoonotlogic.presentation.orders.composable.OrderCard
 @Composable
 fun OrdersScreen(
     viewModel: OrdersViewModel = hiltViewModel(),
-    navigateToHome: (String) -> Unit
+    navigateToHome: (String) -> Unit,
+    navigateToOrderDetail: (String, String, Boolean) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -52,9 +53,13 @@ fun OrdersScreen(
                     item { Divider(modifier = Modifier.fillMaxWidth()) }
                     items(state.orders) { order ->
                         OrderCard(
+                            userId = state.userId,
                             order = order,
                             viewModel = viewModel,
-                            onSendClick = { viewModel.changeSendState(it) }
+                            onSendClick = { viewModel.changeSendState(it) },
+                            navigateToOrderDetail = { userId, orderId, goOrders ->
+                                navigateToOrderDetail(userId, orderId, goOrders)
+                            }
                         )
                     }
                 }

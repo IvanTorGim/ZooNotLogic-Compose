@@ -38,6 +38,7 @@ import com.stripe.android.paymentsheet.rememberPaymentSheet
 fun BottomSheet(
     user: User,
     viewModel: CartViewModel,
+    validAddress: Boolean,
     navigateToHome: (String) -> Unit,
 ) {
     val paymentSheet =
@@ -101,7 +102,8 @@ fun BottomSheet(
                     if (currentConfig != null && currentClientSecret != null) {
                         presentPaymentSheet(paymentSheet, currentConfig, currentClientSecret)
                     }
-                }
+                },
+                enabled = validAddress
             )
         }
     }

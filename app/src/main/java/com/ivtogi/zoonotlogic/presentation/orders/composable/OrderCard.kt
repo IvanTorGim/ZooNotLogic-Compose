@@ -1,5 +1,6 @@
 package com.ivtogi.zoonotlogic.presentation.orders.composable
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,14 +25,19 @@ import com.ivtogi.zoonotlogic.presentation.orders.OrdersViewModel
 
 @Composable
 fun OrderCard(
+    userId: String,
     order: Order,
     viewModel: OrdersViewModel,
-    onSendClick: (Order) -> Unit
+    onSendClick: (Order) -> Unit,
+    navigateToOrderDetail: (String, String, Boolean) -> Unit
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(120.dp),
+            .height(120.dp)
+            .clickable {
+                navigateToOrderDetail(userId, order.orderId, true)
+            }
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
             AsyncImage(

@@ -6,6 +6,8 @@ import com.ivtogi.zoonotlogic.domain.model.Order
 fun Order.toDto(): OrderDto {
     return OrderDto(
         userId = this.userId,
+        userName = this.userName,
+        userPhone = this.userPhone,
         cartProducts = this.cartProducts,
         state = this.state,
         totalPrice = this.totalPrice,
@@ -19,6 +21,8 @@ fun Order.toDto(): OrderDto {
 fun OrderDto.toDomain(): Order {
     return Order(
         userId = this.userId,
+        userName = this.userName,
+        userPhone = this.userPhone,
         cartProducts = this.cartProducts,
         state = this.state,
         totalPrice = this.totalPrice,

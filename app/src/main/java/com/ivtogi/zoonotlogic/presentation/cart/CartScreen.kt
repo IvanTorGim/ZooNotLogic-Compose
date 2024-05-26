@@ -76,6 +76,7 @@ fun CartScreen(
                     user = state.user,
                     viewModel = viewModel,
                     navigateToHome = navigateToHome,
+                    validAddress = state.validAddress
                 )
             }
         }

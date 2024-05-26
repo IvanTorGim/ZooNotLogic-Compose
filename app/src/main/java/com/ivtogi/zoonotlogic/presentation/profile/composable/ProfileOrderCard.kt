@@ -23,17 +23,19 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ivtogi.zoonotlogic.R
 import com.ivtogi.zoonotlogic.domain.model.Order
+import com.ivtogi.zoonotlogic.domain.model.User
 import com.ivtogi.zoonotlogic.presentation.profile.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileOrderCard(
     order: Order,
-    viewModel: ProfileViewModel
+    user: User,
+    viewModel: ProfileViewModel,
+    navigateToOrderDetail: (String, String, Boolean) -> Unit
 ) {
-    //TODO: NAVIGATE TO ORDER DETAILS
     Card(
-        onClick = { /*TODO*/ },
+        onClick = { navigateToOrderDetail(user.id, order.orderId, false) },
         colors = CardDefaults.cardColors(containerColor = White),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
         modifier = Modifier

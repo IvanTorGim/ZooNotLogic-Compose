@@ -10,6 +10,12 @@ sealed class Routes(val route: String) {
         fun createRoute(userId: String) = "orders/?userId=$userId"
     }
 
+    data object OrderDetail :
+        Routes("orderDetail/?userId={userId}&orderId={orderId}&goOrders={goOrders}") {
+        fun createRoute(userId: String, orderId: String, goOrders: Boolean) =
+            "orderDetail/?userId=$userId&orderId=$orderId&goOrders=$goOrders"
+    }
+
     data object Product : Routes("product/?userId={userId}&productId={productId}") {
         fun createRoute(userId: String, productId: String?) =
             "product/?userId=$userId&productId=$productId"

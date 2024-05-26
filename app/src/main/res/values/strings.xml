@@ -80,4 +80,18 @@
 
     <!-- ORDERS SCREEN -->
     <string name="orders">Pedidos</string>
+    <string name="order_detail">Detalle del pedido</string>
+    <string name="order_detail_order_id">Pedido: %s</string>
+    <string name="order_detail_user_name">Nombre: %s</string>
+    <string name="order_detail_date">Fecha: %s</string>
+    <string name="order_detail_user_phone">Teléfono: %s</string>
+    <string name="order_detail_address">Dirección: %s</string>
+    <string name="order_detail_city">Ciudad: %s</string>
+    <string name="order_detail_postal_code">Código postal: %s</string>
+    <string name="order_detail_total_price">Total: %s</string>
+    <string name="order_detail_quantity">Cantidad: %s</string>
+    <string name="order_detail_size">Talla: %s</string>
+    <string name="order_detail_price">Precio: %s</string>
+
+
 </resources>
