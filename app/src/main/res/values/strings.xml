@@ -43,7 +43,7 @@
     <!-- CART SCREEN -->
     <string name="cart">Carro</string>
     <string name="pay">Precio total: %s</string>
-    <string name="empty_cart">El carro esta vacío</string>"
+    <string name="empty_cart">El carro está vacío</string>"
     <string name="pay_now">Pagar ahora</string>
 
     <!-- PROFILE SCREEN -->
